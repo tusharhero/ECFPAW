@@ -75,16 +75,16 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
 
 ** General Keybindings
 #+begin_src elisp
-  (use-package general
-    :config
-    (general-evil-setup)
+(use-package general
+  :config
+  (general-evil-setup)
 
-    ;; set up 'SPC' as the global leader key
-    (general-create-definer dt/leader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :prefix "SPC" ;; set leader
-      :global-prefix "M-SPC") ;; access leader in insert mode
+  ;; set up 'SPC' as the global leader key
+  (general-create-definer ECFPAW/leader-keys
+    :states '(normal insert visual emacs)
+    :keymaps 'override
+    :prefix "SPC" ;; set leader
+    :global-prefix "M-SPC") ;; access leader in insert mode
 
 	     ;; direct convinient keybindings
 		 (ECFPAW/leader-keys
@@ -120,12 +120,12 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
 		   "e e" '(eval-expression :wk "Evaluate and elisp expression")
 		   "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
 		   "e r" '(eval-region :wk "Evaluate elisp in region")
-		  ))
+		  )
     (ECFPAW/leader-keys
      "h" '(:ignore t :wk "Help")
      "h f" '(describe-function :wk "Describe function")
      "h v" '(describe-variable :wk "Describe variable")
-    )
+    ))
 
 #+end_src
 
