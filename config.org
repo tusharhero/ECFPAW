@@ -99,7 +99,8 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
                      "f" '(:ignore t :wk "files")
                      "f f" '(find-file :wk "Find file")
                      "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
-                     "f r r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config")
+                     "f r" '(counsel-recentf :wk "Find recent files")
+                     "f e r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config")
                    )
 
                  ;; buffer related keybindings
