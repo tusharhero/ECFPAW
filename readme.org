@@ -1,0 +1,6 @@
+#+TITLE: ECFPAW (Emacs Configuration For Programming and Writing).
+#+AUTHOR: tusharhero
+#+email: tusharhero@sdf.org
+
+Welcome to my GNU Emacs configuration repository. You can find the
+config [[file:config.org][here]].
