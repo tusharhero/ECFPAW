@@ -146,6 +146,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
      "w n" '(evil-window-new :wk "New window")
      "w s" '(evil-window-split :wk "Horizontal split window")
      "w v" '(evil-window-vsplit :wk "Vertical split window")
+     "w m" '(maximize-window :wk "Maximize window")
      ;; Window motions
      "w h" '(evil-window-left :wk "Window left")
      "w j" '(evil-window-down :wk "Window down")
@@ -296,10 +297,6 @@ This packages allows shortcuts for source blocks etc.
 #+end_src
 
 * SHELLS AND TERMINALS
- In my configs, all of my shells (bash, fish, zsh and the ESHELL)
- require my shell-color-scripts-git package to be installed.  On Arch
- Linux, you can install it from the AUR.  Otherwise, go to my
- shell-color-scripts repository on GitLab to get it.
 ** Vterm
  Vterm is a terminal emulator within Emacs.  The 'shell-file-name'
  setting sets the shell to be used in M-x shell, M-x term, M-x
@@ -311,7 +308,7 @@ This packages allows shortcuts for source blocks etc.
      (setq shell-file-name "/bin/fish"
            vterm-max-scrollback 5000))
  #+end_src
- ** Vterm-Toggle 
+** Vterm-Toggle 
  [[https://github.com/jixiuf/vterm-toggle][vterm-toggle]] toggles between the vterm buffer and whatever buffer you are editing.
  #+begin_src emacs-lisp
    (use-package vterm-toggle
