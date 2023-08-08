@@ -92,6 +92,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
                      "SPC" '(execute-extended-command :wk "Execute command")
                      "TAB" '(mode-line-other-buffer :wk "Last buffer")
                      "c" '(comment-line :wk "Comment lines")
+                     "'" '(vterm-toggle :wk "Toggle vterm")
                    )
 
                  ;; file related keybindings
@@ -133,6 +134,19 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
     "t" '(:ignore t :wk "Toggle")
     "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
     "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+  (ECFPAW/leader-keys
+    "w" '(:ignore t :wk "Windows")
+    ;; Window splits
+    "w c" '(evil-window-delete :wk "Close window")
+    "w n" '(evil-window-new :wk "New window")
+    "w s" '(evil-window-split :wk "Horizontal split window")
+    "w v" '(evil-window-vsplit :wk "Vertical split window")
+    ;; Window motions
+    "w h" '(evil-window-left :wk "Window left")
+    "w j" '(evil-window-down :wk "Window down")
+    "w k" '(evil-window-up :wk "Window up")
+    "w l" '(evil-window-right :wk "Window right")
+    "w w" '(evil-window-next :wk "Goto next window"))
   )
 
 #+end_src
@@ -254,6 +268,9 @@ This packages allows shortcuts for source blocks etc.
       "f U" '(sudo-edit :wk "Sudo edit file")))
 #+end_src
 
+* THEME
+(add-to-list 'custom-theme-load-path "~/.config/emacs/themes/")
+(load-theme 'foggy-night t)
 * WHICH-KEY 
 #+begin_src elisp
       (use-package which-key
@@ -275,3 +292,47 @@ This packages allows shortcuts for source blocks etc.
             which-key-separator " → " )
   )
 #+end_src
+# * SHELLS AND TERMINALS
+# In my configs, all of my shells (bash, fish, zsh and the ESHELL)
+# require my shell-color-scripts-git package to be installed.  On Arch
+# Linux, you can install it from the AUR.  Otherwise, go to my
+# shell-color-scripts repository on GitLab to get it.
+
+
+# ** Vterm
+# Vterm is a terminal emulator within Emacs.  The 'shell-file-name'
+# setting sets the shell to be used in M-x shell, M-x term, M-x
+# ansi-term and M-x vterm.  By default, the shell is set to 'fish' but
+# could change it to 'bash' or 'zsh' if you prefer.
+
+# #+begin_src emacs-lisp
+# (use-package vterm
+# :config
+# (setq shell-file-name "/bin/fish"
+#       vterm-max-scrollback 5000))
+# #+end_src
+
+# ** Vterm-Toggle 
+# [[https://github.com/jixiuf/vterm-toggle][vterm-toggle]] toggles between the vterm buffer and whatever buffer you are editing.
+
+# #+begin_src emacs-lisp
+# (use-package vterm-toggle
+#   :after vterm
+#   :config
+#   (setq vterm-toggle-fullscreen-p nil)
+#   (setq vterm-toggle-scope 'project)
+#   (add-to-list 'display-buffer-alist
+#                '((lambda (buffer-or-name _)
+#                      (let ((buffer (get-buffer buffer-or-name)))
+#                        (with-current-buffer buffer
+#                          (or (equal major-mode 'vterm-mode)
+#                              (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
+#                   (display-buffer-reuse-window display-buffer-at-bottom)
+#                   ;;(display-buffer-reuse-window display-buffer-in-direction)
+#                   ;;display-buffer-in-direction/direction/dedicated is added in emacs27
+#                   ;;(direction . bottom)
+#                   ;;(dedicated . t) ;dedicated is supported in emacs27
+#                   (reusable-frames . visible)
+#                   (window-height . 0.3))))
+# #+end_src
+
