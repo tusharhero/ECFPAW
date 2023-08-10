@@ -103,6 +103,12 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
      "f r" '(counsel-recentf :wk "Find recent files")
      "f e r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config")
      )
+   (ECFPAW/leader-keys
+     "d" '(:ignore t :wk "Dired")
+     "d d" '(dired :wk "Open dired")
+     "d j" '(dired-jump :wk "Dired jump to current")
+     "d p" '(peep-dired :wk "Peep-dired"))
+
 
     ;; buffer related keybindings
     (ECFPAW/leader-keys
@@ -208,6 +214,21 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
     :config
     (dashboard-setup-startup-hook))
   #+end_src
+* DIRED
+#+begin_src emacs-lisp
+  ;; disable overloading with info by default, shift+( to show details
+  (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+  (use-package peep-dired
+    :after dired
+    :hook (evil-normalize-keymaps . peep-dired-hook)
+    :config
+      (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
+      (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
+      (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+      (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file)
+  )
+
+#+end_src
 * FONTS
 ** setting the fonts face
 Defining the various fonts emacs will use.
@@ -231,7 +252,6 @@ For CTRL =/- zooming
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
   (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 #+end_src
-
 * GRAPHICAL USER INTERFACE TWEAKS
 Let's make GNU Emacs look a little better.
 
@@ -327,6 +347,11 @@ system is “fish”.
 (use-package projectile
   :config
   (projectile-mode 1))
+#+end_src
+* TRANSPARENCY
+With Emacs version 29, true transparency has been added.  
+#+begin_src elisp
+(add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
 #+end_src
 * WHICH-KEY 
 #+begin_src elisp
