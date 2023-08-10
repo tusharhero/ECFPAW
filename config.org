@@ -143,7 +143,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
     (ECFPAW/leader-keys
      "w" '(:ignore t :wk "Windows")
      ;; Window splits
-     "w c" '(evil-window-delete :wk "Close window")
+     "w x" '(evil-window-delete :wk "Close window")
      "w n" '(evil-window-new :wk "New window")
      "w s" '(evil-window-split :wk "Horizontal split window")
      "w v" '(evil-window-vsplit :wk "Vertical split window")
@@ -246,12 +246,17 @@ I like relative line numbers
                             ivy-rich-switch-buffer-align-virtual-buffer t
                             ivy-rich-path-style 'abbrev)
     :config
-    (ivy-set-display-transformer 'ivy-switch-buffer
-                                 'ivy-rich-switch-buffer-transformer))
+      (ivy-set-display-transformer 'ivy-switch-buffer
+                                   'ivy-rich-switch-buffer-transformer))
 
 #+end_src
 
 * ORG-MODE
+** Making the *scratch* buffer start in Org-mode
+#+begin_src elisp
+  (setq initial-major-mode 'org-mode)
+#+end_src
+
 ** Enabling Org Bullets
 Org-bullets look nice
 #+begin_src elisp
