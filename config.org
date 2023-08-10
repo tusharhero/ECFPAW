@@ -113,6 +113,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
      "b n" '(next-buffer :wk "Next buffer")
      "b p" '(previous-buffer :wk "Previous buffer")
      "b r" '(revert-buffer :wk "Revert buffer")
+     "b h" '((lambda () (interactive) (switch-to-buffer "*GNU Emacs*")) :wk "Home buffer")
      )
 
     ;; eval related keybindings
