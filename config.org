@@ -311,11 +311,14 @@ I like relative line numbers
 #+end_src
 
 * ORG-MODE
+** Enable autofill mode by default 
+#+begin_src elisp
+(add-hook 'org-mode-hook 'autofill-mode)
+#+end_src
 ** Making the *scratch* buffer start in Org-mode
 #+begin_src elisp
   (setq initial-major-mode 'org-mode)
 #+end_src
-
 ** Enabling Org Bullets
 Org-bullets look nice
 #+begin_src elisp
