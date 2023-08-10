@@ -125,12 +125,13 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "f r" '(counsel-recentf :wk "Find recent files")
       "f e r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config")
       )
+
+    ;; dired related keybindings
     (ECFPAW/leader-keys
       "d" '(:ignore t :wk "Dired")
       "d d" '(dired :wk "Open dired")
       "d j" '(dired-jump :wk "Dired jump to current")
       "d p" '(peep-dired :wk "Peep-dired"))
-
 
     ;; buffer related keybindings
     (ECFPAW/leader-keys
