@@ -331,9 +331,9 @@ I like relative line numbers
 #+end_src
 
 * ORG-MODE
-** Enable autofill mode by default 
+** Enable auto-fill mode by default 
 #+begin_src elisp
-(add-hook 'org-mode-hook 'autofill-mode)
+  (add-hook 'org-mode-hook 'auto-fill-mode)
 #+end_src
 ** Making the *scratch* buffer start in Org-mode
 #+begin_src elisp
