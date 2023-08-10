@@ -204,13 +204,13 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
     (setq initial-buffer-choice 'dashboard-open)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
+    (setq dashboard-startup-banner "~/.config/emacs/images/trancendent-gnu.png")
     (setq dashboard-banner-logo-title "ECFPAW")
     (setq dashboard-center-content t)
     (setq dashboard-items '((recents . 5)
+                            (projects . 5)
                             (agenda . 5 )
-                            (bookmarks . 3)
-                            (projects . 3)
-                            (registers . 3)))
+                            (bookmarks . 3)))
     :config
     (dashboard-setup-startup-hook))
   #+end_src
