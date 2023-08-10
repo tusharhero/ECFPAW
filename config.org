@@ -113,7 +113,8 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
      "b n" '(next-buffer :wk "Next buffer")
      "b p" '(previous-buffer :wk "Previous buffer")
      "b r" '(revert-buffer :wk "Revert buffer")
-     "b h" '((lambda () (interactive) (switch-to-buffer "*GNU Emacs*")) :wk "Home buffer")
+     "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
+     "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer")
      )
 
     ;; eval related keybindings
@@ -169,6 +170,25 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
 (use-package all-the-icons-dired
   :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 #+end_src
+
+* DASHBOARD
+#+begin_src elisp
+  (use-package dashboard
+    :ensure t 
+    :init
+    (setq initial-buffer-choice 'dashboard-open)
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-banner-logo-title "ECFPAW")
+    (setq dashboard-center-content t)
+    (setq dashboard-items '((recents . 5)
+                            (agenda . 5 )
+                            (bookmarks . 3)
+                            (projects . 3)
+                            (registers . 3)))
+    :config
+    (dashboard-setup-startup-hook))
+  #+end_src
 * FONTS
 ** setting the fonts face
 Defining the various fonts emacs will use.
@@ -269,7 +289,19 @@ This packages allows shortcuts for source blocks etc.
 #+begin_src elisp
   (require 'org-tempo)
 #+end_src
-
+* PROJECTILE 
+Projectile is a project interaction library for Emacs.  It should be
+noted that many projectile commands do not work if you have set “fish”
+as the “shell-file-name” for Emacs.  I had initially set “fish” as the
+“shell-file-name” in the Vterm section of this config, but oddly
+enough I changed it to “bin/sh” and projectile now works as expected,
+and Vterm still uses “fish” because my default user “sh” on my Linux
+system is “fish”.
+#+begin_src elisp
+(use-package projectile
+  :config
+  (projectile-mode 1))
+#+end_src
 * WHICH-KEY 
 #+begin_src elisp
   (use-package which-key
@@ -306,12 +338,11 @@ This packages allows shortcuts for source blocks etc.
 ** Vterm
  Vterm is a terminal emulator within Emacs.  The 'shell-file-name'
  setting sets the shell to be used in M-x shell, M-x term, M-x
- ansi-term and M-x vterm.  By default, the shell is set to 'fish' but
- could change it to 'bash' or 'zsh' if you prefer.
+ ansi-term and M-x vterm.
  #+begin_src emacs-lisp
    (use-package vterm
      :config
-     (setq shell-file-name "/bin/fish"
+     (setq shell-file-name "/bin/sh"
            vterm-max-scrollback 5000))
  #+end_src
 ** Vterm-Toggle 
