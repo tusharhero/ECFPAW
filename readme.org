@@ -2,5 +2,37 @@
 #+AUTHOR: tusharhero
 #+email: tusharhero@sdf.org
 
-Welcome to my GNU Emacs configuration repository. You can find the
+Welcome to my GNU Emacs configuration repository.You can find the
 config [[file:config.org][here]].
+
+I will use this configuration primarily for programming and writing
+articles and stories.
+
+Before writing this, I used to use Spacemacs, and I think spacemacs is
+great too, I am going to get configure some features from spacemacs
+here as well (The ones I liked obviously).
+
+* Setup
+
+I am going to use it in GNU Linux only (I hope), and here the setup is
+quite simple.
+
+- Install GNU Emacs using your package manager,
+  for me its Archlinux
+  #+begin_src bash
+    sudo pacman -S emacs
+  #+end_src
+- Get the configuration in the right place, 
+  #+begin_src bash
+    git clone https://github.com/tusharhero/ECFPAW ~/.config/emacs
+  #+end_src
+- enable the Emacs server and start it.
+  #+begin_src bash
+    systemctl enable emacs --user
+    systemctl start emacs --user
+  #+end_src
+- Run emacs using emacsclient
+  #+begin_src bash
+    emacsclient -nc
+  #+end_src
+  You can use a GUI shortcut for Emacsclient as well.
