@@ -121,9 +121,9 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
     (ECFPAW/leader-keys
       "f" '(:ignore t :wk "files")
       "f f" '(find-file :wk "Find file")
-      "f c" '((lambda () (interactive) (find-file (get-file-user-config "config.org"))) :wk "Edit emacs config")
+      "f c" '((lambda () (interactive) (find-file (get-user-config-file-path "config.org"))) :wk "Edit emacs config")
       "f r" '(counsel-recentf :wk "Find recent files")
-      "f e r" '((lambda () (interactive) (get-file-user-config "init.el")) :wk "Reload emacs config"))
+      "f e r" '((lambda () (interactive) (get-user-config-file-path "init.el")) :wk "Reload emacs config"))
 
     ;; dired related keybindings
     (ECFPAW/leader-keys
@@ -232,7 +232,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
     (setq initial-buffer-choice 'dashboard-open)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
-    (setq dashboard-startup-banner (get-file-user-config "images/trancendent-gnu.png"))
+    (setq dashboard-startup-banner (get-user-config-file-path "images/trancendent-gnu.png"))
     (setq dashboard-banner-logo-title "ECFPAW")
     (setq dashboard-center-content t)
     (setq dashboard-items '((recents . 5)
@@ -347,6 +347,7 @@ I like relative line numbers
 #+end_src
 ** Making the *scratch* buffer start in Org-mode
 #+begin_src elisp
+  (setq 
   (setq initial-major-mode 'org-mode)
 #+end_src
 ** Enabling Org Bullets
@@ -476,5 +477,6 @@ I will just use one of the doom themes for now.
 
 * CUSTOM
 #+begin_src elisp
-  (defsubst get-file-user-config(file) (concat user-emacs-directory file))
+  ;; Get the path of file from user-config directory
+  (defsubst get-user-config-file-path(file) (concat user-emacs-directory file))
 #+end_src
