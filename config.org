@@ -167,6 +167,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
     (ECFPAW/leader-keys
       "t" '(:ignore t :wk "Toggle")
       "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+      "t s" '(flyspell-mode :wk "Toggle line numbers")
       "t t" '(visual-line-mode :wk "Toggle truncated lines"))
 
     ;; window management keybindings
@@ -332,6 +333,10 @@ I like relative line numbers
 #+end_src
 
 * ORG-MODE
+** Enable spell checking by default
+#+begin_src elisp
+  (add-hook 'org-mode-hook 'flyspell-mode)
+#+end_src
 ** Enable auto-fill mode by default 
 #+begin_src elisp
   (add-hook 'org-mode-hook 'auto-fill-mode)
