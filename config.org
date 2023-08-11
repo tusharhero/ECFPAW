@@ -167,8 +167,13 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
     (ECFPAW/leader-keys
       "t" '(:ignore t :wk "Toggle")
       "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-      "t s" '(flyspell-mode :wk "Toggle line numbers")
+      "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
       "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+
+    (ECFPAW/leader-keys
+      "S" '(:ignore t :wk "Spell")
+      "S s" '(ispell-word :wk "correct the word")
+      "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
 
     ;; window management keybindings
     (ECFPAW/leader-keys
