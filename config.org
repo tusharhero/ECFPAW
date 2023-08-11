@@ -121,10 +121,9 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
     (ECFPAW/leader-keys
       "f" '(:ignore t :wk "files")
       "f f" '(find-file :wk "Find file")
-      "f c" '((lambda () (interactive) (find-file "~/.config/emacs/config.org")) :wk "Edit emacs config")
+      "f c" '((lambda () (interactive) (find-file (concat user-emacs-directory "config.org"))) :wk "Edit emacs config")
       "f r" '(counsel-recentf :wk "Find recent files")
-      "f e r" '((lambda () (interactive) (load-file "~/.config/emacs/init.el")) :wk "Reload emacs config")
-      )
+      "f e r" '((lambda () (interactive) (concat user-emacs-directory "init.el")) :wk "Reload emacs config"))
 
     ;; dired related keybindings
     (ECFPAW/leader-keys
