@@ -253,7 +253,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
     (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
      ;; use dired-find-file instead if not using dired-open package
     (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) 
-    (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file
+    (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
     (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
 #+end_src
 * FONTS
