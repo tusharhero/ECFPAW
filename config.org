@@ -140,7 +140,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "b" '(:ignore t :wk "buffer")
       "b b" '(switch-to-buffer :wk "Switch buffer")
       "b i" '(ibuffer :wk "Ibuffer")
-      "b x" '(kill-this-buffer :wk "Kill this buffer")
+      "b d" '(kill-this-buffer :wk "Kill this buffer")
       "b n" '(next-buffer :wk "Next buffer")
       "b p" '(previous-buffer :wk "Previous buffer")
       "b r" '(revert-buffer :wk "Revert buffer")
@@ -183,7 +183,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
     (ECFPAW/leader-keys
       "w" '(:ignore t :wk "Windows")
       ;; Window splits
-      "w x" '(evil-window-delete :wk "Close window")
+      "w d" '(evil-window-delete :wk "Close window")
       "w n" '(evil-window-new :wk "New window")
       "w s" '(evil-window-split :wk "Horizontal split window")
       "w v" '(evil-window-vsplit :wk "Vertical split window") ;; both of 
@@ -361,6 +361,18 @@ system is “fish”.
   :config
   (projectile-mode 1))
 #+end_src
+* LANGUAGE SUPPORT
+** tree-sit
+*** install language grammar
+use this SRC block to install support for more languages (You can also
+just call it using M-x)
+#+begin_src elisp
+  ;; (treesit-install-language-grammar "python")
+#+end_src
+** eglot
+LSP!!!!
+#+begin_src elisp
+#+end_src
 * TRANSPARENCY
 With Emacs version 29, true transparency has been added.  
 #+begin_src elisp
@@ -435,18 +447,18 @@ With Emacs version 29, true transparency has been added.
 * THEME
 I will just use one of the doom themes for now.
 #+begin_src elisp
-(use-package doom-themes
-  :ensure t
-  :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-outrun-electric t)
+  (use-package doom-themes
+    :ensure t
+    :config
+    ;; Global settings (defaults)
+    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+          doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    (load-theme 'doom-outrun-electric t)
 
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
+    ;; Enable flashing mode-line on errors
+    (doom-themes-visual-bell-config)
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config))
 #+end_src
 
 * CUSTOM
