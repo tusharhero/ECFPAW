@@ -251,8 +251,9 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
     :hook (evil-normalize-keymaps . peep-dired-hook)
     :config
     (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
-    (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
-    (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
+     ;; use dired-find-file instead if not using dired-open package
+    (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) 
+    (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file
     (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
 #+end_src
 * FONTS
@@ -347,7 +348,6 @@ I like relative line numbers
 #+end_src
 ** Making the *scratch* buffer start in Org-mode
 #+begin_src elisp
-  (setq 
   (setq initial-major-mode 'org-mode)
 #+end_src
 ** Enabling Org Bullets
