@@ -4,6 +4,10 @@
 #+DESCRIPTION: It actually does more than just programming and writing.
 #+STARTUP: content
 
+* Things I want to add
+** TODO language support for python using eglot
+** TODO Use helm for spelling corrections.
+
 * LICENSE NOTICE
   :PROPERTIES:
   :VISIBILITY: folded
@@ -120,7 +124,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
     ;; file related keybindings
     (ECFPAW/leader-keys
       "f" '(:ignore t :wk "files")
-      "f f" '(helm-locate :wk "Find file")
+      "f f" '(helm-find-files :wk "Find file")
       "f c" '((lambda () (interactive) (find-file (get-user-config-file-path "config.org"))) :wk "Edit emacs config")
       "f r" '(recentf :wk "Find recent files")
       "f e r" '((lambda () (interactive) (get-user-config-file-path "init.el")) :wk "Reload emacs config"))
@@ -195,7 +199,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "w w" '(evil-window-next :wk "Goto next window"))
     )
 
-#+end_src
+      #+end_src
 
 * ALL THE ICONS 
 This is an icon set that can be used with dashboard, dired, ibuffer and other Emacs programs.
@@ -245,7 +249,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
                             (bookmarks . 3)))
     :config
     (dashboard-setup-startup-hook))
-  #+end_src
+#+end_src
 * DIRED
 #+begin_src emacs-lisp
   ;; disable overloading with info by default, shift+( to show details
@@ -255,7 +259,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
     :hook (evil-normalize-keymaps . peep-dired-hook)
     :config
     (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
-     ;; use dired-find-file instead if not using dired-open package
+    ;; use dired-find-file instead if not using dired-open package
     (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) 
     (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
     (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
@@ -432,15 +436,10 @@ I will just use one of the doom themes for now.
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-city-lights t)
+  (load-theme 'doom-outrun-electric t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  (doom-themes-neotree-config)
-  ;; or for treemacs users
-  (setq doom-themes-treemacs-theme "doom-city-lights") ; use "doom-colors" for less minimal icon theme
-  (doom-themes-treemacs-config)
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 #+end_src
