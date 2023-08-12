@@ -111,7 +111,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
 
     ;; direct convinient keybindings
     (ECFPAW/leader-keys
-      "SPC" '(execute-extended-command :wk "Execute command")
+      "SPC" '(helm-M-x :wk "Execute command")
       "TAB" '(mode-line-other-buffer :wk "Last buffer")
       "c" '(comment-line :wk "Comment lines")
       "'" '(vterm-toggle :wk "Toggle vterm")
