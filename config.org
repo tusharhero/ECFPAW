@@ -169,7 +169,8 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "t" '(:ignore t :wk "Toggle")
       "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
       "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
-      "t t" '(visual-line-mode :wk "Toggle truncated lines"))
+      "t t" '(visual-line-mode :wk "Toggle truncated lines")
+      "t p" '(peep-dired :wk "Peep-dired"))
 
     (ECFPAW/leader-keys
       "S" '(:ignore t :wk "Spell")
