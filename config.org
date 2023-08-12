@@ -4,9 +4,6 @@
 #+DESCRIPTION: It actually does more than just programming and writing.
 #+STARTUP: content
 
-* Things I want to add
-** TODO language support for python using eglot
-
 * LICENSE NOTICE
   :PROPERTIES:
   :VISIBILITY: folded
@@ -29,6 +26,9 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+end_src
+* Things I want to add
+** TODO language support for python using eglot
+
 * IMPORTANT PROGRAMS TO LOAD FIRST
 ** Package Manager
 I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manager.
@@ -242,9 +242,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
     (setq dashboard-banner-logo-title "ECFPAW")
     (setq dashboard-center-content t)
     (setq dashboard-items '((recents . 5)
-                            (projects . 5)
-                            (agenda . 5 )
-                            (bookmarks . 3)))
+                            (projects . 5)))
     :config
     (dashboard-setup-startup-hook))
 #+end_src
@@ -313,8 +311,6 @@ I like relative line numbers
 
   (use-package helm-flyspell)
 #+end_src
-
-#+RESULTS:
 
 * ORG-MODE
 ** Enable spell checking by default
@@ -400,7 +396,9 @@ With Emacs version 29, true transparency has been added.
     )
 #+end_src
 * SUDO EDIT
-[[https://github.com/nflath/sudo-edit][sudo-edit]] gives us the ability to open files with sudo privileges or switch over to editing with sudo privileges if we initially opened the file without such privileges.
+[[https://github.com/nflath/sudo-edit][sudo-edit]] gives us the ability to open files with sudo privileges or
+switch over to editing with sudo privileges if we initially opened the
+file without such privileges.
 
 #+begin_src emacs-lisp
   (use-package sudo-edit
