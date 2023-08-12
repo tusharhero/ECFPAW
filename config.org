@@ -6,7 +6,6 @@
 
 * Things I want to add
 ** TODO language support for python using eglot
-** TODO Use helm for spelling corrections.
 
 * LICENSE NOTICE
   :PROPERTIES:
@@ -146,8 +145,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "b p" '(previous-buffer :wk "Previous buffer")
       "b r" '(revert-buffer :wk "Revert buffer")
       "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
-      "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer")
-      )
+      "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer"))
 
     ;; eval related keybindings
     (ECFPAW/leader-keys
@@ -156,8 +154,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "e d" '(eval-defun :wk "Evaluate defun containing or after point")
       "e e" '(eval-expression :wk "Evaluate and elisp expression")
       "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-      "e r" '(eval-region :wk "Evaluate elisp in region")
-      )
+      "e r" '(eval-region :wk "Evaluate elisp in region"))
 
     ;; help keybindings
     (ECFPAW/leader-keys
@@ -166,8 +163,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "h f" '(describe-function :wk "Describe function")
       "h v" '(describe-variable :wk "Describe variable")
       "h m" '(:ignore t :wk "Manuals")
-      "h m e" '(info-emacs-manual :wk "Emacs manual")
-      )
+      "h m e" '(info-emacs-manual :wk "Emacs manual"))
 
     ;; toggle keybindings
     (ECFPAW/leader-keys
@@ -177,9 +173,10 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "t t" '(visual-line-mode :wk "Toggle truncated lines")
       "t p" '(peep-dired :wk "Peep-dired"))
 
+    ;; spelling keybindings
     (ECFPAW/leader-keys
       "S" '(:ignore t :wk "Spell")
-      "S s" '(ispell-word :wk "correct the word")
+      "S s" '(helm-flyspell-correct :wk "correct the word")
       "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
 
     ;; window management keybindings
@@ -303,13 +300,20 @@ I like relative line numbers
   (global-display-line-numbers-mode)
   (global-visual-line-mode t)
 #+end_src
-
+** Disable the scroll bar
+#+begin_src elisp
+  (scroll-bar-mode -1)
+#+end_src
 * HELM
 #+begin_src emacs-lisp
   (use-package helm
     :demand t
     :config (helm-mode 1))
+
+  (use-package helm-flyspell)
 #+end_src
+
+#+RESULTS:
 
 * ORG-MODE
 ** Enable spell checking by default
