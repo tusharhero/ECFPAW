@@ -158,6 +158,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
     ;; help keybindings
     (ECFPAW/leader-keys
       "h" '(:ignore t :wk "Help")
+      "h h" '(help :wk "Help Help!")
       "h f" '(describe-function :wk "Describe function")
       "h v" '(describe-variable :wk "Describe variable")
       "h m" '(:ignore t :wk "Manuals")
