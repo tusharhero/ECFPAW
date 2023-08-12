@@ -160,6 +160,8 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "h" '(:ignore t :wk "Help")
       "h f" '(describe-function :wk "Describe function")
       "h v" '(describe-variable :wk "Describe variable")
+      "h m" '(:ignore t :wk "Manuals")
+      "h m e" '(info-emacs-manual :wk "Emacs manual")
       )
 
     ;; toggle keybindings
