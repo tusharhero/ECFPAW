@@ -141,6 +141,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "b b" '(switch-to-buffer :wk "Switch buffer")
       "b i" '(ibuffer :wk "Ibuffer")
       "b d" '(kill-this-buffer :wk "Kill this buffer")
+      "b x" '(kill-this-buffer :wk "Kill this buffer")
       "b n" '(next-buffer :wk "Next buffer")
       "b p" '(previous-buffer :wk "Previous buffer")
       "b r" '(revert-buffer :wk "Revert buffer")
@@ -184,6 +185,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "w" '(:ignore t :wk "Windows")
       ;; Window splits
       "w d" '(evil-window-delete :wk "Close window")
+      "w x" '(evil-window-delete :wk "Close window")
       "w n" '(evil-window-new :wk "New window")
       "w s" '(evil-window-split :wk "Horizontal split window")
       "w v" '(evil-window-vsplit :wk "Vertical split window") ;; both of 
@@ -195,6 +197,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "w k" '(evil-window-up :wk "Window up")
       "w l" '(evil-window-right :wk "Window right")
       "w w" '(evil-window-next :wk "Goto next window"))
+
     )
 
       #+end_src
