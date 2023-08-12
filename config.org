@@ -186,7 +186,8 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
       "w x" '(evil-window-delete :wk "Close window")
       "w n" '(evil-window-new :wk "New window")
       "w s" '(evil-window-split :wk "Horizontal split window")
-      "w v" '(evil-window-vsplit :wk "Vertical split window")
+      "w v" '(evil-window-vsplit :wk "Vertical split window") ;; both of 
+      "w /" '(evil-window-vsplit :wk "Vertical split window") ;; these do the samething but I really like the second keybinding.
       "w m" '(maximize-window :wk "Maximize window")
       ;; Window motions
       "w h" '(evil-window-left :wk "Window left")
