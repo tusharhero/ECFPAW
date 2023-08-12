@@ -120,9 +120,9 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
     ;; file related keybindings
     (ECFPAW/leader-keys
       "f" '(:ignore t :wk "files")
-      "f f" '(find-file :wk "Find file")
+      "f f" '(helm-locate :wk "Find file")
       "f c" '((lambda () (interactive) (find-file (get-user-config-file-path "config.org"))) :wk "Edit emacs config")
-      "f r" '(counsel-recentf :wk "Find recent files")
+      "f r" '(recentf :wk "Find recent files")
       "f e r" '((lambda () (interactive) (get-user-config-file-path "init.el")) :wk "Reload emacs config"))
 
     ;; dired related keybindings
