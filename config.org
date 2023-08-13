@@ -324,7 +324,7 @@ modes, and other relevant information, all in a sleek and elegant
 format.
 #+begin_src elisp
   (use-package spaceline
-    :config (spaceline-emacs-theme))
+    :config (spaceline-spacemacs-theme))
 #+end_src
 * HELM
 #+begin_src emacs-lisp
