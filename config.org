@@ -72,6 +72,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
 (elpaca `(,@elpaca-order))
 #+END_SRC
 ***  use-package support.
+[[https://jwiegley.github.io/use-package/][use-package]] is useful for configuring and installing packages.
 #+begin_src elisp
   ;; Install use-package support
   (elpaca elpaca-use-package
@@ -83,6 +84,8 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
   (elpaca-wait)
 #+end_src
 ** Load Evil Mode
+Getting evil mode installed because, I was Vim user and I am most
+comfortable in those keybindings.
 #+begin_src elisp
   (setq evil-want-C-u-scroll t) ;; fix C-u scrolling
     (use-package evil
@@ -101,6 +104,9 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
 #+end_src
 
 * GENERAL KEYBINDINGS
+I will use general package to create all the keybindings for ECFPAW. I
+only make key binds for the stuff I really need(That goes for the
+configuration in general as well).
 #+begin_src elisp
   (use-package general
     :config
@@ -253,6 +259,8 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
 #+end_src
 
 * DASHBOARD
+[[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
+dashboard which comes up when you start Emacs.
 #+begin_src elisp
   (use-package dashboard
     :ensure t 
@@ -269,6 +277,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
     (dashboard-setup-startup-hook))
 #+end_src
 * DIRED
+Dired is a file manager within Emacs. It comes builtin.
 #+begin_src emacs-lisp
   ;; disable overloading with info by default, shift+( to show details
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
@@ -298,7 +307,7 @@ Defining the various fonts emacs will use.
   ;; (setq-default line-spacing 0.12)
 #+end_src
 ** Zooming In/Out
-For CTRL =/- zooming
+For =CTRL=/-= zooming shortcuts.
 #+begin_src elisp
   (global-set-key (kbd "C-=") 'text-scale-increase)
   (global-set-key (kbd "C--") 'text-scale-decrease)
@@ -308,34 +317,39 @@ For CTRL =/- zooming
 * GRAPHICAL USER INTERFACE TWEAKS
 Let's make GNU Emacs look a little better.
 
-** Disable Menubar and Toolbars 
+Mostly just disabling some Emacs features which are for beginners(mostly).
+** Disable Menu bar and Toolbars 
+Just too distracting.
 #+begin_src elisp
   (menu-bar-mode -1)
   (tool-bar-mode -1)
 #+end_src
 
-** Disply Line Numbers and Truncated Lines
-I like relative line numbers
+** Display Line Numbers and Truncated Lines
+I like relative line numbers(They help in Evil keybindings).
 #+begin_src elisp
   (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode)
   (global-visual-line-mode t)
 #+end_src
 ** Disable the scroll bar
+Because they are totally unnecessary and I don't use them. Even if I
+ever wanted to use my mouse, I would just use my mouse wheel instead
+of this.
 #+begin_src elisp
   (scroll-bar-mode -1)
 #+end_src
 * MODE LINE
-“Mood-line” is an Emacs package that enhances the mode line, providing
-a visually appealing and informative display. It enriches your editing
-experience by showing essential details about the buffer, active
-modes, and other relevant information, all in a sleek and elegant
-format.
+[[https://github.com/TheBB/spaceline/][spaceline]] is the mode-line package extracted from Emacs. Decided to
+use it because my mode-line was getting too long.
 #+begin_src elisp
   (use-package spaceline
     :config (spaceline-spacemacs-theme))
 #+end_src
 * HELM
+[[https://emacs-helm.github.io/helm][helm]] is a completion mechanism. And I am in love with it. I plan to
+use it everywhere its possible. Currently its not accepting =TAB=. I
+will figure that out eventually. Also I use it for flyspell as well.
 #+begin_src emacs-lisp
   (use-package helm
     :demand t
@@ -345,20 +359,28 @@ format.
 #+end_src
 
 * ORG-MODE
+#+begin_quote
+...
+What is like the org-mode? What can make war against it?
+...
+#+end_quote
 ** Enable spell checking by default
 #+begin_src elisp
   (add-hook 'org-mode-hook 'flyspell-mode)
 #+end_src
 ** Enable auto-fill mode by default 
+I love auto-fill mode it basically wraps the line at 80 characters for
+you. So that the line is not too big and readable.
 #+begin_src elisp
   (add-hook 'org-mode-hook 'auto-fill-mode)
 #+end_src
 ** Making the *scratch* buffer start in Org-mode
+Why not?
 #+begin_src elisp
   (setq initial-major-mode 'org-mode)
 #+end_src
 ** Enabling Org Bullets
-Org-bullets look nice
+Org-bullets look nice.
 #+begin_src elisp
   (add-hook 'org-mode-hook 'org-indent-mode)
   (use-package org-bullets)
@@ -370,6 +392,9 @@ This packages allows shortcuts for source blocks etc.
   (require 'org-tempo)
 #+end_src
 * FLYCHECK
+Flycheck can do a lot of stuff including,
+- Showing errors in programs,
+- Showing spelling errors.
 #+begin_src elisp
   (use-package flycheck
     :ensure t
@@ -390,6 +415,7 @@ system is “fish”.
     (projectile-mode 1))
 #+end_src
 * LANGUAGE SUPPORT
+This section is not *really* necessary for /now/.
 ** tree-sit
 *** install language grammar
 use this SRC block to install support for more languages (You can also
@@ -401,11 +427,13 @@ just call it using M-x)
 Not really much configuration was required here. I am keeping this
 heading here so that I know where to put stuff in the future.
 * TRANSPARENCY
-With Emacs version 29, true transparency has been added.  
+With Emacs version 29, true transparency has been added.
 #+begin_src elisp
 (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
 #+end_src
 * WHICH-KEY 
+=which-key= basically shows the shortcuts you have setup. Its very
+useful, because you may not which key you bonded to what.
 #+begin_src elisp
   (use-package which-key
     :init
@@ -440,6 +468,7 @@ file without such privileges.
 #+end_src
 
 * SHELLS AND TERMINALS
+You do need shell, in our editor sometimes...
 ** Vterm
  Vterm is a terminal emulator within Emacs.  The 'shell-file-name'
  setting sets the shell to be used in M-x shell, M-x term, M-x
@@ -474,7 +503,8 @@ file without such privileges.
  #+end_src
 
 * THEME
-I will just use one of the doom themes for now.
+I will just use one of the doom themes. And its called
+=doom-outrun-electric=. Looks dope! Not in the TTY tho :< .
 #+begin_src elisp
   (use-package doom-themes
     :ensure t
@@ -491,6 +521,7 @@ I will just use one of the doom themes for now.
 #+end_src
 
 * CUSTOM
+Just a place for some custom functions I define.
 #+begin_src elisp
   ;; Get the path of file from user-config directory
   (defsubst get-user-config-file-path(file) (concat user-emacs-directory file))
