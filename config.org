@@ -316,6 +316,16 @@ I like relative line numbers
 #+begin_src elisp
   (scroll-bar-mode -1)
 #+end_src
+* MODE LINE
+“Mood-line” is an Emacs package that enhances the mode line, providing
+a visually appealing and informative display. It enriches your editing
+experience by showing essential details about the buffer, active
+modes, and other relevant information, all in a sleek and elegant
+format.
+#+begin_src elisp
+  (use-package spaceline
+    :config (spaceline-emacs-theme))
+#+end_src
 * HELM
 #+begin_src emacs-lisp
   (use-package helm
@@ -353,9 +363,9 @@ This packages allows shortcuts for source blocks etc.
 * FLYCHECK
 #+begin_src elisp
   (use-package flycheck
-  :ensure t
-  :defer t
-  :init (global-flycheck-mode))
+    :ensure t
+    :defer t
+    :init (global-flycheck-mode))
 #+end_src
 * PROJECTILE 
 Projectile is a project interaction library for Emacs.  It should be
@@ -366,9 +376,9 @@ enough I changed it to “bin/sh” and projectile now works as expected,
 and Vterm still uses “fish” because my default user “sh” on my Linux
 system is “fish”.
 #+begin_src elisp
-(use-package projectile
-  :config
-  (projectile-mode 1))
+  (use-package projectile
+    :config
+    (projectile-mode 1))
 #+end_src
 * LANGUAGE SUPPORT
 ** tree-sit
