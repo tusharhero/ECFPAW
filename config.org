@@ -98,7 +98,6 @@ comfortable in those keybindings.
     (use-package evil-collection
       :after evil
       :config
-      (setq evil-collection-mode-list '(dashboard dired ibuffer))
       (evil-collection-init))
     (use-package evil-tutor)
 #+end_src
