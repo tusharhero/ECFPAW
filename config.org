@@ -346,7 +346,7 @@ of this.
   (scroll-bar-mode -1)
 #+end_src
 * MODE LINE
-[[https://github.com/TheBB/spaceline/][spaceline]] is the mode-line package extracted from Emacs. Decided to
+[[https://github.com/TheBB/spaceline/][spaceline]] is the mode-line package extracted from Spacemacs. Decided to
 use it because my mode-line was getting too long.
 #+begin_src elisp
   (use-package spaceline
