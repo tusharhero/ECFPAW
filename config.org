@@ -225,6 +225,12 @@ configuration in general as well).
       "w k" '(evil-window-up :wk "Window up")
       "w l" '(evil-window-right :wk "Window right")
       "w w" '(evil-window-next :wk "Goto next window")))
+  ;; different keybindgings to resize windows.
+  (global-set-key (kbd "<C-down>") 'shrink-window)  
+  (global-set-key (kbd "<C-up>") 'enlarge-window)  
+  (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
+  (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
+
       #+end_src
 
 * ALL THE ICONS 
