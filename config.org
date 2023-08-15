@@ -233,10 +233,6 @@ configuration in general as well).
   (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
 
       #+end_src
-
-      #+RESULTS:
-      : enlarge-window-horizontally
-
 * ALL THE ICONS 
 This is an icon set that can be used with dashboard, dired, ibuffer and other Emacs programs.
   
@@ -363,8 +359,10 @@ will figure that out eventually. Also I use it for flyspell as well.
 #+begin_src emacs-lisp
   (use-package helm
     :demand t
-    :config (helm-mode 1))
-
+    :config (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
+    (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+    )
   (use-package helm-flyspell)
 #+end_src
 
