@@ -29,7 +29,7 @@
 * Things I want to add
 ** TODO language support for python using eglot
 - [X] setup eglot
-- [X] make abstraction for running the code so that its language agnostic
+- [ ] make abstraction for running the code so that its language agnostic
 * IMPORTANT PROGRAMS TO LOAD FIRST
 ** Package Manager
 I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manager.
@@ -87,19 +87,20 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
 Getting evil mode installed because, I was Vim user and I am most
 comfortable in those keybindings.
 #+begin_src elisp
-  (setq evil-want-C-u-scroll t) ;; fix C-u scrolling
-  (use-package evil
-    :init ;; tweak evil's configuration before loading it.
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-vsplit-window-right t)
-    (setq evil-split-window-below t)
-    (evil-mode))
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
-  (use-package evil-tutor)
+    (setq evil-want-C-u-scroll t) ;; fix C-u scrolling
+    (use-package evil
+      :init ;; tweak evil's configuration before loading it.
+      (setq evil-want-integration t)
+      (setq evil-want-keybinding nil)
+      (setq evil-vsplit-window-right t)
+      (setq evil-split-window-below t)
+      (evil-mode))
+    (use-package evil-collection
+      :after evil
+      :config
+      (evil-collection-init))
+    (use-package evil-tutor)
+
 #+end_src
 
 * GENERAL KEYBINDINGS
@@ -110,6 +111,9 @@ configuration in general as well).
   (use-package general
     :config
     (general-evil-setup)
+
+    ;; set up ',' as major mode keybinds key
+    (evil-define-key 'normal global-map (kbd ",") 'ECFPAW/major-mode-keybinds)
 
     ;; set up 'SPC' as the global leader key
     (general-create-definer ECFPAW/leader-keys
@@ -196,6 +200,8 @@ configuration in general as well).
       "o j" '(org-ctrl-c-ctrl-c :wk "toggle item")
       "o i" '(:ignore :wk "insert")
       "o i t" '(org-time-stamp :wk "time stamp"))
+    (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
+    (which-key-add-key-based-replacements "SPC o b" "babel")
 
     ;; programming keybindings
     (ECFPAW/leader-keys
@@ -540,4 +546,8 @@ Just a place for some custom functions I define.
 #+begin_src elisp
   ;; Get the path of file from user-config directory
   (defsubst get-user-config-file-path(file) (concat user-emacs-directory file))
+
+  (defun ECFPAW/major-mode-keybinds ()
+    (interactive)
+    (setq unread-command-events (listify-key-sequence (kbd "C-c"))))
 #+end_src
