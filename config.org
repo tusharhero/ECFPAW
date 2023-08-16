@@ -199,7 +199,7 @@ configuration in general as well).
       "o o" '(org-mode :wk "toggle org-mode")
       "o j" '(org-ctrl-c-ctrl-c :wk "toggle item")
       "o i" '(:ignore :wk "insert")
-      "o i t" '(org-time-stamp :wk "time stamp"))
+      "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
     (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
     (which-key-add-key-based-replacements "SPC o b" "babel")
 
@@ -566,10 +566,16 @@ browser in a very integrated way. Here is a [[https://github.com/stsquad/emacs_c
 * CUSTOM
 Just a place for some custom functions I define.
 #+begin_src elisp
-  ;; Get the path of file from user-config directory
-  (defsubst get-user-config-file-path(file) (concat user-emacs-directory file))
+  (defsubst get-user-config-file-path(file)
+    ;; Get the path of file from user-config directory
+    (concat user-emacs-directory file))
 
   (defun ECFPAW/major-mode-keybinds ()
     (interactive)
     (setq unread-command-events (listify-key-sequence (kbd "C-c"))))
+
+  (defun ECFPAW/insert-now-timestamp()
+    "Insert org mode timestamp at point with current date and time."
+    (interactive)
+    (org-insert-time-stamp (current-time) t))
 #+end_src
