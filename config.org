@@ -134,9 +134,9 @@ configuration in general as well).
     (ECFPAW/leader-keys
       "f" '(:ignore t :wk "files")
       "f f" '(helm-find-files :wk "Find file")
-      "f c" '((lambda () (interactive) (find-file (get-user-config-file-path "config.org"))) :wk "Edit emacs config")
+      "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
       "f r" '(recentf :wk "Find recent files")
-      "f e r" '((lambda () (interactive) (get-user-config-file-path "init.el")) :wk "Reload emacs config"))
+      "f e r" '((lambda () (interactive) (locate-user-emacs-file "init.el")) :wk "Reload emacs config"))
 
     ;; dired related keybindings
     (ECFPAW/leader-keys
@@ -148,7 +148,7 @@ configuration in general as well).
     ;; buffer related keybindings
     (ECFPAW/leader-keys
       "b" '(:ignore t :wk "buffer")
-      "b b" '(switch-to-buffer :wk "Switch buffer")
+      "b b" '(helm-mini :wk "Switch buffer")
       "b i" '(ibuffer :wk "Ibuffer")
       "b d" '(kill-this-buffer :wk "Kill this buffer")
       "b x" '(kill-this-buffer :wk "Kill this buffer")
@@ -283,7 +283,7 @@ dashboard which comes up when you start Emacs.
     (setq initial-buffer-choice 'dashboard-open)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
-    (setq dashboard-startup-banner (get-user-config-file-path "images/trancendent-gnu.png"))
+    (setq dashboard-startup-banner (locate-user-emacs-file "images/trancendent-gnu.png"))
     (setq dashboard-banner-logo-title "ECFPAW")
     (setq dashboard-center-content t)
     (setq dashboard-items '((recents . 5)
@@ -371,7 +371,9 @@ will figure that out eventually. Also I use it for flyspell as well.
     :config (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
     (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
     (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+    (helm-mode +1)
     )
+
   (use-package helm-flyspell)
 #+end_src
 
@@ -566,11 +568,8 @@ browser in a very integrated way. Here is a [[https://github.com/stsquad/emacs_c
 * CUSTOM
 Just a place for some custom functions I define.
 #+begin_src elisp
-  (defsubst get-user-config-file-path(file)
-    ;; Get the path of file from user-config directory
-    (concat user-emacs-directory file))
-
   (defun ECFPAW/major-mode-keybinds ()
+    "Get the path of file from user-config directory"
     (interactive)
     (setq unread-command-events (listify-key-sequence (kbd "C-c"))))
 
