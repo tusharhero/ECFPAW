@@ -138,7 +138,8 @@ configuration in general as well).
       "f f" '(helm-find-files :wk "Find file")
       "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
       "f r" '(recentf :wk "Find recent files")
-      "f e r" '((lambda () (interactive) (locate-user-emacs-file "init.el")) :wk "Reload emacs config"))
+      "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
+                :wk "Reload emacs config"))
 
     ;; dired related keybindings
     (ECFPAW/leader-keys
