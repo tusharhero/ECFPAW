@@ -281,8 +281,6 @@ blindly copied from DistroTube worked. Lesson learned.
     company-box
     :after company
     :hook (company-mode . company-box-mode))
-
-
 #+end_src
 * DASHBOARD
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
@@ -358,8 +356,7 @@ of this.
 #+end_src
 * HELM
 [[https://emacs-helm.github.io/helm][helm]] is a completion mechanism. And I am in love with it. I plan to
-use it everywhere its possible. Currently its not accepting =TAB=. I
-will figure that out eventually. Also I use it for flyspell as well.
+use it everywhere its possible. I use it for flyspell as well.
 #+begin_src emacs-lisp
   (use-package helm
     :demand t
