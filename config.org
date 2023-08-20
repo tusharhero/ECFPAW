@@ -83,6 +83,15 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
   ;; Block until current queue processed.
   (elpaca-wait)
 #+end_src
+* SET LOCALE
+This is will fix text glitches in vterm(see [[*SHELLS AND TERMINALS]]).
+#+begin_src elisp
+  (setq locale-coding-system 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (set-keyboard-coding-system 'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+#+end_src
 * Load Evil Mode
 Getting evil mode installed because, I was Vim user and I am most
 comfortable in those keybindings.
