@@ -433,9 +433,12 @@ as the “shell-file-name” for Emacs.  I had initially set “fish” as the
 enough I changed it to “bin/sh” and projectile now works as expected,
 and Vterm still uses “fish” because my default user “sh” on my Linux
 system is “fish”.
+
+I make it use =dired= to open a project instead of just using =find-file=.
 #+begin_src elisp
   (use-package projectile
     :config
+    (setq projectile-switch-project-action #'projectile-dired)
     (projectile-mode 1))
 #+end_src
 * LANGUAGE SUPPORT
@@ -455,7 +458,8 @@ just call it using M-x)
 Not really much configuration was required here. I am keeping this
 heading here so that I know where to put stuff in the future.
 * TRANSPARENCY
-With Emacs version 29, true transparency has been added.
+With Emacs version 29, true transparency has been added. For now I
+have disabled transparency.
 #+begin_src elisp
   (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
 #+end_src
