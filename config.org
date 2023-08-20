@@ -154,8 +154,7 @@ configuration in general as well).
     (ECFPAW/leader-keys
       "d" '(:ignore t :wk "Dired")
       "d d" '(dired :wk "Open dired")
-      "d j" '(dired-jump :wk "Dired jump to current")
-      "d p" '(peep-dired :wk "Peep-dired"))
+      "d j" '(dired-jump :wk "Dired jump to current"))
 
     ;; buffer related keybindings
     (ECFPAW/leader-keys
@@ -308,15 +307,6 @@ Dired is a file manager within Emacs. It comes builtin.
 #+begin_src emacs-lisp
   ;; disable overloading with info by default, shift+( to show details
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
-  (use-package peep-dired
-    :after dired
-    :hook (evil-normalize-keymaps . peep-dired-hook)
-    :config
-    (evil-define-key 'normal dired-mode-map (kbd "h") 'dired-up-directory)
-    ;; use dired-find-file instead if not using dired-open package
-    (evil-define-key 'normal dired-mode-map (kbd "l") 'dired-open-file) 
-    (evil-define-key 'normal peep-dired-mode-map (kbd "j") 'peep-dired-next-file)
-    (evil-define-key 'normal peep-dired-mode-map (kbd "k") 'peep-dired-prev-file))
 #+end_src
 * FONTS
 ** setting the fonts face
