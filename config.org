@@ -2,7 +2,7 @@
 #+AUTHOR: tusharhero
 #+EMAIL: tusharhero@sdf.org
 #+DESCRIPTION: It actually does more than just programming and writing.
-#+STARTUP: content
+#+STARTUP: overview
 
 * LICENSE NOTICE
   :PROPERTIES:
@@ -83,7 +83,7 @@ I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manag
   ;; Block until current queue processed.
   (elpaca-wait)
 #+end_src
-** Load Evil Mode
+* Load Evil Mode
 Getting evil mode installed because, I was Vim user and I am most
 comfortable in those keybindings.
 #+begin_src elisp
@@ -314,7 +314,7 @@ Dired is a file manager within Emacs. It comes builtin.
 Defining the various fonts emacs will use.
 #+begin_src elisp
   (set-face-attribute 'default nil
-                      :font "FiraCode Nerd Font"
+                      :font "JetBrainsMono Nerd Font"
                       :height 130
                       :weight 'medium)
   (set-face-attribute 'font-lock-comment-face nil
