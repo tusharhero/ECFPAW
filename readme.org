@@ -14,6 +14,10 @@ Before writing this, I used to use Spacemacs, and I think spacemacs is
 great too, I am going to get configure some features from spacemacs
 here as well (The ones I liked obviously).
 
+* Screenshot
+#+CAPTION: This was taken in late August 2023
+#+NAME:   ECFPAW dashboard
+[[./images/ECFPAW_screenshot.png]]
 * Setup
 
 I am going to use it in GNU Linux only (I hope), and here the setup is
