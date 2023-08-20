@@ -361,7 +361,10 @@ of this.
 use it because my mode-line was getting too long.
 #+begin_src elisp
   (use-package spaceline
-    :config (spaceline-emacs-theme))
+    :config (spaceline-emacs-theme)
+    (spaceline-helm-mode)
+    (spaceline-info-mode)
+    )
 #+end_src
 * HELM
 [[https://emacs-helm.github.io/helm][helm]] is a completion mechanism. And I am in love with it. I plan to
@@ -454,7 +457,7 @@ heading here so that I know where to put stuff in the future.
 * TRANSPARENCY
 With Emacs version 29, true transparency has been added.
 #+begin_src elisp
-(add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
+  (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
 #+end_src
 * WHICH-KEY 
 =which-key= basically shows the shortcuts you have setup. Its very
@@ -538,7 +541,6 @@ I will just use one of the doom themes. And its called
     (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
           doom-themes-enable-italic t) ; if nil, italics is universally disabled
     (load-theme 'doom-outrun-electric t)
-
     ;; Enable flashing mode-line on errors
     (doom-themes-visual-bell-config)
     ;; Corrects (and improves) org-mode's native fontification.
