@@ -357,14 +357,17 @@ of this.
   (scroll-bar-mode -1)
 #+end_src
 * MODE LINE
-[[https://github.com/TheBB/spaceline/][spaceline]] is the mode-line package extracted from Spacemacs. Decided to
-use it because my mode-line was getting too long.
+Telephone-line looks good. :)
 #+begin_src elisp
-  (use-package spaceline
-    :config (spaceline-emacs-theme)
-    (spaceline-helm-mode)
-    (spaceline-info-mode)
-    )
+  (use-package telephone-line
+    :config
+    (setq telephone-line-primary-left-separator 'telephone-line-gradient
+          telephone-line-secondary-left-separator 'telephone-line-nil
+          telephone-line-primary-right-separator 'telephone-line-gradient
+          telephone-line-secondary-right-separator 'telephone-line-nil)
+    (setq telephone-line-height 40
+          telephone-line-evil-use-short-tag t)
+    (telephone-line-mode 1))
 #+end_src
 * HELM
 [[https://emacs-helm.github.io/helm][helm]] is a completion mechanism. And I am in love with it. I plan to
