@@ -284,7 +284,8 @@ blindly copied from DistroTube worked. Lesson learned.
 #+end_src
 * DASHBOARD
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
-dashboard which comes up when you start Emacs.
+dashboard which comes up when you start Emacs. I also disable the
+number lines for this one because it looked ugly.
 #+begin_src elisp
   (use-package dashboard
     :ensure t 
@@ -298,7 +299,8 @@ dashboard which comes up when you start Emacs.
     (setq dashboard-items '((recents . 5)
                             (projects . 5)))
     :config
-    (dashboard-setup-startup-hook))
+    (dashboard-setup-startup-hook)
+    (add-hook 'dashboard-mode 'display-line-numbers-mode))
 #+end_src
 * DIRED
 Dired is a file manager within Emacs. It comes builtin.
