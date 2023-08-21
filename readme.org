@@ -6,7 +6,7 @@ Welcome to my GNU Emacs configuration repository. You can find the
 configuration [[file:config.org][here]].
 
 I will use this configuration primarily for programming and writing
-articles and stories. And it is for me, I would discourage you to use
+articles and stories. And it is for me, I would *discourage* you to use
 my configuration. I have put it here publicly for easy access. You
 might learn something if you are /completely/ new though.
 
