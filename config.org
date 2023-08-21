@@ -429,7 +429,14 @@ I make it use =dired= to open a project instead of just using =find-file=.
     (projectile-mode 1))
 #+end_src
 * LANGUAGE SUPPORT
-This section is not *really* necessary for /now/.
+** LANGUAGE MODES
+**** Markdown mode
+I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
+#+begin_src elisp
+  (use-package markdown-mode
+    :config
+    (markdown-mode))
+#+end_src
 ** code folding
 #+begin_src elisp
   (add-hook 'python-mode-hook 'outline-minor-mode)
