@@ -235,7 +235,7 @@ configuration in general as well).
       "w s" '(evil-window-split :wk "Horizontal split window")
       "w v" '(evil-window-vsplit :wk "Vertical split window") 
       "w /" '(evil-window-vsplit :wk "Vertical split window")
-      "w m" '(maximize-window :wk "Maximize window")
+      "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
       ;; Window motions
       "w h" '(evil-window-left :wk "Window left")
       "w j" '(evil-window-down :wk "Window down")
@@ -574,4 +574,19 @@ Just a place for some custom functions I define.
     "Insert org mode timestamp at point with current date and time."
     (interactive)
     (org-insert-time-stamp (current-time) t))
+
+  ;; Toggle between split windows and a single window
+  (defun ECFPAW/toggle-windows-split()
+    "Switch back and forth between one window and whatever split of
+    windows we might have in the frame. The idea is to maximize the
+    current buffer, while being able to go back to the previous split
+    of windows in the frame simply by calling this command again."
+    (interactive)
+    (if (not(window-minibuffer-p (selected-window)))
+        (progn
+          (if (< 1 (count-windows))
+              (progn
+                (window-configuration-to-register ?u)
+                (delete-other-windows))
+            (jump-to-register ?u)))))
 #+end_src
