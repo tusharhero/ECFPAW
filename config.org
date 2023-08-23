@@ -460,10 +460,9 @@ just call it using M-x)
 Not really much configuration was required here. I am keeping this
 heading here so that I know where to put stuff in the future.
 * TRANSPARENCY
-With Emacs version 29, true transparency has been added. For now I
-have disabled transparency.
+With Emacs version 29, true transparency has been added.
 #+begin_src elisp
-  (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
+  (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
 #+end_src
 * WHICH-KEY 
 =which-key= basically shows the shortcuts you have setup. Its very
