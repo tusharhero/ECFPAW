@@ -117,145 +117,147 @@ I will use general package to create all the keybindings for ECFPAW. I
 only make key binds for the stuff I really need(That goes for the
 configuration in general as well).
 #+begin_src elisp
-    (use-package general
-      :config
-      (general-evil-setup)
+  (use-package general
+    :config
+    (general-evil-setup)
 
-      ;; set up ',' as major mode keybinds key
-      (evil-define-key 'normal global-map (kbd ",") 'ECFPAW/major-mode-keybinds)
+    ;; set up ',' as major mode keybinds key
+    (evil-define-key 'normal global-map (kbd ",") 'ECFPAW/major-mode-keybinds)
 
-      ;; set up 'SPC' as the global leader key
-      (general-create-definer ECFPAW/leader-keys
-        :states '(normal insert visual emacs)
-        :keymaps 'override
-        :prefix "SPC" ;; set leader
-        :global-prefix "M-SPC") ;; access leader in insert mode
+    ;; set up 'SPC' as the global leader key
+    (general-create-definer ECFPAW/leader-keys
+                            :states '(normal insert visual emacs)
+                            :keymaps 'override
+                            :prefix "SPC" ;; set leader
+                            :global-prefix "M-SPC") ;; access leader in insert mode
 
-      ;; direct convinient keybindings
-      (ECFPAW/leader-keys
-        "SPC" '(helm-M-x :wk "Execute command")
-        "TAB" '(mode-line-other-buffer :wk "Last buffer")
-        "c" '(comment-line :wk "Comment lines")
-        "'" '(vterm-toggle :wk "Toggle vterm")
-        "a" '(evil-numbers/inc-at-pt :wk "Increment number")
-        "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
-        )
+    ;; direct convinient keybindings
+    (ECFPAW/leader-keys
+     "SPC" '(helm-M-x :wk "Execute command")
+     "TAB" '(mode-line-other-buffer :wk "Last buffer")
+     "c" '(comment-line :wk "Comment lines")
+     "'" '(vterm-toggle :wk "Toggle vterm")
+     "a" '(evil-numbers/inc-at-pt :wk "Increment number")
+     "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
+     )
 
-      ;; file related keybindings
-      (ECFPAW/leader-keys
-        "f" '(:ignore t :wk "files")
-        "f f" '(helm-find-files :wk "Find file")
-        "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
-        "f r" '(recentf :wk "Find recent files")
-        "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
-                  :wk "Reload emacs config"))
+    ;; file related keybindings
+    (ECFPAW/leader-keys
+     "f" '(:ignore t :wk "files")
+     "f f" '(helm-find-files :wk "Find file")
+     "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
+     "f r" '(recentf :wk "Find recent files")
+     "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
+               :wk "Reload emacs config"))
 
-      ;; dired related keybindings
-      (ECFPAW/leader-keys
-        "d" '(:ignore t :wk "Dired")
-        "d d" '(dired :wk "Open dired")
-        "d j" '(dired-jump :wk "Dired jump to current"))
+    ;; dired related keybindings
+    (ECFPAW/leader-keys
+     "d" '(:ignore t :wk "Dired")
+     "d d" '(dired :wk "Open dired")
+     "d j" '(dired-jump :wk "Dired jump to current"))
 
-      ;; buffer related keybindings
-      (ECFPAW/leader-keys
-        "b" '(:ignore t :wk "buffer")
-        "b b" '(helm-mini :wk "Switch buffer")
-        "b i" '(ibuffer :wk "Ibuffer")
-        "b d" '(kill-this-buffer :wk "Kill this buffer")
-        "b x" '(kill-this-buffer :wk "Kill this buffer")
-        "b n" '(next-buffer :wk "Next buffer")
-        "b p" '(previous-buffer :wk "Previous buffer")
-        "b r" '(revert-buffer :wk "Revert buffer")
-        "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
-        "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer"))
+    ;; buffer related keybindings
+    (ECFPAW/leader-keys
+     "b" '(:ignore t :wk "buffer")
+     "b b" '(helm-mini :wk "Switch buffer")
+     "b i" '(ibuffer :wk "Ibuffer")
+     "b d" '(kill-this-buffer :wk "Kill this buffer")
+     "b x" '(kill-this-buffer :wk "Kill this buffer")
+     "b n" '(next-buffer :wk "Next buffer")
+     "b p" '(previous-buffer :wk "Previous buffer")
+     "b r" '(revert-buffer :wk "Revert buffer")
+     "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
+     "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer"))
 
-      ;; bookmark related keybindings
-      (ECFPAW/leader-keys
-        "B" '(:ignore t :wk "bookmark")
-        "B s" '(bookmark-set :wk "bookmark set")
-        "B l" '(bookmark-bmenu-list :wk "bookmark list"))
+    ;; bookmark related keybindings
+    (ECFPAW/leader-keys
+     "B" '(:ignore t :wk "bookmark")
+     "B s" '(bookmark-set :wk "bookmark set")
+     "B l" '(bookmark-bmenu-list :wk "bookmark list"))
 
-      ;; eval related keybindings
-      (ECFPAW/leader-keys
-        "e" '(:ignore t :wk "Evaluate")    
-        "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-        "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-        "e e" '(eval-expression :wk "Evaluate and elisp expression")
-        "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-        "e r" '(eval-region :wk "Evaluate elisp in region"))
+    ;; eval related keybindings
+    (ECFPAW/leader-keys
+     "e" '(:ignore t :wk "Evaluate")    
+     "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+     "e d" '(eval-defun :wk "Evaluate defun containing or after point")
+     "e e" '(eval-expression :wk "Evaluate and elisp expression")
+     "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
+     "e r" '(eval-region :wk "Evaluate elisp in region"))
 
-      ;; help keybindings
-      (ECFPAW/leader-keys
-        "h" '(:ignore t :wk "Help")
-        "h h" '(help :wk "Help Help!")
-        "h f" '(describe-function :wk "Describe function")
-        "h v" '(describe-variable :wk "Describe variable")
-        "h m" '(:ignore t :wk "Manuals")
-        "h m E" '(info-emacs-manual :wk "Emacs manual")
-        "h m e" '(helm-info-eglot :wk "Eglot manual"))
+    ;; help keybindings
+    (ECFPAW/leader-keys
+     "h" '(:ignore t :wk "Help")
+     "h h" '(help :wk "Help Help!")
+     "h f" '(describe-function :wk "Describe function")
+     "h v" '(describe-variable :wk "Describe variable")
+     "h m" '(:ignore t :wk "Manuals")
+     "h m E" '(info-emacs-manual :wk "Emacs manual")
+     "h m e" '(helm-info-eglot :wk "Eglot manual"))
 
-      ;; toggle keybindings
-      (ECFPAW/leader-keys
-        "t" '(:ignore t :wk "Toggle")
-        "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-        "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
-        "t t" '(visual-line-mode :wk "Toggle truncated lines")
-        "t c" '(outline-minor-mode :wk "enable code-folding")
-        "t o" '(org-mode :wk "toggle org-mode")
-        "t p" '(peep-dired :wk "Peep-dired"))
+    ;; toggle keybindings
+    (ECFPAW/leader-keys
+     "t" '(:ignore t :wk "Toggle")
+     "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+     "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
+     "t t" '(visual-line-mode :wk "Toggle truncated lines")
+     "t c" '(outline-minor-mode :wk "enable code-folding")
+     "t o" '(org-mode :wk "toggle org-mode")
+     "t p" '(peep-dired :wk "Peep-dired"))
 
-      ;; spelling keybindings
-      (ECFPAW/leader-keys
-        "S" '(:ignore t :wk "Spelling")
-        "S s" '(helm-flyspell-correct :wk "correct the word")
-        "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
+    ;; spelling keybindings
+    (ECFPAW/leader-keys
+     "S" '(:ignore t :wk "Spelling")
+     "S s" '(helm-flyspell-correct :wk "correct the word")
+     "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
 
-      ;; org-mode keybindings
-      (ECFPAW/leader-keys
-        "o" '(:ignore t :wk "org-mode")
-        "o o" '(org-mode :wk "toggle org-mode")
-        "o j" '(org-ctrl-c-ctrl-c :wk "toggle item")
-        "o i" '(:ignore :wk "insert")
-        "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
-      (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
-      (which-key-add-key-based-replacements "SPC o b" "babel")
+    ;; org-mode keybindings
+    (ECFPAW/leader-keys
+     "o" '(:ignore t :wk "org-mode")
+     "o o" '(org-mode :wk "toggle org-mode")
+     "o j" '(org-ctrl-c-ctrl-c :wk "toggle item")
+     "o i" '(:ignore :wk "insert")
+     "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
+    (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
+    (which-key-add-key-based-replacements "SPC o b" "babel")
 
-      ;; programming keybindings
-      (ECFPAW/leader-keys
-        "p" '(:ignore t :wk "Programming")
-        "p e" '(eglot :wk "Turn on eglot")
-        "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
-        "p r" '(eglot-rename :wk "eglot-rename")
-        "p g" '(xref-find-definition :wk "go to definition")
-        "p d" '(eldoc :wk "get docs")
-        "p a" '(eldoc :wk "eglot code actions")
-        "p c" '(outline-minor-mode :wk "enable code-folding"))
+    ;; programming keybindings
+    (ECFPAW/leader-keys
+     "p" '(:ignore t :wk "Programming")
+     "p e" '(eglot :wk "Turn on eglot")
+     "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
+     "p r" '(eglot-rename :wk "eglot-rename")
+     "p g" '(xref-find-definitions :wk "go to definition")
+     "p d" '(eldoc :wk "get docs")
+     "p i" '(helm-imenu :wk "imenu")
+     "p a" '(eldoc :wk "eglot code actions")
+     "p c" '(outline-minor-mode :wk "enable code-folding"))
 
-      ;; window management keybindings
-      (ECFPAW/leader-keys
-        "w" '(:ignore t :wk "Windows")
-        ;; Window splits
-        "w d" '(evil-window-delete :wk "Close window")
-        "w x" '(evil-window-delete :wk "Close window")
-        "w n" '(evil-window-new :wk "New window")
-        "w s" '(evil-window-split :wk "Horizontal split window")
-        "w v" '(evil-window-vsplit :wk "Vertical split window") 
-        "w /" '(evil-window-vsplit :wk "Vertical split window")
-        "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
-        ;; Window motions
-        "w h" '(evil-window-left :wk "Window left")
-        "w j" '(evil-window-down :wk "Window down")
-        "w k" '(evil-window-up :wk "Window up")
-        "w l" '(evil-window-right :wk "Window right")
-        "w w" '(evil-window-next :wk "Goto next window")))
-    ;; different keybindgings to resize windows.
-    (global-set-key (kbd "<C-down>") 'shrink-window)  
-    (global-set-key (kbd "<C-up>") 'enlarge-window)  
-    (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
-    (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
+    ;; window management keybindings
+    (ECFPAW/leader-keys
+     "w" '(:ignore t :wk "Windows")
+     ;; Window splits
+     "w d" '(evil-window-delete :wk "Close window")
+     "w x" '(evil-window-delete :wk "Close window")
+     "w n" '(evil-window-new :wk "New window")
+     "w s" '(evil-window-split :wk "Horizontal split window")
+     "w v" '(evil-window-vsplit :wk "Vertical split window") 
+     "w /" '(evil-window-vsplit :wk "Vertical split window")
+     "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
+     ;; Window motions
+     "w h" '(evil-window-left :wk "Window left")
+     "w j" '(evil-window-down :wk "Window down")
+     "w k" '(evil-window-up :wk "Window up")
+     "w l" '(evil-window-right :wk "Window right")
+     "w w" '(evil-window-next :wk "Goto next window")))
+  ;; different keybindgings to resize windows.
+  (global-set-key (kbd "<C-down>") 'shrink-window)  
+  (global-set-key (kbd "<C-up>") 'enlarge-window)  
+  (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
+  (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
 
       #+end_src
-* ALL THE ICONS 
+* GRAPHICS
+** ALL THE ICONS 
 This is an icon set that can be used with dashboard, dired, ibuffer and other Emacs programs.
   
 #+begin_src emacs-lisp
@@ -267,6 +269,78 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
     :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
 #+end_src
 
+** FONTS
+*** setting the fonts face
+Defining the various fonts emacs will use.
+#+begin_src elisp
+  (set-face-attribute 'default nil
+                      :font "JetBrainsMono Nerd Font"
+                      :height 130
+                      :weight 'medium)
+  (set-face-attribute 'font-lock-comment-face nil
+                      :slant 'italic)
+  (set-face-attribute 'font-lock-keyword-face nil
+                      :slant 'italic)
+  ;; Uncomment theh following line if line spacing needs adjusting.
+  ;; (setq-default line-spacing 0.12)
+#+end_src
+*** Zooming In/Out
+For =CTRL=/-= zooming shortcuts.
+#+begin_src elisp
+  (global-set-key (kbd "C-=") 'text-scale-increase)
+  (global-set-key (kbd "C--") 'text-scale-decrease)
+  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+#+end_src
+** GRAPHICAL USER INTERFACE TWEAKS
+Let's make GNU Emacs look a little better.
+
+Mostly just disabling some Emacs features which are for beginners(mostly).
+*** Disable Menu bar and Toolbars 
+Just too distracting.
+#+begin_src elisp
+  (menu-bar-mode -1)
+  (tool-bar-mode -1)
+#+end_src
+
+*** Display Line Numbers and Truncated Lines
+I like relative line numbers(They help in Evil keybindings).
+#+begin_src elisp
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode)
+  (global-visual-line-mode t)
+#+end_src
+*** Disable the scroll bar
+Because they are totally unnecessary and I don't use them. Even if I
+ever wanted to use my mouse, I would just use my mouse wheel instead
+of this.
+#+begin_src elisp
+  (scroll-bar-mode -1)
+#+end_src
+** THEME
+I will just use one of the doom themes. And its called
+=doom-outrun-electric=. Looks dope! Not in the TTY tho :< .
+#+begin_src elisp
+  (use-package doom-themes
+    :ensure t
+    :config
+    ;; Global settings (defaults)
+    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+          doom-themes-enable-italic t) ; if nil, italics is universally disabled
+    (load-theme 'doom-outrun-electric t)
+
+    ;; Enable flashing mode-line on errors
+    ;; (doom-themes-visual-bell-config)
+
+    ;; Corrects (and improves) org-mode's native fontification.
+    (doom-themes-org-config))
+#+end_src
+
+** TRANSPARENCY
+With Emacs version 29, true transparency has been added.
+#+begin_src elisp
+  (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
+#+end_src
 * COMPANY
 [[https://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for
 "complete anything".  Completion will start automatically after you
@@ -313,54 +387,6 @@ Dired is a file manager within Emacs. It comes builtin.
 #+begin_src emacs-lisp
   ;; disable overloading with info by default, shift+( to show details
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
-#+end_src
-* FONTS
-** setting the fonts face
-Defining the various fonts emacs will use.
-#+begin_src elisp
-  (set-face-attribute 'default nil
-                      :font "JetBrainsMono Nerd Font"
-                      :height 130
-                      :weight 'medium)
-  (set-face-attribute 'font-lock-comment-face nil
-                      :slant 'italic)
-  (set-face-attribute 'font-lock-keyword-face nil
-                      :slant 'italic)
-  ;; Uncomment theh following line if line spacing needs adjusting.
-  ;; (setq-default line-spacing 0.12)
-#+end_src
-** Zooming In/Out
-For =CTRL=/-= zooming shortcuts.
-#+begin_src elisp
-  (global-set-key (kbd "C-=") 'text-scale-increase)
-  (global-set-key (kbd "C--") 'text-scale-decrease)
-  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
-#+end_src
-* GRAPHICAL USER INTERFACE TWEAKS
-Let's make GNU Emacs look a little better.
-
-Mostly just disabling some Emacs features which are for beginners(mostly).
-** Disable Menu bar and Toolbars 
-Just too distracting.
-#+begin_src elisp
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-#+end_src
-
-** Display Line Numbers and Truncated Lines
-I like relative line numbers(They help in Evil keybindings).
-#+begin_src elisp
-  (setq display-line-numbers-type 'relative)
-  (global-display-line-numbers-mode)
-  (global-visual-line-mode t)
-#+end_src
-** Disable the scroll bar
-Because they are totally unnecessary and I don't use them. Even if I
-ever wanted to use my mouse, I would just use my mouse wheel instead
-of this.
-#+begin_src elisp
-  (scroll-bar-mode -1)
 #+end_src
 * HELM
 [[https://emacs-helm.github.io/helm][helm]] is a completion mechanism. And I am in love with it. I plan to
@@ -459,11 +485,6 @@ just call it using M-x)
 ** eglot
 Not really much configuration was required here. I am keeping this
 heading here so that I know where to put stuff in the future.
-* TRANSPARENCY
-With Emacs version 29, true transparency has been added.
-#+begin_src elisp
-  (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
-#+end_src
 * WHICH-KEY 
 =which-key= basically shows the shortcuts you have setup. Its very
 useful, because you may not which key you bonded to what.
@@ -535,25 +556,12 @@ You do need shell, in our editor sometimes...
                     (window-height . 0.3))))
  #+end_src
 
-* THEME
-I will just use one of the doom themes. And its called
-=doom-outrun-electric=. Looks dope! Not in the TTY tho :< .
+* TRAMP
 #+begin_src elisp
-  (use-package doom-themes
-    :ensure t
-    :config
-    ;; Global settings (defaults)
-    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-          doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    (load-theme 'doom-outrun-electric t)
-
-    ;; Enable flashing mode-line on errors
-    ;; (doom-themes-visual-bell-config)
-
-    ;; Corrects (and improves) org-mode's native fontification.
-    (doom-themes-org-config))
+  (custom-set-variables
+   '(tramp-default-method "ssh")
+   '(tramp-default-user "tusharhero"))
 #+end_src
-
 * EDIT SERVER
 Edit server is an extensions which allows you edit text from your
 browser in a very integrated way. Here is a [[https://github.com/stsquad/emacs_chrome][link]] to their git server.
