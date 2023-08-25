@@ -97,6 +97,7 @@ Getting evil mode installed because, I was Vim user and I am most
 comfortable in those keybindings.
 #+begin_src elisp
   (setq evil-want-C-u-scroll t) ;; fix C-u scrolling
+  (setq evil-undo-system 'undo-redo) ;; fix undo redo system
   (use-package evil
     :init ;; tweak evil's configuration before loading it.
     (setq evil-want-integration t)
@@ -471,6 +472,22 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
     :config
     (markdown-mode))
 #+end_src
+**** Python
+Setting up Eglot for python. Also setting up black format on save!
+#+begin_src elisp
+  (add-hook 'python-mode-hook 'eglot-ensure)
+
+  ;; This part is confusing so I just used a seperate package for formatting instead of trying to use Eglot for it.
+
+  ;; (add-hook 'python-mode-hook '(with-eval-after-load 'eglot
+  ;;                                (setq-default eglot-workspace-configuration
+  ;;                                              '(:pylsp (:plugins (:jedi_completion (:include_params t
+  ;;                                                                                                    :fuzzy t)
+  ;;                                                                                   :pylint (:enabled :json-false)))
+  ;;                                                       :gopls (:usePlaceholders t)))))
+  (use-package blacken :config (add-hook 'python-mode-hook 'blacken-mode))
+
+#+end_src
 ** code folding
 #+begin_src elisp
   (add-hook 'python-mode-hook 'outline-minor-mode)
@@ -482,9 +499,11 @@ just call it using M-x)
 #+begin_src elisp
   ;; (treesit-install-language-grammar "python")
 #+end_src
-** eglot
-Not really much configuration was required here. I am keeping this
-heading here so that I know where to put stuff in the future.
+** Eglot
+Get the latest version!
+#+begin_src elisp
+  (use-package eglot :ensure t)
+#+end_src
 * WHICH-KEY 
 =which-key= basically shows the shortcuts you have setup. Its very
 useful, because you may not which key you bonded to what.
