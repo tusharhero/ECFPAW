@@ -26,10 +26,6 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+end_src
-* Things I want to add
-** TODO language support for python using eglot
-- [X] setup eglot
-- [ ] make abstraction for running the code so that its language agnostic
 * IMPORTANT PROGRAMS TO LOAD FIRST
 ** Package Manager
 I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manager.
@@ -425,6 +421,14 @@ Why not?
 #+begin_src elisp
   (setq initial-major-mode 'org-mode)
 #+end_src
+** Inserting time and date
+Here I will make a custom function which will help me insert time and date.
+#+begin_src elisp
+  (defun ECFPAW/insert-now-timestamp()
+    "Insert org mode timestamp at point with current date and time."
+    (interactive)
+    (org-insert-time-stamp (current-time) t))
+#+end_src
 ** Enabling Org Bullets
 Org-bullets look nice.
 #+begin_src elisp
@@ -610,11 +614,6 @@ Just a place for some custom functions I define.
     "Get the path of file from user-config directory"
     (interactive)
     (setq unread-command-events (listify-key-sequence (kbd "C-c"))))
-
-  (defun ECFPAW/insert-now-timestamp()
-    "Insert org mode timestamp at point with current date and time."
-    (interactive)
-    (org-insert-time-stamp (current-time) t))
 
   ;; Toggle between split windows and a single window
   (defun ECFPAW/toggle-windows-split()
