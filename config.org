@@ -195,12 +195,13 @@ configuration in general as well).
       (ECFPAW/leader-keys
        "t" '(:ignore t :wk "Toggle")
        "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+       "t L" '(ECFPAW/cycle-line-number-type :wk "cycle line number types")
        "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
        "t t" '(visual-line-mode :wk "Toggle truncated lines")
        "t c" '(outline-minor-mode :wk "enable code-folding")
        "t o" '(org-mode :wk "toggle org-mode")
        "t p" '(peep-dired :wk "Peep-dired")
-       "t T" '(cycle-my-theme :wk "Cycle through my themes")
+       "t T" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes")
   )
 
       ;; spelling keybindings
@@ -306,7 +307,6 @@ Just too distracting.
 *** Display Line Numbers and Truncated Lines
 I like relative line numbers(They help in Evil keybindings).
 #+begin_src elisp
-  (setq display-line-numbers-type 'relative)
   (global-display-line-numbers-mode)
   (global-visual-line-mode t)
 #+end_src
@@ -339,7 +339,7 @@ I will just use one of the doom themes. And its called
 (setq my-themes '(doom-gruvbox-light doom-gruvbox))
 
 (setq my-cur-theme nil)
-(defun cycle-my-theme ()
+(defun ECFPAW/cycle-my-theme ()
   "Cycle through a list of themes, my-themes"
   (interactive)
   (when my-cur-theme
@@ -349,12 +349,25 @@ I will just use one of the doom themes. And its called
   (load-theme my-cur-theme t))
 
 ;; Switch to the first theme in the list above
-(cycle-my-theme)
+(ECFPAW/cycle-my-theme)
 #+end_src
 ** TRANSPARENCY
 With Emacs version 29, true transparency has been added.
 #+begin_src elisp
   (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
+#+end_src
+* LINE NUMBERS
+I am using this function because sometimes =absolute= line number is
+better than =relative=.
+#+begin_src elisp
+  (setq ECFPAW/line-number-list '(relative absolute))
+  (defun ECFPAW/cycle-line-number-type ()
+    "Cycle through line number types"
+    (interactive)
+    (setq display-line-numbers (pop ECFPAW/line-number-list))
+    (setq ECFPAW/line-number-list (append ECFPAW/line-number-list (list display-line-numbers))))
+
+  (ECFPAW/cycle-line-number-type)
 #+end_src
 * COMPANY
 [[https://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for
