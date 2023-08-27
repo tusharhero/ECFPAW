@@ -211,6 +211,7 @@ configuration in general as well).
     (ECFPAW/leader-keys
      "o" '(:ignore t :wk "org-mode")
      "o o" '(org-mode :wk "toggle org-mode")
+     "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
      "o j" '(org-ctrl-c-ctrl-c :wk "toggle item")
      "o i" '(:ignore :wk "insert")
      "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
@@ -324,7 +325,7 @@ I will just use one of the doom themes. And its called
     ;; Global settings (defaults)
     (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
           doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    (load-theme 'doom-dracula t)
+    (load-theme 'doom-gruvbox t)
 
     ;; Enable flashing mode-line on errors
     ;; (doom-themes-visual-bell-config)
@@ -440,6 +441,14 @@ Org-bullets look nice.
 This packages allows shortcuts for source blocks etc.
 #+begin_src elisp
   (require 'org-tempo)
+#+end_src
+** LaTeX preview
+Org-mode can embed directly into the document. Here I am adjusting the
+size mainly.
+#+begin_src elisp
+  (custom-set-variables '(org-format-latex-options
+                          '(:foreground default :background default :scale 3 :html-foreground "Black" :html-background "Transparent" :html-scale 1 :matchers
+                                        ("begin" "$1" "$" "$$" "\\(" "\\["))))
 #+end_src
 * FLYCHECK
 Flycheck can do a lot of stuff including,
