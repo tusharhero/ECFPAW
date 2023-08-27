@@ -438,6 +438,14 @@ Emojis, I need them.😅
     :config (setq 'emojify-display-style "unicode")
     :hook (after-init . global-emojify-mode))
 #+end_src
+* TEXT
+Some stuff which are for text editing in general.
+** Electric
+*** Electric pairs
+Adds the next pair for =(= automatically.
+#+begin_src elisp
+(add-hook 'text-mode-hook 'electric-pair-mode)
+#+end_src>
 * ORG-MODE
 #+begin_quote
 ...
