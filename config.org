@@ -401,10 +401,11 @@ use it everywhere its possible. I use it for flyspell as well.
   (use-package helm-flyspell)
 #+end_src
 * EMOJI
-Emojis, I need them.😅 
+Emojis, I need them.😅
 #+begin_src elisp
-(use-package emojify
-  :hook (after-init . global-emojify-mode))
+  (use-package emojify
+    :config (setq 'emojify-display-style "unicode")
+    :hook (after-init . global-emojify-mode))
 #+end_src
 * ORG-MODE
 #+begin_quote
