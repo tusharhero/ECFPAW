@@ -450,6 +450,18 @@ size mainly.
                           '(:foreground default :background default :scale 3 :html-foreground "Black" :html-background "Transparent" :html-scale 1 :matchers
                                         ("begin" "$1" "$" "$$" "\\(" "\\["))))
 #+end_src
+* GIT
+[[git-scm.com][Git]] is the best version control system(The only one I have ever
+used). You can use it for anything BTW, not just programming. For
+instance when writing stories, its convenient to have Git manage the
+versions for you.
+** MAGIT
+Magit (Maggot , magic IDK) is a git client for Emacs.
+#+begin_src elisp
+  (use-package magit
+    :ensure t
+    :defer t)
+#+end_src
 * FLYCHECK
 Flycheck can do a lot of stuff including,
 - Showing errors in programs,
