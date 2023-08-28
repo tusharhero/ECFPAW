@@ -3,7 +3,6 @@
 #+EMAIL: tusharhero@sdf.org
 #+DESCRIPTION: It actually does more than just programming and writing.
 #+STARTUP: overview
-
 * LICENSE NOTICE
   :PROPERTIES:
   :VISIBILITY: folded
@@ -332,24 +331,22 @@ I will just use one of the doom themes. And its called
     ;; (doom-themes-visual-bell-config)
 
     ;; Corrects (and improves) org-mode's native fontification.
-    (doom-themes-org-config))
+    (doom-themes-org-config)
+    (ECFPAW/cycle-my-theme))
 #+end_src
 *** Easy cycling
 #+begin_src elisp
-(setq my-themes '(doom-gruvbox-light doom-gruvbox))
+  (setq my-themes '(doom-gruvbox-light doom-gruvbox))
 
-(setq my-cur-theme nil)
-(defun ECFPAW/cycle-my-theme ()
-  "Cycle through a list of themes, my-themes"
-  (interactive)
-  (when my-cur-theme
-    (disable-theme my-cur-theme)
-    (setq my-themes (append my-themes (list my-cur-theme))))
-  (setq my-cur-theme (pop my-themes))
-  (load-theme my-cur-theme t))
-
-;; Switch to the first theme in the list above
-(ECFPAW/cycle-my-theme)
+  (setq my-cur-theme nil)
+  (defun ECFPAW/cycle-my-theme ()
+    "Cycle through a list of themes, my-themes"
+    (interactive)
+    (when my-cur-theme
+      (disable-theme my-cur-theme)
+      (setq my-themes (append my-themes (list my-cur-theme))))
+    (setq my-cur-theme (pop my-themes))
+    (load-theme my-cur-theme t))
 #+end_src
 ** TRANSPARENCY
 With Emacs version 29, true transparency has been added.
@@ -444,7 +441,7 @@ Some stuff which are for text editing in general.
 *** Electric pairs
 Adds the next pair for =(= automatically.
 #+begin_src elisp
-(add-hook 'text-mode-hook 'electric-pair-mode)
+(add-hook 'fundamental-mode-hook 'electric-pair-mode)
 #+end_src>
 * ORG-MODE
 #+begin_quote
