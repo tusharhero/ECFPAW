@@ -113,147 +113,157 @@ I will use general package to create all the keybindings for ECFPAW. I
 only make key binds for the stuff I really need(That goes for the
 configuration in general as well).
 #+begin_src elisp
-    (use-package general
-      :config
-      (general-evil-setup)
+  (use-package general
+    :config
+    (general-evil-setup)
 
-      ;; set up ',' as major mode keybinds key
-      (evil-define-key 'normal global-map (kbd ",") 'ECFPAW/major-mode-keybinds)
+    ;; set up ',' as major mode keybinds key
+    (evil-define-key 'normal global-map (kbd ",") 'ECFPAW/major-mode-keybinds)
 
-      ;; set up 'SPC' as the global leader key
-      (general-create-definer ECFPAW/leader-keys
-                              :states '(normal insert visual emacs)
-                              :keymaps 'override
-                              :prefix "SPC" ;; set leader
-                              :global-prefix "M-SPC") ;; access leader in insert mode
+    ;; set up 'SPC' as the global leader key
+    (general-create-definer ECFPAW/leader-keys
+      :states '(normal insert visual emacs)
+      :keymaps 'override
+      :prefix "SPC" ;; set leader
+      :global-prefix "M-SPC") ;; access leader in insert mode
 
-      ;; direct convinient keybindings
-      (ECFPAW/leader-keys
-       "SPC" '(helm-M-x :wk "Execute command")
-       "TAB" '(mode-line-other-buffer :wk "Last buffer")
-       "c" '(comment-line :wk "Comment lines")
-       "'" '(vterm-toggle :wk "Toggle vterm")
-       "a" '(evil-numbers/inc-at-pt :wk "Increment number")
-       "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
-       )
+    ;; direct convinient keybindings
+    (ECFPAW/leader-keys
+      "SPC" '(helm-M-x :wk "Execute command")
+      "TAB" '(mode-line-other-buffer :wk "Last buffer")
+      "c" '(comment-line :wk "Comment lines")
+      "'" '(vterm-toggle :wk "Toggle vterm")
+      "a" '(evil-numbers/inc-at-pt :wk "Increment number")
+      "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
+      )
 
-      ;; file related keybindings
-      (ECFPAW/leader-keys
-       "f" '(:ignore t :wk "files")
-       "f f" '(helm-find-files :wk "Find file")
-       "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
-       "f r" '(recentf :wk "Find recent files")
-       "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
-                 :wk "Reload emacs config"))
+    ;; file related keybindings
+    (ECFPAW/leader-keys
+      "f" '(:ignore t :wk "files")
+      "f f" '(helm-find-files :wk "Find file")
+      "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
+      "f r" '(recentf :wk "Find recent files")
+      "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
+                :wk "Reload emacs config"))
 
-      ;; dired related keybindings
-      (ECFPAW/leader-keys
-       "d" '(:ignore t :wk "Dired")
-       "d d" '(dired :wk "Open dired")
-       "d j" '(dired-jump :wk "Dired jump to current"))
+    ;; dired related keybindings
+    (ECFPAW/leader-keys
+      "d" '(:ignore t :wk "Dired")
+      "d d" '(dired :wk "Open dired")
+      "d j" '(dired-jump :wk "Dired jump to current"))
 
-      ;; buffer related keybindings
-      (ECFPAW/leader-keys
-       "b" '(:ignore t :wk "buffer")
-       "b b" '(helm-mini :wk "Switch buffer")
-       "b i" '(ibuffer :wk "Ibuffer")
-       "b d" '(kill-this-buffer :wk "Kill this buffer")
-       "b x" '(kill-this-buffer :wk "Kill this buffer")
-       "b n" '(next-buffer :wk "Next buffer")
-       "b p" '(previous-buffer :wk "Previous buffer")
-       "b r" '(revert-buffer :wk "Revert buffer")
-       "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
-       "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer"))
+    ;; buffer related keybindings
+    (ECFPAW/leader-keys
+      "b" '(:ignore t :wk "buffer")
+      "b b" '(helm-mini :wk "Switch buffer")
+      "b i" '(ibuffer :wk "Ibuffer")
+      "b d" '(kill-this-buffer :wk "Kill this buffer")
+      "b x" '(kill-this-buffer :wk "Kill this buffer")
+      "b n" '(next-buffer :wk "Next buffer")
+      "b p" '(previous-buffer :wk "Previous buffer")
+      "b r" '(revert-buffer :wk "Revert buffer")
+      "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
+      "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer"))
 
-      ;; bookmark related keybindings
-      (ECFPAW/leader-keys
-       "B" '(:ignore t :wk "bookmark")
-       "B s" '(bookmark-set :wk "bookmark set")
-       "B l" '(bookmark-bmenu-list :wk "bookmark list"))
+    ;; bookmark related keybindings
+    (ECFPAW/leader-keys
+      "B" '(:ignore t :wk "bookmark")
+      "B s" '(bookmark-set :wk "bookmark set")
+      "B l" '(bookmark-bmenu-list :wk "bookmark list"))
 
-      ;; eval related keybindings
-      (ECFPAW/leader-keys
-       "e" '(:ignore t :wk "Evaluate")    
-       "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-       "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-       "e e" '(eval-expression :wk "Evaluate and elisp expression")
-       "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-       "e r" '(eval-region :wk "Evaluate elisp in region"))
+    ;; eval related keybindings
+    (ECFPAW/leader-keys
+      "e" '(:ignore t :wk "Evaluate")    
+      "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+      "e d" '(eval-defun :wk "Evaluate defun containing or after point")
+      "e e" '(eval-expression :wk "Evaluate and elisp expression")
+      "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
+      "e r" '(eval-region :wk "Evaluate elisp in region"))
 
-      ;; help keybindings
-      (ECFPAW/leader-keys
-       "h" '(:ignore t :wk "Help")
-       "h h" '(help :wk "Help Help!")
-       "h f" '(describe-function :wk "Describe function")
-       "h v" '(describe-variable :wk "Describe variable")
-       "h m" '(:ignore t :wk "Manuals")
-       "h m E" '(info-emacs-manual :wk "Emacs manual")
-       "h m e" '(helm-info-eglot :wk "Eglot manual"))
+    ;; help keybindings
+    (ECFPAW/leader-keys
+      "h" '(:ignore t :wk "Help")
+      "h h" '(help :wk "Help Help!")
+      "h f" '(describe-function :wk "Describe function")
+      "h v" '(describe-variable :wk "Describe variable")
+      "h m" '(:ignore t :wk "Manuals")
+      "h m E" '(info-emacs-manual :wk "Emacs manual")
+      "h m e" '(helm-info-eglot :wk "Eglot manual"))
 
-      ;; toggle keybindings
-      (ECFPAW/leader-keys
-       "t" '(:ignore t :wk "Toggle")
-       "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-       "t L" '(ECFPAW/cycle-line-number-type :wk "cycle line number types")
-       "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
-       "t t" '(visual-line-mode :wk "Toggle truncated lines")
-       "t c" '(outline-minor-mode :wk "enable code-folding")
-       "t o" '(org-mode :wk "toggle org-mode")
-       "t p" '(peep-dired :wk "Peep-dired")
-       "t T" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes")
-  )
+    ;; toggle keybindings
+    (ECFPAW/leader-keys
+      "t" '(:ignore t :wk "Toggle")
+      "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+      "t L" '(ECFPAW/cycle-line-number-type :wk "cycle line number types")
+      "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
+      "t t" '(visual-line-mode :wk "Toggle truncated lines")
+      "t c" '(outline-minor-mode :wk "enable code-folding")
+      "t o" '(org-mode :wk "toggle org-mode")
+      "t p" '(peep-dired :wk "Peep-dired")
+      "t T" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes")
+      )
 
-      ;; spelling keybindings
-      (ECFPAW/leader-keys
-       "S" '(:ignore t :wk "Spelling")
-       "S s" '(helm-flyspell-correct :wk "correct the word")
-       "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
+    ;; spelling keybindings
+    (ECFPAW/leader-keys
+      "S" '(:ignore t :wk "Spelling")
+      "S s" '(helm-flyspell-correct :wk "correct the word")
+      "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
 
-      ;; org-mode keybindings
-      (ECFPAW/leader-keys
-       "o" '(:ignore t :wk "org-mode")
-       "o o" '(org-mode :wk "toggle org-mode")
-       "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
-       "o j" '(org-ctrl-c-ctrl-c :wk "toggle item")
-       "o i" '(:ignore :wk "insert")
-       "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
-      (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
-      (which-key-add-key-based-replacements "SPC o b" "babel")
+    ;; org-mode keybindings
+    (ECFPAW/leader-keys
+      "o" '(:ignore t :wk "org-mode")
+      "o o" '(org-mode :wk "toggle org-mode")
+      "o r" '(:ignore t :wk "org-roam")
+      "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
+      "o j" '(org-ctrl-c-ctrl-c :wk "toggle item")
+      "o i" '(:ignore :wk "insert")
+      "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
+    (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
+    (which-key-add-key-based-replacements "SPC o b" "babel")
 
-      ;; programming keybindings
-      (ECFPAW/leader-keys
-       "p" '(:ignore t :wk "Programming")
-       "p e" '(eglot :wk "Turn on eglot")
-       "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
-       "p r" '(eglot-rename :wk "eglot-rename")
-       "p g" '(xref-find-definitions :wk "go to definition")
-       "p d" '(eldoc :wk "get docs")
-       "p i" '(helm-imenu :wk "imenu")
-       "p a" '(eldoc :wk "eglot code actions")
-       "p c" '(outline-minor-mode :wk "enable code-folding"))
+    ;; org-roam keybindings
+    (ECFPAW/leader-keys
+      "o r l" '(org-roam-buffer-toggle :wk "Buffer Toggle")
+      "o r f" '(org-roam-node-find  :wk "Node find")
+      "o r g" '(org-roam-graph  :wk "Graph")
+      "o r i" '(org-roam-node-insert :wk "Node insert")
+      "o r c" '(org-roam-capture :wk "Capture")
+      "o r j" '(org-roam-dailies-capture-today :wk "dailies capture"))
 
-      ;; window management keybindings
-      (ECFPAW/leader-keys
-       "w" '(:ignore t :wk "Windows")
-       ;; Window splits
-       "w d" '(evil-window-delete :wk "Close window")
-       "w x" '(evil-window-delete :wk "Close window")
-       "w n" '(evil-window-new :wk "New window")
-       "w s" '(evil-window-split :wk "Horizontal split window")
-       "w v" '(evil-window-vsplit :wk "Vertical split window") 
-       "w /" '(evil-window-vsplit :wk "Vertical split window")
-       "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
-       ;; Window motions
-       "w h" '(evil-window-left :wk "Window left")
-       "w j" '(evil-window-down :wk "Window down")
-       "w k" '(evil-window-up :wk "Window up")
-       "w l" '(evil-window-right :wk "Window right")
-       "w w" '(evil-window-next :wk "Goto next window")))
-    ;; different keybindgings to resize windows.
-    (global-set-key (kbd "<C-down>") 'shrink-window)  
-    (global-set-key (kbd "<C-up>") 'enlarge-window)  
-    (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
-    (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
+    ;; programming keybindings
+    (ECFPAW/leader-keys
+      "p" '(:ignore t :wk "Programming")
+      "p e" '(eglot :wk "Turn on eglot")
+      "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
+      "p r" '(eglot-rename :wk "eglot-rename")
+      "p g" '(xref-find-definitions :wk "go to definition")
+      "p d" '(eldoc :wk "get docs")
+      "p i" '(helm-imenu :wk "imenu")
+      "p a" '(eldoc :wk "eglot code actions")
+      "p c" '(outline-minor-mode :wk "enable code-folding"))
+
+    ;; window management keybindings
+    (ECFPAW/leader-keys
+      "w" '(:ignore t :wk "Windows")
+      ;; Window splits
+      "w d" '(evil-window-delete :wk "Close window")
+      "w x" '(evil-window-delete :wk "Close window")
+      "w n" '(evil-window-new :wk "New window")
+      "w s" '(evil-window-split :wk "Horizontal split window")
+      "w v" '(evil-window-vsplit :wk "Vertical split window") 
+      "w /" '(evil-window-vsplit :wk "Vertical split window")
+      "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
+      ;; Window motions
+      "w h" '(evil-window-left :wk "Window left")
+      "w j" '(evil-window-down :wk "Window down")
+      "w k" '(evil-window-up :wk "Window up")
+      "w l" '(evil-window-right :wk "Window right")
+      "w w" '(evil-window-next :wk "Goto next window")))
+  ;; different keybindgings to resize windows.
+  (global-set-key (kbd "<C-down>") 'shrink-window)  
+  (global-set-key (kbd "<C-up>") 'enlarge-window)  
+  (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
+  (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
 
       #+end_src
 * GRAPHICS
@@ -491,6 +501,21 @@ size mainly.
   (custom-set-variables '(org-format-latex-options
                           '(:foreground default :background default :scale 3 :html-foreground "Black" :html-background "Transparent" :html-scale 1 :matchers
                                         ("begin" "$1" "$" "$$" "\\(" "\\["))))
+#+end_src
+** Roam
+I want my second brain too🗿. 
+#+begin_src elisp
+  (use-package org-roam
+    :ensure t
+    :custom
+    (org-roam-directory (file-truename "~/Documents/roam"))
+    :config
+    ;; If you're using a vertical completion framework, you might want a more informative completion interface
+    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+    (org-roam-db-autosync-mode)
+    (setq org-roam-completion-everywhere t)
+    ;; If using org-roam-protocol
+    (require 'org-roam-protocol))
 #+end_src
 * GIT
 [[git-scm.com][Git]] is the best version control system(The only one I have ever
