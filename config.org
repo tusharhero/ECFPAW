@@ -346,7 +346,7 @@ I will just use one of the doom themes. And its called
 #+end_src
 *** Easy cycling
 #+begin_src elisp
-  (setq my-themes '(doom-gruvbox-light doom-gruvbox))
+  (setq my-themes '(doom-gruvbox doom-gruvbox-light))
 
   (setq my-cur-theme nil)
   (defun ECFPAW/cycle-my-theme ()
@@ -496,11 +496,12 @@ This packages allows shortcuts for source blocks etc.
 #+end_src
 ** LaTeX preview
 Org-mode can embed directly into the document. Here I am adjusting the
-size mainly.
+size and rendering method.
 #+begin_src elisp
   (custom-set-variables '(org-format-latex-options
                           '(:foreground default :background default :scale 3 :html-foreground "Black" :html-background "Transparent" :html-scale 1 :matchers
                                         ("begin" "$1" "$" "$$" "\\(" "\\["))))
+  (setq org-preview-latex-default-process 'dvisvgm)
 #+end_src
 ** Roam
 I want my second brain too🗿. 
