@@ -135,7 +135,7 @@ configuration in general as well).
       "'" '(vterm-toggle :wk "Toggle vterm")
       "a" '(evil-numbers/inc-at-pt :wk "Increment number")
       "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
-      )
+      "g" '(magit :wk "Magit"))
 
     ;; file related keybindings
     (ECFPAW/leader-keys
@@ -284,7 +284,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
 Defining the various fonts emacs will use.
 #+begin_src elisp
   (set-face-attribute 'default nil
-                      :font "JetBrainsMono Nerd Font"
+                      :font "Hack"
                       :height 130
                       :weight 'medium)
   (set-face-attribute 'font-lock-comment-face nil
@@ -329,7 +329,8 @@ of this.
 ** THEME
 I will just use one of the doom themes. And its called
 =gruvbox= 🤓. 
-*** Doom Themes
+*** Themes
+**** Doom Themes
 #+begin_src elisp
   (use-package doom-themes
     :ensure t
@@ -344,9 +345,18 @@ I will just use one of the doom themes. And its called
     (doom-themes-org-config)
     (ECFPAW/cycle-my-theme))
 #+end_src
+**** VSCode theme
+#+begin_src elisp
+  (use-package vscode-dark-plus-theme
+    :ensure t)
+#+end_src
+**** Catpuccin theme
+#+begin_src elisp
+(use-package catppuccin-theme :ensure t)
+#+end_src
 *** Easy cycling
 #+begin_src elisp
-  (setq my-themes '(doom-gruvbox doom-gruvbox-light))
+  (setq my-themes '(vscode-dark-plus doom-gruvbox doom-gruvbox-light))
 
   (setq my-cur-theme nil)
   (defun ECFPAW/cycle-my-theme ()
