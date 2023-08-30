@@ -146,6 +146,11 @@ configuration in general as well).
       "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
                 :wk "Reload emacs config"))
 
+    ;; insert related keybindings
+    (ECFPAW/leader-keys
+      "i" '(:ignore t :wk "insert")
+      "i e" '(emoji-insert :wk "insert emoji"))
+
     ;; dired related keybindings
     (ECFPAW/leader-keys
       "d" '(:ignore t :wk "Dired")
@@ -327,8 +332,7 @@ of this.
   (scroll-bar-mode -1)
 #+end_src
 ** THEME
-I will just use one of the doom themes. And its called
-=gruvbox= 🤓. 
+I will use VSCode theme🗿.
 *** Themes
 **** Doom Themes
 #+begin_src elisp
