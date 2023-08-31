@@ -127,6 +127,11 @@ configuration in general as well).
       :prefix "SPC" ;; set leader
       :global-prefix "M-SPC") ;; access leader in insert mode
 
+    ;; frame related keybindings
+    (ECFPAW/leader-keys
+      "F" '(:ignore t :wk "frame")
+      "F t" '(ECFPAW/change-current-transparency-to :wk "change transparency"))
+
     ;; direct convinient keybindings
     (ECFPAW/leader-keys
       "SPC" '(helm-M-x :wk "Execute command")
@@ -136,6 +141,7 @@ configuration in general as well).
       "a" '(evil-numbers/inc-at-pt :wk "Increment number")
       "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
       "g" '(magit :wk "Magit"))
+
 
     ;; file related keybindings
     (ECFPAW/leader-keys
@@ -374,8 +380,16 @@ I will use VSCode theme🗿.
 #+end_src
 ** TRANSPARENCY
 With Emacs version 29, true transparency has been added.
+*** Setting initial transparency
 #+begin_src elisp
   (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
+#+end_src
+*** Function to change the transparency of the current frame.
+#+begin_src elisp
+    (defun ECFPAW/change-current-transparency-to (alpha-val)
+      "Change the transparency to the given value"
+      (interactive "nChange transparency: ")
+      (set-frame-parameter (selected-frame) 'alpha alpha-val))
 #+end_src
 * LINE NUMBERS
 I am using this function because sometimes =absolute= line number is
@@ -384,7 +398,7 @@ better than =relative=.
   (setq ECFPAW/line-number-list '(relative absolute))
   (defun ECFPAW/cycle-line-number-type ()
     "Cycle through line number types"
-    (interactive)
+    (interactive )
     (setq display-line-numbers (pop ECFPAW/line-number-list))
     (setq ECFPAW/line-number-list (append ECFPAW/line-number-list (list display-line-numbers))))
 
@@ -427,6 +441,7 @@ number lines for this one because it looked ugly.
     (setq dashboard-center-content t)
     (setq dashboard-items '((recents . 5)
                             (projects . 5)))
+    (setq dashboard-footer-messages '("Emacs config for Programming And Writing(ECFPAW)"))
     :config
     (dashboard-setup-startup-hook)
     (add-hook 'dashboard-mode 'display-line-numbers-mode))
