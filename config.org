@@ -402,13 +402,15 @@ I am using this function because sometimes =absolute= line number is
 better than =relative=.
 #+begin_src elisp
   (setq ECFPAW/line-number-list '(relative absolute))
+
   (defun ECFPAW/cycle-line-number-type ()
     "Cycle through line number types"
-    (interactive )
+    (interactive)
     (setq display-line-numbers (pop ECFPAW/line-number-list))
     (setq ECFPAW/line-number-list (append ECFPAW/line-number-list (list display-line-numbers))))
 
   (ECFPAW/cycle-line-number-type)
+  (global-display-line-numbers-mode)
 #+end_src
 * COMPANY
 [[https://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for
