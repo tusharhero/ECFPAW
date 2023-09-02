@@ -625,8 +625,20 @@ Setting up Eglot for python. Also setting up black format on save!
   ;;                                                                                                    :fuzzy t)
   ;;                                                                                   :pylint (:enabled :json-false)))
   ;;                                                       :gopls (:usePlaceholders t)))))
+
+  ;; add blacken support
   (use-package blacken :config (add-hook 'python-mode-hook 'blacken-mode))
 
+  ;; add automatically activating pyenv
+  (use-package auto-virtualenv
+    :ensure t
+    :init
+    (use-package pyvenv
+      :ensure t)
+    :config
+    (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
+    (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv)  ;; If using projectile
+    )
 #+end_src
 ** code folding
 #+begin_src elisp
