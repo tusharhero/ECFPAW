@@ -295,7 +295,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
 Defining the various fonts emacs will use.
 #+begin_src elisp
   (set-face-attribute 'default nil
-                      :font "Hack"
+                      :font "Iosevka"
                       :height 130
                       :weight 'medium)
   (set-face-attribute 'font-lock-comment-face nil
