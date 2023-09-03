@@ -490,6 +490,10 @@ Adds the next pair for =(= automatically.
 #+begin_src elisp
 (add-hook 'fundamental-mode-hook 'electric-pair-mode)
 #+end_src>
+** Prettify mode
+#+begin_src elisp
+  (global-prettify-symbols-mode)
+#+end_src
 * ORG-MODE
 #+begin_quote
 ...
@@ -616,6 +620,7 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
 #+end_src
 **** Python
 Setting up Eglot for python. Also setting up black format on save!
+***** Eglot
 #+begin_src elisp
   (add-hook 'python-mode-hook 'eglot-ensure)
 
@@ -628,9 +633,14 @@ Setting up Eglot for python. Also setting up black format on save!
   ;;                                                                                   :pylint (:enabled :json-false)))
   ;;                                                       :gopls (:usePlaceholders t)))))
 
+#+end_src
+***** Code formatting
+#+begin_src elisp
   ;; add blacken support
   (use-package blacken :config (add-hook 'python-mode-hook 'blacken-mode))
-
+#+end_src
+***** Virtual Environment support
+#+begin_src elisp
   ;; add automatically activating pyenv
   (use-package auto-virtualenv
     :ensure t
@@ -642,9 +652,23 @@ Setting up Eglot for python. Also setting up black format on save!
     (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv)  ;; If using projectile
     )
 #+end_src
+***** Prettify mode symbols
+#+begin_src elisp
+  (defun ECFPAW/python-prettify-symbols ()
+    (setq prettify-symbols-alist
+          '(("lambda" . 955 )
+            ("and"    . 8743)
+            ("or"     . 8744)
+            ("->"     . "→" )
+            ("<="     . "≤" )
+            (">="     . "≥" )
+            ("=="     . "≟" )
+            )))
+  (add-hook 'python-mode-hook 'ECFPAW/python-prettify-symbols)
+#+end_src
 ** code folding
 #+begin_src elisp
-  (add-hook 'python-mode-hook 'outline-minor-mode)
+  (add-hook 'prog-mode-hook 'outline-minor-mode)
 #+end_src
 ** tree-sit
 *** install language grammar
