@@ -492,6 +492,7 @@ Adds the next pair for =(= automatically.
 #+end_src>
 ** Prettify mode
 #+begin_src elisp
+  (setq prettify-symbols-unprettify-at-point t)
   (global-prettify-symbols-mode)
 #+end_src
 * ORG-MODE
