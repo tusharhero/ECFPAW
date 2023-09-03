@@ -196,10 +196,7 @@ configuration in general as well).
       "h" '(:ignore t :wk "Help")
       "h h" '(help :wk "Help Help!")
       "h f" '(describe-function :wk "Describe function")
-      "h v" '(describe-variable :wk "Describe variable")
-      "h m" '(:ignore t :wk "Manuals")
-      "h m E" '(info-emacs-manual :wk "Emacs manual")
-      "h m e" '(helm-info-eglot :wk "Eglot manual"))
+      "h v" '(describe-variable :wk "Describe variable"))
 
     ;; toggle keybindings
     (ECFPAW/leader-keys
@@ -210,7 +207,6 @@ configuration in general as well).
       "t t" '(visual-line-mode :wk "Toggle truncated lines")
       "t c" '(outline-minor-mode :wk "enable code-folding")
       "t o" '(org-mode :wk "toggle org-mode")
-      "t p" '(peep-dired :wk "Peep-dired")
       "t T" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes")
       )
 
@@ -226,7 +222,6 @@ configuration in general as well).
       "o o" '(org-mode :wk "toggle org-mode")
       "o r" '(:ignore t :wk "org-roam")
       "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
-      "o j" '(org-ctrl-c-ctrl-c :wk "toggle item")
       "o i" '(:ignore :wk "insert")
       "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
     (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
@@ -238,8 +233,7 @@ configuration in general as well).
       "o r f" '(org-roam-node-find  :wk "Node find")
       "o r g" '(org-roam-graph  :wk "Graph")
       "o r i" '(org-roam-node-insert :wk "Node insert")
-      "o r c" '(org-roam-capture :wk "Capture")
-      "o r j" '(org-roam-dailies-capture-today :wk "dailies capture"))
+      "o r c" '(org-roam-capture :wk "Capture"))
 
     ;; programming keybindings
     (ECFPAW/leader-keys
@@ -259,7 +253,6 @@ configuration in general as well).
       ;; Window splits
       "w d" '(evil-window-delete :wk "Close window")
       "w x" '(evil-window-delete :wk "Close window")
-      "w n" '(evil-window-new :wk "New window")
       "w s" '(evil-window-split :wk "Horizontal split window")
       "w v" '(evil-window-vsplit :wk "Vertical split window") 
       "w /" '(evil-window-vsplit :wk "Vertical split window")
@@ -275,7 +268,6 @@ configuration in general as well).
   (global-set-key (kbd "<C-up>") 'enlarge-window)  
   (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
   (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
-
       #+end_src
 * GRAPHICS
 ** ALL THE ICONS 
