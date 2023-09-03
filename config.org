@@ -112,6 +112,7 @@ comfortable in those keybindings.
 I will use general package to create all the keybindings for ECFPAW. I
 only make key binds for the stuff I really need(That goes for the
 configuration in general as well).
+** Installation and basic config
 #+begin_src elisp
   (use-package general
     :config
@@ -125,14 +126,11 @@ configuration in general as well).
       :states '(normal insert visual emacs)
       :keymaps 'override
       :prefix "SPC" ;; set leader
-      :global-prefix "M-SPC") ;; access leader in insert mode
+      :global-prefix "M-SPC")) ;; access leader in insert mode
 
-    ;; frame related keybindings
-    (ECFPAW/leader-keys
-      "F" '(:ignore t :wk "frame")
-      "F t" '(ECFPAW/change-current-transparency-to :wk "change transparency"))
-
-    ;; direct convinient keybindings
+#+end_src
+** Direct convenient keybindings
+#+begin_src elisp
     (ECFPAW/leader-keys
       "SPC" '(helm-M-x :wk "Execute command")
       "TAB" '(mode-line-other-buffer :wk "Last buffer")
@@ -141,29 +139,17 @@ configuration in general as well).
       "a" '(evil-numbers/inc-at-pt :wk "Increment number")
       "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
       "g" '(magit :wk "Magit"))
-
-
-    ;; file related keybindings
+#+end_src
+** Help
+#+begin_src elisp
     (ECFPAW/leader-keys
-      "f" '(:ignore t :wk "files")
-      "f f" '(helm-find-files :wk "Find file")
-      "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
-      "f r" '(recentf :wk "Find recent files")
-      "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
-                :wk "Reload emacs config"))
-
-    ;; insert related keybindings
-    (ECFPAW/leader-keys
-      "i" '(:ignore t :wk "insert")
-      "i e" '(emoji-insert :wk "insert emoji"))
-
-    ;; dired related keybindings
-    (ECFPAW/leader-keys
-      "d" '(:ignore t :wk "Dired")
-      "d d" '(dired :wk "Open dired")
-      "d j" '(dired-jump :wk "Dired jump to current"))
-
-    ;; buffer related keybindings
+      "h" '(:ignore t :wk "Help")
+      "h h" '(help :wk "Help Help!")
+      "h f" '(describe-function :wk "Describe function")
+      "h v" '(describe-variable :wk "Describe variable"))
+#+end_src
+** Buffer
+#+begin_src elisp
     (ECFPAW/leader-keys
       "b" '(:ignore t :wk "buffer")
       "b b" '(helm-mini :wk "Switch buffer")
@@ -175,14 +161,77 @@ configuration in general as well).
       "b r" '(revert-buffer :wk "Revert buffer")
       "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
       "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer"))
-
-    ;; bookmark related keybindings
+#+end_src
+** Window management
+#+begin_src elisp
+  ;; window management keybindings
+  (ECFPAW/leader-keys
+    "w" '(:ignore t :wk "Windows")
+    ;; Window splits
+    "w d" '(evil-window-delete :wk "Close window")
+    "w x" '(evil-window-delete :wk "Close window")
+    "w s" '(evil-window-split :wk "Horizontal split window")
+    "w v" '(evil-window-vsplit :wk "Vertical split window") 
+    "w /" '(evil-window-vsplit :wk "Vertical split window")
+    "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
+    ;; Window motions
+    "w h" '(evil-window-left :wk "Window left")
+    "w j" '(evil-window-down :wk "Window down")
+    "w k" '(evil-window-up :wk "Window up")
+    "w l" '(evil-window-right :wk "Window right")
+    "w w" '(evil-window-next :wk "Goto next window"))
+  ;; different keybindgings to resize windows.
+  (global-set-key (kbd "<C-down>") 'shrink-window)  
+  (global-set-key (kbd "<C-up>") 'enlarge-window)  
+  (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
+  (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
+ #+end_src
+** File 
+#+begin_src elisp
+    (ECFPAW/leader-keys
+      "f" '(:ignore t :wk "files")
+      "f f" '(helm-find-files :wk "Find file")
+      "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
+      "f r" '(recentf :wk "Find recent files")
+      "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
+                :wk "Reload emacs config"))
+#+end_src
+** Dired 
+#+begin_src elisp
+    ;; dired related keybindings
+    (ECFPAW/leader-keys
+      "d" '(:ignore t :wk "Dired")
+      "d d" '(dired :wk "Open dired")
+      "d j" '(dired-jump :wk "Dired jump to current"))
+#+end_src
+** Spelling
+#+begin_src elisp
+    (ECFPAW/leader-keys
+      "S" '(:ignore t :wk "Spelling")
+      "S s" '(helm-flyspell-correct :wk "correct the word")
+      "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
+#+end_src
+** Frame 
+#+begin_src elisp
+    (ECFPAW/leader-keys
+      "F" '(:ignore t :wk "frame")
+      "F t" '(ECFPAW/change-current-transparency-to :wk "change transparency"))
+#+end_src
+** Bookmarks
+#+begin_src elisp
     (ECFPAW/leader-keys
       "B" '(:ignore t :wk "bookmark")
       "B s" '(bookmark-set :wk "bookmark set")
       "B l" '(bookmark-bmenu-list :wk "bookmark list"))
-
-    ;; eval related keybindings
+#+end_src
+** Insert
+#+begin_src elisp
+    (ECFPAW/leader-keys
+      "i" '(:ignore t :wk "insert")
+      "i e" '(emoji-insert :wk "insert emoji"))
+#+end_src
+** Eval
+#+begin_src elisp
     (ECFPAW/leader-keys
       "e" '(:ignore t :wk "Evaluate")    
       "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
@@ -190,15 +239,9 @@ configuration in general as well).
       "e e" '(eval-expression :wk "Evaluate and elisp expression")
       "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
       "e r" '(eval-region :wk "Evaluate elisp in region"))
-
-    ;; help keybindings
-    (ECFPAW/leader-keys
-      "h" '(:ignore t :wk "Help")
-      "h h" '(help :wk "Help Help!")
-      "h f" '(describe-function :wk "Describe function")
-      "h v" '(describe-variable :wk "Describe variable"))
-
-    ;; toggle keybindings
+#+end_src
+** Toggling
+#+begin_src elisp
     (ECFPAW/leader-keys
       "t" '(:ignore t :wk "Toggle")
       "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
@@ -207,16 +250,10 @@ configuration in general as well).
       "t t" '(visual-line-mode :wk "Toggle truncated lines")
       "t c" '(outline-minor-mode :wk "enable code-folding")
       "t o" '(org-mode :wk "toggle org-mode")
-      "t T" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes")
-      )
-
-    ;; spelling keybindings
-    (ECFPAW/leader-keys
-      "S" '(:ignore t :wk "Spelling")
-      "S s" '(helm-flyspell-correct :wk "correct the word")
-      "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
-
-    ;; org-mode keybindings
+      "t T" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes"))
+#+end_src
+** Org-mode
+#+begin_src elisp
     (ECFPAW/leader-keys
       "o" '(:ignore t :wk "org-mode")
       "o o" '(org-mode :wk "toggle org-mode")
@@ -226,16 +263,18 @@ configuration in general as well).
       "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
     (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
     (which-key-add-key-based-replacements "SPC o b" "babel")
-
-    ;; org-roam keybindings
+#+end_src
+*** Org-roam
+#+begin_src elisp
     (ECFPAW/leader-keys
       "o r l" '(org-roam-buffer-toggle :wk "Buffer Toggle")
       "o r f" '(org-roam-node-find  :wk "Node find")
       "o r g" '(org-roam-graph  :wk "Graph")
       "o r i" '(org-roam-node-insert :wk "Node insert")
       "o r c" '(org-roam-capture :wk "Capture"))
-
-    ;; programming keybindings
+#+end_src
+** Programming
+#+begin_src elisp
     (ECFPAW/leader-keys
       "p" '(:ignore t :wk "Programming")
       "p e" '(eglot :wk "Turn on eglot")
@@ -246,29 +285,7 @@ configuration in general as well).
       "p i" '(helm-imenu :wk "imenu")
       "p a" '(eldoc :wk "eglot code actions")
       "p c" '(outline-minor-mode :wk "enable code-folding"))
-
-    ;; window management keybindings
-    (ECFPAW/leader-keys
-      "w" '(:ignore t :wk "Windows")
-      ;; Window splits
-      "w d" '(evil-window-delete :wk "Close window")
-      "w x" '(evil-window-delete :wk "Close window")
-      "w s" '(evil-window-split :wk "Horizontal split window")
-      "w v" '(evil-window-vsplit :wk "Vertical split window") 
-      "w /" '(evil-window-vsplit :wk "Vertical split window")
-      "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
-      ;; Window motions
-      "w h" '(evil-window-left :wk "Window left")
-      "w j" '(evil-window-down :wk "Window down")
-      "w k" '(evil-window-up :wk "Window up")
-      "w l" '(evil-window-right :wk "Window right")
-      "w w" '(evil-window-next :wk "Goto next window")))
-  ;; different keybindgings to resize windows.
-  (global-set-key (kbd "<C-down>") 'shrink-window)  
-  (global-set-key (kbd "<C-up>") 'enlarge-window)  
-  (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
-  (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
-      #+end_src
+#+end_src
 * GRAPHICS
 ** ALL THE ICONS 
 This is an icon set that can be used with dashboard, dired, ibuffer and other Emacs programs.
