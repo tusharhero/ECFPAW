@@ -624,16 +624,6 @@ Setting up Eglot for python. Also setting up black format on save!
 ***** Eglot
 #+begin_src elisp
   (add-hook 'python-mode-hook 'eglot-ensure)
-
-  ;; This part is confusing so I just used a seperate package for formatting instead of trying to use Eglot for it.
-
-  ;; (add-hook 'python-mode-hook '(with-eval-after-load 'eglot
-  ;;                                (setq-default eglot-workspace-configuration
-  ;;                                              '(:pylsp (:plugins (:jedi_completion (:include_params t
-  ;;                                                                                                    :fuzzy t)
-  ;;                                                                                   :pylint (:enabled :json-false)))
-  ;;                                                       :gopls (:usePlaceholders t)))))
-
 #+end_src
 ***** Code formatting
 #+begin_src elisp
@@ -642,17 +632,10 @@ Setting up Eglot for python. Also setting up black format on save!
 #+end_src
 ***** Virtual Environment support
 #+begin_src elisp
-  ;; add automatically activating pyenv
-  (use-package auto-virtualenv
-    :ensure t
-    :init
-    (use-package pyvenv
-      :ensure t)
-    :config
-    (add-hook 'python-mode-hook 'auto-virtualenv-set-virtualenv)
-    (add-hook 'projectile-after-switch-project-hook 'auto-virtualenv-set-virtualenv)  ;; If using projectile
-    )
-#+end_src
+(use-package pet
+  :config
+  (add-hook 'python-base-mode-hook 'pet-mode -10))
+#+end_src 
 ***** Prettify mode symbols
 #+begin_src elisp
   (defun ECFPAW/python-prettify-symbols ()
