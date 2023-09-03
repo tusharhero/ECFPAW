@@ -696,6 +696,17 @@ Setting up Eglot for python. Also setting up black format on save!
             )))
   (add-hook 'python-mode-hook 'ECFPAW/python-prettify-symbols)
 #+end_src
+**** C
+***** Prettify mode symbols
+#+begin_src elisp
+  (defun ECFPAW/c-prettify-symbols ()
+    (setq prettify-symbols-alist
+          '(("<="     . "≤" )
+            (">="     . "≥" )
+            ("=="     . "≟" )
+            )))
+  (add-hook 'c-mode-hook 'ECFPAW/c-prettify-symbols)
+#+end_src
 ** code folding
 #+begin_src elisp
   (add-hook 'prog-mode-hook 'outline-minor-mode)
