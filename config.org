@@ -135,6 +135,9 @@ useful, because you may not which key you bonded to what.
 I will use general package to create all the keybindings for ECFPAW. I
 only make key binds for the stuff I really need(That goes for the
 configuration in general as well).
+
+I had to do add all these different headings to get support for
+Imenu. But I also am inside a huge =use-package= call.
 ** Installation and basic config
 #+begin_src elisp
   (use-package general
@@ -149,7 +152,7 @@ configuration in general as well).
       :states '(normal insert visual emacs)
       :keymaps 'override
       :prefix "SPC" ;; set leader
-      :global-prefix "M-SPC")) ;; access leader in insert mode
+      :global-prefix "M-SPC") ;; access leader in insert mode
 #+end_src
 ** Direct convenient keybindings
 #+begin_src elisp
@@ -307,6 +310,10 @@ configuration in general as well).
       "p i" '(helm-imenu :wk "imenu")
       "p a" '(eldoc :wk "eglot code actions")
       "p c" '(outline-minor-mode :wk "enable code-folding"))
+#+end_src
+** Last parens
+#+begin_src elisp
+  )
 #+end_src
 * GRAPHICS
 ** ALL THE ICONS 
