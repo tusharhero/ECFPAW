@@ -108,6 +108,29 @@ comfortable in those keybindings.
   (use-package evil-numbers :after evil)
 #+end_src
 
+* WHICH-KEY 
+=which-key= basically shows the shortcuts you have setup. Its very
+useful, because you may not which key you bonded to what.
+#+begin_src elisp
+  (use-package which-key
+    :init
+    (which-key-mode 1)
+    :config
+    (setq
+     which-key-side-window-location 'bottom
+     which-key-sort-order #'which-key-key-order-alpha
+     which-key-sort-uppercase-first nil
+     which-key-add-column-padding 1
+     which-key-max-display-columns nil
+     which-key-min-display-lines 6
+     which-key-side-window-slot -10
+     which-key-side-window-max-height 0.25
+     which-key-idle-delay 0.8
+     which-key-max-description-length 25
+     which-key-allow-imprecise-window-fit t
+     which-key-separator " → " )
+    )
+#+end_src
 * GENERAL KEYBINDINGS
 I will use general package to create all the keybindings for ECFPAW. I
 only make key binds for the stuff I really need(That goes for the
@@ -127,7 +150,6 @@ configuration in general as well).
       :keymaps 'override
       :prefix "SPC" ;; set leader
       :global-prefix "M-SPC")) ;; access leader in insert mode
-
 #+end_src
 ** Direct convenient keybindings
 #+begin_src elisp
@@ -674,29 +696,6 @@ just call it using M-x)
 Get the latest version!
 #+begin_src elisp
   (use-package eglot :ensure t)
-#+end_src
-* WHICH-KEY 
-=which-key= basically shows the shortcuts you have setup. Its very
-useful, because you may not which key you bonded to what.
-#+begin_src elisp
-  (use-package which-key
-    :init
-    (which-key-mode 1)
-    :config
-    (setq
-     which-key-side-window-location 'bottom
-     which-key-sort-order #'which-key-key-order-alpha
-     which-key-sort-uppercase-first nil
-     which-key-add-column-padding 1
-     which-key-max-display-columns nil
-     which-key-min-display-lines 6
-     which-key-side-window-slot -10
-     which-key-side-window-max-height 0.25
-     which-key-idle-delay 0.8
-     which-key-max-description-length 25
-     which-key-allow-imprecise-window-fit t
-     which-key-separator " → " )
-    )
 #+end_src
 * SUDO EDIT
 [[https://github.com/nflath/sudo-edit][sudo-edit]] gives us the ability to open files with sudo privileges or
