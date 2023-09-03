@@ -642,6 +642,20 @@ I make it use =dired= to open a project instead of just using =find-file=.
     (projectile-mode 1))
 #+end_src
 * LANGUAGE SUPPORT
+** Direnv
+You also have you install the =direnv= package on your operating
+system. This package will manage all your environment needs. Its
+pretty cool :).
+
+For reference, using =direnv=, you can make a =.envrc= in your python
+project directory and put the following in it. =layout python=. It
+literally feels like black magic.
+
+Also, you need to configure your shell for it to work. Since I use
+=fish= shell, I had to add =direnv hook fish | source= to it.
+#+begin_src elisp
+  (use-package direnv)
+#+end_src
 ** LANGUAGE MODES
 **** Markdown mode
 I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
@@ -661,12 +675,6 @@ Setting up Eglot for python. Also setting up black format on save!
   ;; add blacken support
   (use-package blacken :config (add-hook 'python-mode-hook 'blacken-mode))
 #+end_src
-***** Virtual Environment support
-#+begin_src elisp
-(use-package pet
-  :config
-  (add-hook 'python-base-mode-hook 'pet-mode -10))
-#+end_src 
 ***** Prettify mode symbols
 #+begin_src elisp
   (defun ECFPAW/python-prettify-symbols ()
