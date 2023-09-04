@@ -330,18 +330,10 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
 
 ** FONTS
 *** setting the fonts face
-Defining the various fonts emacs will use.
+Defining the various fonts Emacs will use.
 #+begin_src elisp
-  (set-face-attribute 'default nil
-                      :font "Iosevka"
-                      :height 130
-                      :weight 'medium)
-  (set-face-attribute 'font-lock-comment-face nil
-                      :slant 'italic)
-  (set-face-attribute 'font-lock-keyword-face nil
-                      :slant 'italic)
-  ;; Uncomment theh following line if line spacing needs adjusting.
-  ;; (setq-default line-spacing 0.12)
+  (add-to-list 'default-frame-alist
+               '(font . "Iosevka Nerd Font Mono 14"))
 #+end_src
 *** Zooming In/Out
 For =CTRL=/-= zooming shortcuts.
@@ -609,6 +601,13 @@ I want my second brain too🗿.
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
+#+end_src
+** Prettify mode symbols
+#+begin_src elisp
+  (add-hook 'org-mode-hook #'(lambda () (setq prettify-symbols-alist '(
+                                                                      ("[ ]" . "⚪")
+                                                                      ("[-]" . "🟠")
+                                                                      ("[X]" . "🔴")))))
 #+end_src
 * GIT
 [[git-scm.com][Git]] is the best version control system(The only one I have ever
