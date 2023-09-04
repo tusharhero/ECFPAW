@@ -605,9 +605,9 @@ I want my second brain too🗿.
 ** Prettify mode symbols
 #+begin_src elisp
   (add-hook 'org-mode-hook #'(lambda () (setq prettify-symbols-alist '(
-                                                                      ("[ ]" . "⚪")
-                                                                      ("[-]" . "🟠")
-                                                                      ("[X]" . "🔴")))))
+                                                                      ("[ ]" . "☐ ")
+                                                                      ("[-]" . "❍")
+                                                                      ("[X]" . "☑ ")))))
 #+end_src
 * GIT
 [[git-scm.com][Git]] is the best version control system(The only one I have ever
