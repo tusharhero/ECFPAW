@@ -522,8 +522,8 @@ Some stuff which are for text editing in general.
 *** Electric pairs
 Adds the next pair for =(= automatically.
 #+begin_src elisp
-(electric-pair-mode)
-#+end_src>
+  (electric-pair-mode 1)
+#+end_src
 ** Prettify mode
 #+begin_src elisp
   (setq prettify-symbols-unprettify-at-point t)
@@ -570,6 +570,13 @@ This packages allows shortcuts for source blocks etc.
 #+begin_src elisp
   (require 'org-tempo)
 #+end_src
+***  Fix Electric mode inhibiting tempo
+#+begin_src elisp
+(add-hook 'org-mode-hook (lambda ()
+           (setq-local electric-pair-inhibit-predicate
+                   `(lambda (c)
+                  (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
+#+end_src
 ** LaTeX preview
 Org-mode can embed directly into the document. Here I am adjusting the
 size and rendering method.
@@ -614,7 +621,7 @@ I want my second brain too🗿.
                                                                       ("[X]" . "☑ ")))))
 #+end_src
 * GIT
-[[git-scm.com][Git]] is the best version control system(The only one I have ever
+[[https://git-scm.com][Git]] is the best version control system(The only one I have ever
 used). You can use it for anything BTW, not just programming. For
 instance when writing stories, its convenient to have Git manage the
 versions for you.
@@ -696,6 +703,7 @@ Setting up Eglot for python. Also setting up black format on save!
             ("<="     . "≤" )
             (">="     . "≥" )
             ("=="     . "≟" )
+            ("!="     . "≠" )
             )))
   (add-hook 'python-mode-hook 'ECFPAW/python-prettify-symbols)
 #+end_src
