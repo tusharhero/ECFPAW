@@ -300,16 +300,20 @@ Imenu. But I also am inside a huge =use-package= call.
 #+end_src
 ** Programming
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "p" '(:ignore t :wk "Programming")
-      "p e" '(eglot :wk "Turn on eglot")
-      "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
-      "p r" '(eglot-rename :wk "eglot-rename")
-      "p g" '(xref-find-definitions :wk "go to definition")
-      "p d" '(eldoc :wk "get docs")
-      "p i" '(helm-imenu :wk "imenu")
-      "p a" '(eldoc :wk "eglot code actions")
-      "p c" '(outline-minor-mode :wk "enable code-folding"))
+  (ECFPAW/leader-keys
+    "p" '(:ignore t :wk "Programming")
+    "p e" '(eglot :wk "Turn on eglot")
+    "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
+    "p r" '(eglot-rename :wk "eglot-rename")
+
+    "p R" '(xref-find-references :wk "Find references")
+    "p g" '(xref-find-definitions :wk "go to definitions")
+    "p b" '(xref-go-back :wk "Go back to where you were")
+
+    "p d" '(eldoc :wk "get docs")
+    "p i" '(helm-imenu :wk "imenu")
+    "p a" '(eldoc :wk "eglot code actions")
+    "p c" '(outline-minor-mode :wk "enable code-folding"))
 #+end_src
 ** Last parens
 #+begin_src elisp
@@ -518,7 +522,7 @@ Some stuff which are for text editing in general.
 *** Electric pairs
 Adds the next pair for =(= automatically.
 #+begin_src elisp
-(add-hook 'fundamental-mode-hook 'electric-pair-mode)
+(electric-pair-mode)
 #+end_src>
 ** Prettify mode
 #+begin_src elisp
@@ -647,7 +651,7 @@ I make it use =dired= to open a project instead of just using =find-file=.
     (setq projectile-switch-project-action #'projectile-dired)
     (projectile-mode 1))
 #+end_src
-* LANGUAGE SUPPORT
+* PROGRAMMING
 ** Direnv
 You also have you install the =direnv= package on your operating
 system. This package will manage all your environment needs. Its
