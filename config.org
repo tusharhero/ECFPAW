@@ -106,6 +106,15 @@ comfortable in those keybindings.
     (evil-collection-init))
   (use-package evil-tutor)
   (use-package evil-numbers :after evil)
+  
+  ;; Using RETURN to follow links in Org/Evil 
+  ;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "SPC") nil)
+    (define-key evil-motion-state-map (kbd "RET") nil)
+    (define-key evil-motion-state-map (kbd "TAB") nil))
+  ;; Setting RETURN key in org-mode to follow links
+  (setq org-return-follows-link  t)
 #+end_src
 
 * WHICH-KEY 
@@ -529,6 +538,10 @@ Adds the next pair for =(= automatically.
   (setq prettify-symbols-unprettify-at-point t)
   (global-prettify-symbols-mode)
 #+end_src
+** Enable narrow to region
+#+begin_src elisp
+  (put 'narrow-to-region 'disabled nil)
+#+end_src
 * ORG-MODE
 #+begin_quote
 ...
@@ -673,6 +686,12 @@ Also, you need to configure your shell for it to work. Since I use
 #+begin_src elisp
   (use-package direnv)
 #+end_src
+** Rainbow delimiters
+This color codes =()= so that you never miss them.
+#+begin_src elisp
+  (use-package rainbow-delimiters
+    :hook ((prog-mode . rainbow-delimiters-mode)))
+#+end_src
 ** LANGUAGE MODES
 **** Markdown mode
 I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
@@ -699,7 +718,7 @@ Setting up Eglot for python. Also setting up black format on save!
           '(("lambda" . 955 )
             ("and"    . 8743)
             ("or"     . 8744)
-            ("->"     . "→" )
+            ("->"     . "→ " )
             ("<="     . "≤" )
             (">="     . "≥" )
             ("=="     . "≟" )
