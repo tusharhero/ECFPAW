@@ -633,6 +633,15 @@ I want my second brain too🗿.
                                                                       ("[-]" . "❍")
                                                                       ("[X]" . "☑ ")))))
 #+end_src
+** Babel
+*** languages
+Enable babel execution for Python too.
+#+begin_src elisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (python . t)))
+#+end_src
 * GIT
 [[https://git-scm.com][Git]] is the best version control system(The only one I have ever
 used). You can use it for anything BTW, not just programming. For
