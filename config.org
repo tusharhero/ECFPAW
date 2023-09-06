@@ -722,29 +722,25 @@ Setting up Eglot for python. Also setting up black format on save!
 #+end_src
 ***** Prettify mode symbols
 #+begin_src elisp
-  (defun ECFPAW/python-prettify-symbols ()
-    (setq prettify-symbols-alist
-          '(("lambda" . 955 )
-            ("and"    . 8743)
-            ("or"     . 8744)
-            ("->"     . "→ " )
-            ("<="     . "≤" )
-            (">="     . "≥" )
-            ("=="     . "≟" )
-            ("!="     . "≠" )
-            )))
-  (add-hook 'python-mode-hook 'ECFPAW/python-prettify-symbols)
+  (add-hook 'python-mode-hook '(lambda () (setq prettify-symbols-alist
+                                                '(("lambda" . 955 )
+                                                  ("and"    . 8743)
+                                                  ("or"     . 8744)
+                                                  ("->"     . "→ ")
+                                                  ("<="     . "≤" )
+                                                  (">="     . "≥" )
+                                                  ("=="     . "≟" )
+                                                  ("!="     . "≠" )
+                                                  ))))
 #+end_src
 **** C
 ***** Prettify mode symbols
 #+begin_src elisp
-  (defun ECFPAW/c-prettify-symbols ()
-    (setq prettify-symbols-alist
-          '(("<="     . "≤" )
-            (">="     . "≥" )
-            ("=="     . "≟" )
-            )))
-  (add-hook 'c-mode-hook 'ECFPAW/c-prettify-symbols)
+  (add-hook 'c-mode-hook '(lambda () (setq prettify-symbols-alist
+                                           '(("<="     . "≤" )
+                                             (">="     . "≥" )
+                                             ("=="     . "≟" )
+                                             ))))
 #+end_src
 ** code folding
 #+begin_src elisp
