@@ -445,7 +445,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 
 
   (defface ECFPAW/mode-line/black-background
-    '((t :background "black" :foreground "white" :weight "ultra-bold" :box t))
+    '((t :background "black" :foreground "white" :box t))
     "Mode line face with black background for use on the mode line.")
 
   (defvar-local ECFPAW/mode-line/major-mode
