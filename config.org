@@ -165,14 +165,15 @@ Imenu. But I also am inside a huge =use-package= call.
 #+end_src
 ** Direct convenient keybindings
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "SPC" '(helm-M-x :wk "Execute command")
-      "TAB" '(mode-line-other-buffer :wk "Last buffer")
-      "c" '(comment-line :wk "Comment lines")
-      "'" '(vterm-toggle :wk "Toggle vterm")
-      "a" '(evil-numbers/inc-at-pt :wk "Increment number")
-      "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
-      "g" '(magit :wk "Magit"))
+  (ECFPAW/leader-keys
+    "SPC" '(helm-M-x :wk "Execute command")
+    "TAB" '(mode-line-other-buffer :wk "Last buffer")
+    ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
+    "c" '(comment-dwim :wk "Comment lines")
+    "'" '(vterm-toggle :wk "Toggle vterm")
+    "a" '(evil-numbers/inc-at-pt :wk "Increment number")
+    "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
+    "g" '(magit :wk "Magit"))
 #+end_src
 ** Help
 #+begin_src elisp
@@ -379,6 +380,10 @@ ever wanted to use my mouse, I would just use my mouse wheel instead
 of this.
 #+begin_src elisp
   (scroll-bar-mode -1)
+#+end_src
+*** Start in maximised mode
+#+begin_src elisp
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 ** THEME
 I will use VSCode theme🗿.
