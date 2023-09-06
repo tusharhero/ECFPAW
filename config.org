@@ -386,22 +386,24 @@ of this.
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 ** THEME
-I will use VSCode theme🗿.
+I will use Modus vivendi theme.
 *** Themes
 **** Doom Themes
 #+begin_src elisp
-  (use-package doom-themes
-    :ensure t
-    :config
-    ;; Global settings (defaults)
-    (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-          doom-themes-enable-italic t) ; if nil, italics is universally disabled
-    ;; Enable flashing mode-line on errors
-    ;; (doom-themes-visual-bell-config)
+      (use-package doom-themes
+        :ensure t
+        :config
+        ;; Global settings (defaults)
+        (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+              doom-themes-enable-italic t) ; if nil, italics is universally disabled
+        ;; Enable flashing mode-line on errors
+        ;; (doom-themes-visual-bell-config)
 
-    ;; Corrects (and improves) org-mode's native fontification.
-    (doom-themes-org-config)
-    (ECFPAW/cycle-my-theme))
+        ;; Corrects (and improves) org-mode's native fontification.
+        (doom-themes-org-config)
+
+
+        (ECFPAW/cycle-my-theme))
 #+end_src
 **** VSCode theme
 #+begin_src elisp
@@ -414,7 +416,7 @@ I will use VSCode theme🗿.
 #+end_src
 *** Easy cycling
 #+begin_src elisp
-  (setq my-themes '(vscode-dark-plus doom-gruvbox doom-gruvbox-light))
+  (setq my-themes '(modus-vivendi vscode-dark-plus doom-gruvbox doom-gruvbox-light))
 
   (setq my-cur-theme nil)
   (defun ECFPAW/cycle-my-theme ()
@@ -426,6 +428,39 @@ I will use VSCode theme🗿.
     (setq my-cur-theme (pop my-themes))
     (load-theme my-cur-theme t))
 #+end_src
+** MODE-LINE
+I am going to make my own mode-line, I followed [[https://protesilaos.com/codelog/2023-07-29-emacs-custom-modeline-tutorial/][Prot's tutorial]].
+#+begin_src elisp
+  (setq-default mode-line-format
+                '((:eval (propertize "ECFPAW" 'face 'ECFPAW/mode-line/black-background))
+                  " "
+                  ECFPAW/mode-line/buffer-name
+                  " "
+                  ECFPAW/mode-line/major-mode
+                  " "
+                  "L%l"
+                  " "
+                  "%I"
+                  "%-"))
+
+
+  (defface ECFPAW/mode-line/black-background
+    '((t :background "black" :foreground "white" :weight "ultra-bold" :box t))
+    "Mode line face with black background for use on the mode line.")
+
+  (defvar-local ECFPAW/mode-line/major-mode
+      '(:eval 
+        (propertize (capitalize (symbol-name major-mode)) 'face 'bold))
+    "Mode line construct to display the major mode.")
+  (put 'ECFPAW/mode-line/major-mode 'risky-local-variable t)
+
+  (defvar-local ECFPAW/mode-line/buffer-name
+      '(:eval 
+        (propertize (buffer-name) 'face 'warning))
+    "Mode line construct to display the buffer-name.")
+  (put 'ECFPAW/mode-line/buffer-name 'risky-local-variable t)
+#+end_src
+
 ** TRANSPARENCY
 With Emacs version 29, true transparency has been added.
 *** Setting initial transparency
