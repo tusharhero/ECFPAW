@@ -14,8 +14,15 @@ Before writing this, I used to use Spacemacs, and I think spacemacs is
 great too, I am going to get configure some features from spacemacs
 here as well (The ones I liked obviously).
 
+* Things I am proud of:
+**  Custom Mode Line
+The mode-line is fully customized(see the [[* Screenshot]]), I didn't use
+any packages for it, because I didn't like the style of any of them
+mode-lines. My mode line is /simpler/ than those packages, but its
+honest work.
+
 * Screenshot
-#+CAPTION: This was taken in late August 2023
+#+CAPTION: This was taken in early September 2023
 #+NAME:   ECFPAW dashboard
 [[./images/ECFPAW_screenshot.png]]
 * Setup
@@ -25,26 +32,30 @@ quite simple.
 
 - Install GNU Emacs using your package manager,
   for me its Archlinux
-  #+begin_src bash
+  #+begin_src shell 
     sudo pacman -S emacs
   #+end_src
+  If you are using Wayland,
+  #+begin_src shell
+    sudo pacman -S emacs-wayland
+  #+end_src
 - Get the configuration in the right place, 
-  #+begin_src bash
+  #+begin_src shell
     git clone https://github.com/tusharhero/ECFPAW ~/.config/emacs
   #+end_src
 - enable the Emacs server and start it.
-  #+begin_src bash
+  #+begin_src shell
     systemctl enable emacs --user
     systemctl start emacs --user
   #+end_src
 - Run emacs using emacsclient
-  #+begin_src bash
+  #+begin_src shell
     emacsclient -nc
   #+end_src
   You can use a GUI shortcut for Emacsclient as well.
 
-* Pains
-I want to document some workarounds to make it work sometime.
+* Workarounds
+I want to document some workarounds.
 ** KDE
 For some reason, just setting up a Emacs server =systemctl= service file doesn't
 let me use =emacsclient= in GUI mode. So I had to hack my way
