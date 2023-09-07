@@ -432,34 +432,58 @@ I will use Modus vivendi theme.
 I am going to make my own mode-line, I followed [[https://protesilaos.com/codelog/2023-07-29-emacs-custom-modeline-tutorial/][Prot's tutorial]].
 #+begin_src elisp
   (setq-default mode-line-format
-                '((:eval (propertize "ECFPAW" 'face 'ECFPAW/mode-line/black-background))
-                  " "
-                  ECFPAW/mode-line/buffer-name
-                  " "
-                  ECFPAW/mode-line/major-mode
-                  " "
-                  "L%l"
-                  " "
-                  "%I"
-                  "%-"))
+                '("@"
+                ECFPAW/mode-line/title
+                " "
+                ECFPAW/mode-line/buffer-name
+                " "
+                ECFPAW/mode-line/major-mode
+                " "
+                (:eval '(vc-mode vc-mode))
+                " "
+                "L%l"
+                " "
+                "%I"
+                " "
+                mode-line-misc-info
+                "%-"))
 
+  ;; Faces
+  (defface ECFPAW/mode-line/title-face
+    '((t :background "black" :foreground "white" :box t :weight ultra-bold))
+    "Mode line face title face for use on the mode line.")
 
-  (defface ECFPAW/mode-line/black-background
-    '((t :background "black" :foreground "white" :box t))
-    "Mode line face with black background for use on the mode line.")
+  (defface ECFPAW/mode-line/major-mode-face
+    '((t :background "midnight blue" :foreground "green yellow"
+         :weight bold))
+    "Mode line face for major mode for use on the mode line.")
+
+  (defface ECFPAW/mode-line/buffer-name-face
+    '((t :background "navy" :foreground "yellow"))
+    "Mode line face for buffer name for use on the mode line.")
+
+  ;; Constructs
+  (defvar-local ECFPAW/mode-line/title
+      '(:eval
+        (propertize "ECFPAW" 'face 'ECFPAW/mode-line/title-face))
+    "Mode line construct to display ECFPAW.")
+  (put 'ECFPAW/mode-line/title 'risky-local-variable t)
 
   (defvar-local ECFPAW/mode-line/major-mode
       '(:eval 
-        (propertize (capitalize (symbol-name major-mode)) 'face 'bold))
+        (propertize (capitalize (symbol-name major-mode)) 'face 'ECFPAW/mode-line/major-mode-face))
     "Mode line construct to display the major mode.")
   (put 'ECFPAW/mode-line/major-mode 'risky-local-variable t)
 
   (defvar-local ECFPAW/mode-line/buffer-name
       '(:eval 
-        (propertize (buffer-name) 'face 'warning))
+        (propertize (buffer-name) 'face 'ECFPAW/mode-line/buffer-name-face))
     "Mode line construct to display the buffer-name.")
   (put 'ECFPAW/mode-line/buffer-name 'risky-local-variable t)
 #+end_src
+
+#+RESULTS:
+: t
 
 ** TRANSPARENCY
 With Emacs version 29, true transparency has been added.
