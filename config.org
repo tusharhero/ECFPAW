@@ -416,16 +416,19 @@ I will use Modus vivendi theme.
 #+end_src
 *** Easy cycling
 #+begin_src elisp
-  (setq my-themes '(modus-vivendi vscode-dark-plus doom-gruvbox doom-gruvbox-light))
+  (defvar ECFPAW/themes '(modus-vivendi vscode-dark-plus doom-gruvbox doom-gruvbox-light)
+    "A list of the themes I like and use.")
 
-  (setq my-cur-theme nil)
+  (defvar ECFPAW/current-theme nil
+    "My current theme according to the cycling mechanism.")
+
   (defun ECFPAW/cycle-my-theme ()
     "Cycle through a list of themes, my-themes"
     (interactive)
-    (when my-cur-theme
-      (disable-theme my-cur-theme)
-      (setq my-themes (append my-themes (list my-cur-theme))))
-    (setq my-cur-theme (pop my-themes))
+    (when ECFPAW/current-theme
+      (disable-theme ECFPAW/current-theme)
+      (setq ECFPAW/themes (append ECFPAW/themes (list ECFPAW/current-theme))))
+    (setq ECFPAW/current-theme (pop ECFPAW/themes))
     (load-theme my-cur-theme t))
 #+end_src
 ** MODE-LINE
