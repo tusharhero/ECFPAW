@@ -328,9 +328,11 @@ Imenu. But I also am inside a huge =use-package= call.
     "p c" '(outline-minor-mode :wk "enable code-folding"))
 #+end_src
 ** Last parens
+Don't know of a way to get rid of this...
 #+begin_src elisp
   )
 #+end_src
+
 * GRAPHICS
 ** ALL THE ICONS 
 This is an icon set that can be used with dashboard, dired, ibuffer and other Emacs programs.
@@ -390,8 +392,10 @@ of this.
 ** THEME
 I will use Modus vivendi theme.
 *** Themes
+I have disabled the loading of all these themes for now. Because I
+don't use them.
 **** Doom Themes
-#+begin_src elisp
+#+begin_src elisp :tangle nil
       (use-package doom-themes
         :ensure t
         :config
@@ -408,28 +412,28 @@ I will use Modus vivendi theme.
         (ECFPAW/cycle-my-theme))
 #+end_src
 **** VSCode theme
-#+begin_src elisp
+#+begin_src elisp :tangle nil
   (use-package vscode-dark-plus-theme
     :ensure t)
 #+end_src
 **** Catpuccin theme
-#+begin_src elisp
+#+begin_src elisp :tangle nil
 (use-package catppuccin-theme :ensure t)
 #+end_src
 *** Easy cycling
+I have a custom function for loading and cycling through my preferred themes.
 #+begin_src elisp
-  (defvar ECFPAW/themes '(modus-vivendi vscode-dark-plus doom-gruvbox doom-gruvbox-light)
+  (defvar ECFPAW/themes (ECFPAW/make-cyclic-list '(modus-vivendi modus-operandi))
     "A list of the themes I like and use.")
 
   (defvar ECFPAW/current-theme nil
     "My current theme according to the cycling mechanism.")
 
   (defun ECFPAW/cycle-my-theme ()
-    "Cycle through a list of themes, my-themes"
+    "Cycle through a list of themes, ECFPAW/themes"
     (interactive)
     (when ECFPAW/current-theme
-      (disable-theme ECFPAW/current-theme)
-      (setq ECFPAW/themes (append ECFPAW/themes (list ECFPAW/current-theme))))
+      (disable-theme ECFPAW/current-theme))
     (setq ECFPAW/current-theme (pop ECFPAW/themes))
     (load-theme ECFPAW/current-theme t))
 #+end_src
@@ -487,9 +491,6 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 
     (setq-default mode-line-format ECFPAW/mode-line/full-format)
 
-    (defun ECFPAW/make-cyclic-list (list)
-      (when list
-        (setf (cdr (last list)) list)))
 
     (defvar ECFPAW/mode-line/formats
       (ECFPAW/make-cyclic-list
@@ -1034,4 +1035,9 @@ Just a place for some custom functions I define.
                 (window-configuration-to-register ?u)
                 (delete-other-windows))
             (jump-to-register ?u)))))
+
+  (defun ECFPAW/make-cyclic-list (list)
+    "Create a "
+    (when list
+      (setf (cdr (last list)) list)))
 #+end_src
