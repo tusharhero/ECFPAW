@@ -500,17 +500,16 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 
     ;; Faces
     (defface ECFPAW/mode-line/title-face
-      '((t :background "black" :foreground "white" :box t :weight ultra-bold))
+      '((t :background "#203448" :foreground "#c6eaff" :box t :weight ultra-bold))
       "Mode line face title face for use on the mode line.")
 
     (defface ECFPAW/mode-line/major-mode-face
-      '((t :background "midnight blue" :foreground "green yellow"
+      '((t :background "#2a2a66" :foreground " #f4f4f4"
            :weight bold))
       "Mode line face for major mode for use on the mode line.")
 
-
     (defface ECFPAW/mode-line/buffer-name-face
-      '((t :background "navy" :foreground "yellow"))
+      '((t :background "#0e183a" :foreground "#bfebe0" :weight bold))
       "Mode line face for buffer name for use on the mode line.")
 
     ;; Constructs
