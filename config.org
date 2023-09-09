@@ -371,11 +371,8 @@ Just too distracting.
   (menu-bar-mode -1)
   (tool-bar-mode -1)
 #+end_src
-
-*** Display Line Numbers and Truncated Lines
-I like relative line numbers(They help in Evil keybindings).
+*** Truncated Lines
 #+begin_src elisp
-  (global-display-line-numbers-mode)
   (global-visual-line-mode t)
 #+end_src
 *** Disable the scroll bar
@@ -586,19 +583,17 @@ function and make a frame unfortunately.
 #+end_src
 * LINE NUMBERS
 I am using this function because sometimes =absolute= line number is
-better than =relative=.
+better than =relative=. And I have decided to *NOT* enable these by
+default because they are super distracting.
 #+begin_src elisp
-  (defvar ECFPAW/line-number-list
-    (ECFPAW/make-cyclic-list '(relative absolute))
-    "list of line numbers")
+    (defvar ECFPAW/line-number-list
+      (ECFPAW/make-cyclic-list (list 'relative 'absolute))
+      "list of line numbers")
 
-  (defun ECFPAW/cycle-line-number-type ()
-    "Cycle through line number types"
-    (interactive)
-    (setq display-line-numbers (pop ECFPAW/line-number-list)))
-
-  (global-display-line-numbers-mode)
-  (ECFPAW/cycle-line-number-type)
+    (defun ECFPAW/cycle-line-number-type ()
+      "Cycle through line number types"
+      (interactive)
+      (setq display-line-numbers (pop ECFPAW/line-number-list)))
 #+end_src
 * COMPANY
 [[https://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for
