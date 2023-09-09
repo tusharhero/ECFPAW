@@ -170,6 +170,7 @@ Imenu. But I also am inside a huge =use-package= call.
     "TAB" '(mode-line-other-buffer :wk "Last buffer")
     ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
     "c" '(comment-dwim :wk "Comment lines")
+    "P" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
     "'" '(vterm-toggle :wk "Toggle vterm")
     "a" '(evil-numbers/inc-at-pt :wk "Increment number")
     "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
@@ -824,6 +825,30 @@ I make it use =dired= to open a project instead of just using =find-file=.
     (setq projectile-switch-project-action #'projectile-dired)
     (projectile-mode 1))
 #+end_src
+* PERSPECTIVE
+#+begin_src elisp
+  (use-package perspective
+    :custom
+    ;; NOTE! I have also set 'SCP P' to open the perspective menu.
+    ;; I'm only setting the additional binding because setting it
+    ;; helps suppress an annoying warning message.
+    (persp-mode-prefix-key (kbd "C-c M-p"))
+    :init 
+    (persp-mode)
+    :config
+    ;; Sets a file to write to when we save states
+    (setq persp-state-default-file (expand-file-name "sessions" user-emacs-directory)))
+
+  ;; This will group buffers by persp-name in ibuffer.
+  (add-hook 'ibuffer-hook
+            (lambda ()
+              (persp-ibuffer-set-filter-groups)
+              (unless (eq ibuffer-sorting-mode 'alphabetic)
+                (ibuffer-do-sort-by-alphabetic))))
+
+  ;; Automatically save perspective states to file when Emacs exits.
+  (add-hook 'kill-emacs-hook #'persp-state-save)
+#+end_src
 * PROGRAMMING
 ** Direnv
 You also have you install the =direnv= package on your operating
@@ -872,14 +897,14 @@ Setting up Eglot for python. Also setting up black format on save!
 ***** Prettify mode symbols
 #+begin_src elisp
   (add-hook 'python-mode-hook '(lambda () (setq prettify-symbols-alist
-                                                '(("lambda" . 955 )
-                                                  ("and"    . 8743)
-                                                  ("or"     . 8744)
-                                                  ("->"     . "→ ")
-                                                  ("<="     . "≤" )
-                                                  (">="     . "≥" )
-                                                  ("=="     . "≟" )
-                                                  ("!="     . "≠" )
+                                                '(("lambda" .  955 )
+                                                  ("and"    .  8743)
+                                                  ("or"     .  8744)
+                                                  ("->"     . "→  ")
+                                                  ("<="     .  "≤" )
+                                                  (">="     .  "≥" )
+                                                  ("=="     .  "≟" )
+                                                  ("!="     .  "≠" )
                                                   ))))
 #+end_src
 **** C
