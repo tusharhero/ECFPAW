@@ -434,6 +434,21 @@ I have a custom function for loading and cycling through my preferred themes.
     (setq ECFPAW/current-theme (pop ECFPAW/themes))
     (load-theme ECFPAW/current-theme t))
 #+end_src
+** FACES
+#+begin_src elisp
+  (defface ECFPAW/mode-line/title-face
+    '((t :background "#203448" :foreground "#c6eaff" :box t :weight ultra-bold))
+    "Mode line face title face for use on the mode line.")
+
+  (defface ECFPAW/mode-line/major-mode-face
+    '((t :background "#2a2a66" :foreground " #f4f4f4"
+         :weight bold))
+    "Mode line face for major mode for use on the mode line.")
+
+  (defface ECFPAW/mode-line/buffer-name-face
+    '((t :background "#0e183a" :foreground "#bfebe0" :weight bold))
+    "Mode line face for buffer name for use on the mode line.")
+#+end_src
 ** MODE-LINE
 I am going to make my own mode-line, I followed [[https://protesilaos.com/codelog/2023-07-29-emacs-custom-modeline-tutorial/][Prot's tutorial]].
 #+begin_src elisp
@@ -500,19 +515,6 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
       (setq mode-line-format (pop ECFPAW/mode-line/formats))
       (force-mode-line-update))
 
-    ;; Faces
-    (defface ECFPAW/mode-line/title-face
-      '((t :background "#203448" :foreground "#c6eaff" :box t :weight ultra-bold))
-      "Mode line face title face for use on the mode line.")
-
-    (defface ECFPAW/mode-line/major-mode-face
-      '((t :background "#2a2a66" :foreground " #f4f4f4"
-           :weight bold))
-      "Mode line face for major mode for use on the mode line.")
-
-    (defface ECFPAW/mode-line/buffer-name-face
-      '((t :background "#0e183a" :foreground "#bfebe0" :weight bold))
-      "Mode line face for buffer name for use on the mode line.")
 
     ;; Constructs
     (defvar-local ECFPAW/mode-line/title
