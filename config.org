@@ -542,7 +542,6 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
       "Mode line construct to display the time")
     (put 'ECFPAW/mode-line/time 'risky-local-variable t)
 #+end_src
-
 *** Diminish modes
 Hide some minor modes, and replace some with emojis™. 
 #+begin_src elisp
@@ -590,14 +589,13 @@ I am using this function because sometimes =absolute= line number is
 better than =relative=.
 #+begin_src elisp
   (defvar ECFPAW/line-number-list
-    '(relative absolute)
+    (ECFPAW/make-cyclic-list '(relative absolute))
     "list of line numbers")
 
   (defun ECFPAW/cycle-line-number-type ()
     "Cycle through line number types"
     (interactive)
-    (setq display-line-numbers (pop ECFPAW/line-number-list))
-    (setq ECFPAW/line-number-list (append ECFPAW/line-number-list (list display-line-numbers))))
+    (setq display-line-numbers (pop ECFPAW/line-number-list)))
 
   (global-display-line-numbers-mode)
   (ECFPAW/cycle-line-number-type)
