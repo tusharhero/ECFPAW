@@ -435,103 +435,102 @@ I will use Modus vivendi theme.
 ** MODE-LINE
 I am going to make my own mode-line, I followed [[https://protesilaos.com/codelog/2023-07-29-emacs-custom-modeline-tutorial/][Prot's tutorial]].
 #+begin_src elisp
-      (defvar ECFPAW/mode-line/full-format
-        '("@@@"
-          ECFPAW/mode-line/title
-          " "
-          ECFPAW/mode-line/buffer-name
-          " "
-          ECFPAW/mode-line/major-mode
-          " "
-          (:eval '(vc-mode vc-mode))
-          " "
-          "L%l"
-          " "
-          "%I"
-          " "
-          "%n"
-          " "
-          mode-line-misc-info
-          " "
-          mode-line-modes
-          "%-")
-        "full mode line format, for when the mode-line has enough space."
-        )
-
-  
-    (defvar ECFPAW/mode-line/mini-format
-        '("@"
-          ECFPAW/mode-line/title
-          " "
-          ECFPAW/mode-line/buffer-name
-          " "
-          ECFPAW/mode-line/major-mode
-          " "
-          (:eval '(vc-mode vc-mode))
-          " "
-          "L%l"
-          " "
-          "%I"
-          " "
-          "%n"
-          " "
-          mode-line-misc-info
-          " "
-          "%-")
-        "mini mode line format, for when the mode-line doesn't have enough space."
-        )
-
-      (setq-default mode-line-format ECFPAW/mode-line/full-format)
-
-      (defun ECFPAW/make-cyclic-list (list)
-        (when list
-          (setf (cdr (last list)) list)))
-
-      (defvar ECFPAW/mode-line/formats
-        (ECFPAW/make-cyclic-list
-         (list ECFPAW/mode-line/mini-format ECFPAW/mode-line/full-format))
-        "A list of all the modelines available")
-
-      (defun ECFPAW/mode-line/cycle-formats ()
-        "Cycle through line number types"
-        (interactive)
-        (setq mode-line-format (pop ECFPAW/mode-line/formats))
-        (force-mode-line-update))
-
-      (ECFPAW/mode-line/cycle-formats)
-      ;; Faces
-      (defface ECFPAW/mode-line/title-face
-        '((t :background "black" :foreground "white" :box t :weight ultra-bold))
-        "Mode line face title face for use on the mode line.")
-
-      (defface ECFPAW/mode-line/major-mode-face
-        '((t :background "midnight blue" :foreground "green yellow"
-             :weight bold))
-        "Mode line face for major mode for use on the mode line.")
+  (defvar ECFPAW/mode-line/full-format
+      '("@"
+        ECFPAW/mode-line/title
+        " "
+        ECFPAW/mode-line/buffer-name
+        " "
+        ECFPAW/mode-line/major-mode
+        " "
+        (:eval '(vc-mode vc-mode))
+        " "
+        "L%l"
+        " "
+        "%I"
+        " "
+        "%n"
+        " "
+        mode-line-misc-info
+        " "
+        mode-line-modes
+        "%-")
+      "full mode line format, for when the mode-line has enough space."
+      )
 
 
-      (defface ECFPAW/mode-line/buffer-name-face
-        '((t :background "navy" :foreground "yellow"))
-        "Mode line face for buffer name for use on the mode line.")
+  (defvar ECFPAW/mode-line/mini-format
+      '("@@"
+        ECFPAW/mode-line/title
+        " "
+        ECFPAW/mode-line/buffer-name
+        " "
+        ECFPAW/mode-line/major-mode
+        " "
+        (:eval '(vc-mode vc-mode))
+        " "
+        "L%l"
+        " "
+        "%I"
+        " "
+        "%n"
+        " "
+        mode-line-misc-info
+        " "
+        "%-")
+      "mini mode line format, for when the mode-line doesn't have enough space."
+      )
 
-      ;; Constructs
-      (defvar-local ECFPAW/mode-line/title
-          '(:eval
-            (propertize "ECFPAW" 'face 'ECFPAW/mode-line/title-face))
-        "Mode line construct to display ECFPAW.")
-      (put 'ECFPAW/mode-line/title 'risky-local-variable t)
+    (setq-default mode-line-format ECFPAW/mode-line/full-format)
 
-      (defvar-local ECFPAW/mode-line/major-mode
-          '(:eval 
-            (propertize (capitalize (symbol-name major-mode)) 'face 'ECFPAW/mode-line/major-mode-face))
-        "Mode line construct to display the major mode.")
-      (put 'ECFPAW/mode-line/major-mode 'risky-local-variable t)
+    (defun ECFPAW/make-cyclic-list (list)
+      (when list
+        (setf (cdr (last list)) list)))
 
-      (defvar-local ECFPAW/mode-line/buffer-name
-          '(:eval 
-            (propertize (buffer-name) 'face 'ECFPAW/mode-line/buffer-name-face))
-        "Mode line construct to display the buffer-name.")
-      (put 'ECFPAW/mode-line/buffer-name 'risky-local-variable t)
+    (defvar ECFPAW/mode-line/formats
+      (ECFPAW/make-cyclic-list
+       (list  ECFPAW/mode-line/full-format ECFPAW/mode-line/mini-format))
+      "A list of all the modelines available")
+
+    (defun ECFPAW/mode-line/cycle-formats ()
+      "Cycle through line number types"
+      (interactive)
+      (setq mode-line-format (pop ECFPAW/mode-line/formats))
+      (force-mode-line-update))
+
+    ;; Faces
+    (defface ECFPAW/mode-line/title-face
+      '((t :background "black" :foreground "white" :box t :weight ultra-bold))
+      "Mode line face title face for use on the mode line.")
+
+    (defface ECFPAW/mode-line/major-mode-face
+      '((t :background "midnight blue" :foreground "green yellow"
+           :weight bold))
+      "Mode line face for major mode for use on the mode line.")
+
+
+    (defface ECFPAW/mode-line/buffer-name-face
+      '((t :background "navy" :foreground "yellow"))
+      "Mode line face for buffer name for use on the mode line.")
+
+    ;; Constructs
+    (defvar-local ECFPAW/mode-line/title
+        '(:eval
+          (propertize "ECFPAW" 'face 'ECFPAW/mode-line/title-face))
+      "Mode line construct to display ECFPAW.")
+    (put 'ECFPAW/mode-line/title 'risky-local-variable t)
+
+    (defvar-local ECFPAW/mode-line/major-mode
+        '(:eval 
+          (propertize (capitalize (symbol-name major-mode)) 'face 'ECFPAW/mode-line/major-mode-face))
+      "Mode line construct to display the major mode.")
+    (put 'ECFPAW/mode-line/major-mode 'risky-local-variable t)
+
+    (defvar-local ECFPAW/mode-line/buffer-name
+        '(:eval 
+          (propertize (buffer-name) 'face 'ECFPAW/mode-line/buffer-name-face))
+      "Mode line construct to display the buffer-name.")
+    (put 'ECFPAW/mode-line/buffer-name 'risky-local-variable t)
 #+end_src
 *** Diminish modes
 Hide some minor modes, and replace some with emojis™. 
@@ -631,8 +630,7 @@ number lines for this one because it looked ugly.
                             (projects . 5)))
     (setq dashboard-footer-messages '("Emacs config for Programming And Writing(ECFPAW)"))
     :config
-    (dashboard-setup-startup-hook)
-    (add-hook 'dashboard-mode 'display-line-numbers-mode))
+    (dashboard-setup-startup-hook))
 #+end_src
 * DIRED
 Dired is a file manager within Emacs. It comes builtin.
@@ -837,6 +835,11 @@ This color codes =()= so that you never miss them.
 #+begin_src elisp
   (use-package rainbow-delimiters
     :hook ((prog-mode . rainbow-delimiters-mode)))
+#+end_src
+** Rainbow mode
+*Show the colors!*
+#+begin_src elisp
+(use-package rainbow-mode :config (add-hook 'prog-mode 'rainbow-mode))
 #+end_src
 ** LANGUAGE MODES
 **** Markdown mode
