@@ -632,7 +632,7 @@ number lines for this one because it looked ugly.
     (setq dashboard-center-content t)
     (setq dashboard-items '((recents . 5)
                             (projects . 5)))
-    (setq dashboard-footer-messages '("Emacs config for Programming And Writing(ECFPAW)"))
+    (setq dashboard-footer-messages '("Emacs Config For Programming And Writing(ECFPAW)"))
     :config
     (dashboard-setup-startup-hook))
 #+end_src
