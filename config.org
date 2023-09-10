@@ -116,7 +116,7 @@ Just a place for some custom functions I define.
     (when list
       (setf (cdr (last list)) list)))
 
-  (defun ECFPAW/is_it_day ()
+  (defun ECFPAW/is-it-day ()
     "Return a boolean representation of whether its day or not. Any
     time between 7 and 18 is defined as day."
     (interactive)
@@ -459,15 +459,27 @@ I have a custom function for loading and cycling through my preferred themes.
     "A list of the themes I like and use.")
 
   (defvar ECFPAW/current-theme nil
-    "My current theme according to the cycling mechanism.")
+    "My current theme")
 
   (defun ECFPAW/cycle-my-theme ()
     "Cycle through a list of themes, ECFPAW/themes"
     (interactive)
-    (when ECFPAW/current-theme
-      (disable-theme ECFPAW/current-theme) 
+    (disable-theme ECFPAW/current-theme) 
     (setq ECFPAW/current-theme (pop ECFPAW/themes))
-    (load-theme ECFPAW/current-theme t)))
+    (load-theme ECFPAW/current-theme t))
+#+end_src
+*** Day and night switching
+I want the light theme at day and the dark theme at night.
+#+begin_src elisp
+  (defvar ECFPAW/day-theme 'modus-operandi
+    "Theme of choice for the day.")
+  (defvar ECFPAW/night-theme 'modus-vivendi
+    "Theme of choice for the night.")
+  (defun ECFPAW/switch-theme-day-night ()
+    (if (ECFPAW/is-it-day)
+        (load-theme ECFPAW/day-theme)
+        (load-theme ECFPAW/night-theme)))
+  (run-at-time nil 3600 'ECFPAW/switch-theme-day-night)
 #+end_src
 ** FACES
 #+begin_src elisp
