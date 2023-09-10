@@ -297,9 +297,9 @@ Imenu. But I also am inside a huge =use-package= call.
 #+end_src
 ** Insert
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "i" '(:ignore t :wk "insert")
-      "i e" '(emoji-insert :wk "insert emoji"))
+  (ECFPAW/leader-keys
+    "i" '(:ignore t :wk "insert")
+    "i e" '(emoji-insert :wk "insert emoji"))
 #+end_src
 ** Eval
 #+begin_src elisp
@@ -439,6 +439,8 @@ don't use them.
 
         ;; Corrects (and improves) org-mode's native fontification.
         (doom-themes-org-config)
+
+
         (ECFPAW/cycle-my-theme))
 #+end_src
 **** VSCode theme
@@ -694,9 +696,8 @@ use it everywhere its possible. I use it for flyspell as well.
 * EMOJI
 Emojis, I need them.😅
 #+begin_src elisp
-  (use-package emojify
-    :config (setq 'emojify-display-style "unicode")
-    :hook (after-init . global-emojify-mode))
+(use-package company-emoji :config 
+  (add-to-list 'company-backends 'company-emoji))
 #+end_src
 * TEXT
 Some stuff which are for text editing in general.
