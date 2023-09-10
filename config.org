@@ -422,8 +422,8 @@ of this.
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 ** THEME
-I will use Modus vivendi theme.
-*** Themes
+I will use Modus themes.
+*** Extra Themes
 I have disabled the loading of all these themes for now. Because I
 don't use them.
 **** Doom Themes
@@ -439,8 +439,6 @@ don't use them.
 
         ;; Corrects (and improves) org-mode's native fontification.
         (doom-themes-org-config)
-
-
         (ECFPAW/cycle-my-theme))
 #+end_src
 **** VSCode theme
@@ -481,23 +479,9 @@ I want the light theme at day and the dark theme at night.
         (load-theme ECFPAW/night-theme)))
   (run-at-time nil 3600 'ECFPAW/switch-theme-day-night)
 #+end_src
-** FACES
-#+begin_src elisp
-  (defface ECFPAW/mode-line/title-face
-    '((t :background "#203448" :foreground "#c6eaff" :box t :weight ultra-bold))
-    "Mode line face title face for use on the mode line.")
-
-  (defface ECFPAW/mode-line/major-mode-face
-    '((t :background "#2a2a66" :foreground " #f4f4f4"
-         :weight bold))
-    "Mode line face for major mode for use on the mode line.")
-
-  (defface ECFPAW/mode-line/buffer-name-face
-    '((t :background "#0e183a" :foreground "#bfebe0" :weight bold))
-    "Mode line face for buffer name for use on the mode line.")
-#+end_src
 ** MODE-LINE
 I am going to make my own mode-line, I followed [[https://protesilaos.com/codelog/2023-07-29-emacs-custom-modeline-tutorial/][Prot's tutorial]].
+*** Mode-line formats
 #+begin_src elisp
   (defvar ECFPAW/mode-line/full-format
       '("@ "
@@ -547,9 +531,36 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
         )
       "mini mode line format, for when the mode-line doesn't have enough space."
       )
+  #+end_src
+*** Mode-line constructs
+#+begin_src elisp
+    (defvar-local ECFPAW/mode-line/title
+        '(:eval
+          (propertize "ECFPAW" 'face 'modus-themes-tab-active))
+      "Mode line construct to display ECFPAW.")
+    (put 'ECFPAW/mode-line/title 'risky-local-variable t)
 
+    (defvar-local ECFPAW/mode-line/major-mode
+        '(:eval 
+          (propertize (capitalize (symbol-name major-mode)) 'face 'modus-themes-refine-blue))
+      "Mode line construct to display the major mode.")
+    (put 'ECFPAW/mode-line/major-mode 'risky-local-variable t)
+
+    (defvar-local ECFPAW/mode-line/buffer-name
+        '(:eval 
+          (propertize (buffer-name) 'face 'modus-themes-nuanced-blue))
+      "Mode line construct to display the buffer-name.")
+    (put 'ECFPAW/mode-line/buffer-name 'risky-local-variable t)
+
+    (defvar-local ECFPAW/mode-line/time
+        '(:eval 
+          (propertize (current-time-string) 'face 'modus-themes-special-calm))
+      "Mode line construct to display the time")
+    (put 'ECFPAW/mode-line/time 'risky-local-variable t)
+#+end_src
+*** Default mode-line, and cycling.
+#+begin_src elisp
     (setq-default mode-line-format ECFPAW/mode-line/full-format)
-
 
     (defvar ECFPAW/mode-line/formats
       (ECFPAW/make-cyclic-list
@@ -561,33 +572,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
       (interactive)
       (setq mode-line-format (pop ECFPAW/mode-line/formats))
       (force-mode-line-update))
-
-
-    ;; Constructs
-    (defvar-local ECFPAW/mode-line/title
-        '(:eval
-          (propertize "ECFPAW" 'face 'ECFPAW/mode-line/title-face))
-      "Mode line construct to display ECFPAW.")
-    (put 'ECFPAW/mode-line/title 'risky-local-variable t)
-
-    (defvar-local ECFPAW/mode-line/major-mode
-        '(:eval 
-          (propertize (capitalize (symbol-name major-mode)) 'face 'ECFPAW/mode-line/major-mode-face))
-      "Mode line construct to display the major mode.")
-    (put 'ECFPAW/mode-line/major-mode 'risky-local-variable t)
-
-    (defvar-local ECFPAW/mode-line/buffer-name
-        '(:eval 
-          (propertize (buffer-name) 'face 'ECFPAW/mode-line/buffer-name-face))
-      "Mode line construct to display the buffer-name.")
-    (put 'ECFPAW/mode-line/buffer-name 'risky-local-variable t)
-
-    (defvar-local ECFPAW/mode-line/time
-        '(:eval 
-          (propertize (current-time-string) 'face 'ECFPAW/mode-line/buffer-name-face))
-      "Mode line construct to display the time")
-    (put 'ECFPAW/mode-line/time 'risky-local-variable t)
-#+end_src
+  #+end_src
 *** Diminish modes
 Hide some minor modes, and replace some with emojis™. 
 #+begin_src elisp
