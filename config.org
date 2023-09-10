@@ -743,11 +743,6 @@ you. So that the line is not too big and readable.
 #+begin_src elisp
   (add-hook 'org-mode-hook 'auto-fill-mode)
 #+end_src
-** Making the *scratch* buffer start in Org-mode
-Why not?
-#+begin_src elisp
-  (setq initial-major-mode 'org-mode)
-#+end_src
 ** Inserting time and date
 Here I will make a custom function which will help me insert time and date.
 #+begin_src elisp
@@ -1016,14 +1011,13 @@ You do need shell, in our editor sometimes...
                           (or (equal major-mode 'vterm-mode)
                               (string-prefix-p vterm-buffer-name (buffer-name buffer))))))
                     (display-buffer-reuse-window display-buffer-at-bottom)
-                    ;;(display-buffer-reuse-window display-buffer-in-direction)
-                    ;;display-buffer-in-direction/direction/dedicated is added in emacs27
-                    ;;(direction . bottom)
-                    ;;(dedicated . t) ;dedicated is supported in emacs27
+                    ;; (display-buffer-reuse-window display-buffer-in-direction)
+                    ;; display-buffer-in-direction/direction/dedicated is added in emacs27
+                    ;; (direction . bottom)
+                    ;; (dedicated . t) ;dedicated is supported in emacs27
                     (reusable-frames . visible)
                     (window-height . 0.3))))
  #+end_src
-
 * TRAMP
 #+begin_src elisp
   (custom-set-variables
