@@ -89,6 +89,7 @@ This is will fix text glitches in vterm(see [[*SHELLS AND TERMINALS]]).
 #+end_src
 * CUSTOM
 Just a place for some custom functions I define.
+** Functions
 #+begin_src elisp
   (defun ECFPAW/major-mode-keybinds ()
     "Map major mode keybindings to C-c"
@@ -98,9 +99,9 @@ Just a place for some custom functions I define.
   ;; Toggle between split windows and a single window
   (defun ECFPAW/toggle-windows-split()
     "Switch back and forth between one window and whatever split of
-    windows we might have in the frame. The idea is to maximize the
-    current buffer, while being able to go back to the previous split
-    of windows in the frame simply by calling this command again."
+      windows we might have in the frame. The idea is to maximize the
+      current buffer, while being able to go back to the previous split
+      of windows in the frame simply by calling this command again."
     (interactive)
     (if (not(window-minibuffer-p (selected-window)))
         (progn
@@ -114,6 +115,12 @@ Just a place for some custom functions I define.
     "Create a "
     (when list
       (setf (cdr (last list)) list)))
+
+  (defun ECFPAW/is_it_day ()
+    "Return a boolean representation of whether its day or not. Any
+    time between 7 and 18 is defined as day."
+    (interactive)
+    (< 7 (decoded-time-hour (decode-time (current-time))) 18))
 #+end_src
 * Load Evil Mode
 Getting evil mode installed because, I was Vim user and I am most
