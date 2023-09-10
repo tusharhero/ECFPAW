@@ -20,6 +20,9 @@ The mode-line is fully customized(see the [[* Screenshot]]), I didn't use
 any packages for it, because I didn't like the style of any of them
 mode-lines. My mode line is /simpler/ than those packages, but its
 honest work.
+** Day and night theme switching.
+I have it configured that it checks the time every hour and changes to
+a appropriate theme. If its required, details in [[config.org][config]].
 
 * Screenshot
 #+CAPTION: This was taken in early September 2023
@@ -35,10 +38,8 @@ quite simple.
   #+begin_src shell 
     sudo pacman -S emacs
   #+end_src
-  If you are using Wayland,
-  #+begin_src shell
-    sudo pacman -S emacs-wayland
-  #+end_src
+  Don't use the =emacs-wayland= package. It gave me quite a few
+  problems. Just use the regular =emacs= package on wayland as well.
 - Get the configuration in the right place, 
   #+begin_src shell
     git clone https://github.com/tusharhero/ECFPAW ~/.config/emacs
@@ -67,3 +68,4 @@ through. I wrote a script called =emac=.
 and made it auto start using KDE Plasma's settings options.
 
 And it worked!
+
