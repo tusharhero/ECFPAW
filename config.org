@@ -87,6 +87,34 @@ This is will fix text glitches in vterm(see [[*SHELLS AND TERMINALS]]).
   (set-selection-coding-system 'utf-8)
   (prefer-coding-system 'utf-8)
 #+end_src
+* CUSTOM
+Just a place for some custom functions I define.
+#+begin_src elisp
+  (defun ECFPAW/major-mode-keybinds ()
+    "Map major mode keybindings to C-c"
+    (interactive)
+    (setq unread-command-events (listify-key-sequence (kbd "C-c"))))
+
+  ;; Toggle between split windows and a single window
+  (defun ECFPAW/toggle-windows-split()
+    "Switch back and forth between one window and whatever split of
+    windows we might have in the frame. The idea is to maximize the
+    current buffer, while being able to go back to the previous split
+    of windows in the frame simply by calling this command again."
+    (interactive)
+    (if (not(window-minibuffer-p (selected-window)))
+        (progn
+          (if (< 1 (count-windows))
+              (progn
+                (window-configuration-to-register ?u)
+                (delete-other-windows))
+            (jump-to-register ?u)))))
+
+  (defun ECFPAW/make-cyclic-list (list)
+    "Create a "
+    (when list
+      (setf (cdr (last list)) list)))
+#+end_src
 * Load Evil Mode
 Getting evil mode installed because, I was Vim user and I am most
 comfortable in those keybindings.
@@ -430,7 +458,7 @@ I have a custom function for loading and cycling through my preferred themes.
     "Cycle through a list of themes, ECFPAW/themes"
     (interactive)
     (when ECFPAW/current-theme
-      (disable-theme ECFPAW/current-theme))
+      (disable-theme ECFPAW/current-theme) 
     (setq ECFPAW/current-theme (pop ECFPAW/themes))
     (load-theme ECFPAW/current-theme t))
 #+end_src
@@ -1008,31 +1036,3 @@ browser in a very integrated way. Here is a [[https://github.com/stsquad/emacs_c
                     (window-system . x))))
 #+end_src
 
-* CUSTOM
-Just a place for some custom functions I define.
-#+begin_src elisp
-  (defun ECFPAW/major-mode-keybinds ()
-    "Map major mode keybindings to C-c"
-    (interactive)
-    (setq unread-command-events (listify-key-sequence (kbd "C-c"))))
-
-  ;; Toggle between split windows and a single window
-  (defun ECFPAW/toggle-windows-split()
-    "Switch back and forth between one window and whatever split of
-    windows we might have in the frame. The idea is to maximize the
-    current buffer, while being able to go back to the previous split
-    of windows in the frame simply by calling this command again."
-    (interactive)
-    (if (not(window-minibuffer-p (selected-window)))
-        (progn
-          (if (< 1 (count-windows))
-              (progn
-                (window-configuration-to-register ?u)
-                (delete-other-windows))
-            (jump-to-register ?u)))))
-
-  (defun ECFPAW/make-cyclic-list (list)
-    "Create a "
-    (when list
-      (setf (cdr (last list)) list)))
-#+end_src
