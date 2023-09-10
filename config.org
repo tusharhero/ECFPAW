@@ -200,16 +200,17 @@ Imenu. But I also am inside a huge =use-package= call.
 #+end_src
 ** Direct convenient keybindings
 #+begin_src elisp
-  (ECFPAW/leader-keys
-    "SPC" '(helm-M-x :wk "Execute command")
-    "TAB" '(mode-line-other-buffer :wk "Last buffer")
-    ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
-    "c" '(comment-dwim :wk "Comment lines")
-    "P" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
-    "'" '(vterm-toggle :wk "Toggle vterm")
-    "a" '(evil-numbers/inc-at-pt :wk "Increment number")
-    "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
-    "g" '(magit :wk "Magit"))
+    (ECFPAW/leader-keys
+      "SPC" '(helm-M-x :wk "Execute command")
+      "TAB" '(mode-line-other-buffer :wk "Last buffer")
+      ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
+      "c" '(comment-dwim :wk "Comment lines")
+      "P" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
+      "'" '(vterm-toggle :wk "Toggle vterm")
+      "a" '(evil-numbers/inc-at-pt :wk "Increment number")
+      "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
+      "g" '(magit :wk "Magit")
+      "." '(pulsar-pulse-line :wk "Pulse the current line"))
 #+end_src
 ** Help
 #+begin_src elisp
@@ -246,11 +247,11 @@ Imenu. But I also am inside a huge =use-package= call.
     "w /" '(evil-window-vsplit :wk "Vertical split window")
     "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
     ;; Window motions
-    "w h" '(evil-window-left :wk "Window left")
-    "w j" '(evil-window-down :wk "Window down")
-    "w k" '(evil-window-up :wk "Window up")
-    "w l" '(evil-window-right :wk "Window right")
-    "w w" '(evil-window-next :wk "Goto next window"))
+    "w h" '(windmove-left :wk "Window left")
+    "w j" '(windmove-down :wk "Window down")
+    "w k" '(windmove-up :wk "Window up")
+    "w l" '(windmove-right :wk "Window right")
+    "w w" '(other-window :wk "Goto next window"))
   ;; different keybindgings to resize windows.
   (global-set-key (kbd "<C-down>") 'shrink-window)  
   (global-set-key (kbd "<C-up>") 'enlarge-window)  
@@ -420,6 +421,25 @@ of this.
 *** Start in maximised mode
 #+begin_src elisp
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
+#+end_src
+** Pulsar
+#+begin_src elisp
+      (use-package pulsar :config
+        (setq pulsar-pulse t)
+        (setq pulsar-delay 0.055)
+        (setq pulsar-iterations 10)
+        (setq pulsar-face 'pulsar-magenta)
+        (setq pulsar-highlight-face 'pulsar-yellow)
+        (add-hook 'next-error-hook #'pulsar-pulse-line)
+        (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
+
+        ;; integration with the built-in `imenu':
+        (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
+        (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
+
+        (with-eval-after-load 'evil-maps
+          (define-key evil-motion-state-map (kbd "z z") #'pulsar-recenter-center))
+        (pulsar-global-mode 1))
 #+end_src
 ** THEME
 I will use Modus themes.
