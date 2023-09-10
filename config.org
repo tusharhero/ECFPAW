@@ -605,17 +605,28 @@ With Emacs version 29, true transparency has been added.
   (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
 #+end_src
 *** Function to change the transparency of the current frame.
+**** Xorg
 I should be modifying =alpha-background= but that doesn't seem to be
 going well. So I will modify =alpha= instead. =alpha-background= just
 changes the background transparency, =alpha= on the other hand changes
 the transparency of the entire buffer. For now the only way to get
 background transparency is to modify the variable in the above
-function and make a frame unfortunately.
-#+begin_src elisp
+function and make a frame unfortunately. 
+
+I use Wayland now. I will disable this.
+#+begin_src elisp :tangle nil
   (defun ECFPAW/change-current-transparency-to (alpha-val)
     "Change the transparency to the given value"
     (interactive "nChange transparency: ")
     (set-frame-parameter (selected-frame) 'alpha alpha-val))
+#+end_src
+**** Wayland
+This works only on Wayland, So disable it and enable the block above.
+#+begin_src elisp
+  (defun ECFPAW/change-current-transparency-to (alpha-val)
+    "Change the transparency to the given value"
+    (interactive "nChange transparency: ")
+    (set-frame-parameter (selected-frame) 'alpha-background alpha-val))
 #+end_src
 * LINE NUMBERS
 I am using this function because sometimes =absolute= line number is
