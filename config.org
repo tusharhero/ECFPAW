@@ -622,7 +622,7 @@ Hide some minor modes, and replace some with emojis™.
 With Emacs version 29, true transparency has been added.
 *** Setting initial transparency
 #+begin_src elisp
-  (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
+  (add-to-list 'default-frame-alist '(alpha-background . 90)) ; For all new frames henceforth
 #+end_src
 *** Function to change the transparency of the current frame.
 **** Xorg
