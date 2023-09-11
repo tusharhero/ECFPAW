@@ -205,7 +205,6 @@ Imenu. But I also am inside a huge =use-package= call.
       "TAB" '(mode-line-other-buffer :wk "Last buffer")
       ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
       "c" '(comment-dwim :wk "Comment lines")
-      "P" '(perspective-map :wk "Perspective") ;; Lists all the perspective keybindings
       "'" '(vterm-toggle :wk "Toggle vterm")
       "a" '(evil-numbers/inc-at-pt :wk "Increment number")
       "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
@@ -736,6 +735,8 @@ Some stuff which are for text editing in general.
 *** Electric pairs
 Adds the next pair for =(= automatically.
 #+begin_src elisp
+  
+  
   (electric-pair-mode 1)
 #+end_src
 ** Prettify mode
@@ -746,6 +747,10 @@ Adds the next pair for =(= automatically.
 ** Enable narrow to region
 #+begin_src elisp
   (put 'narrow-to-region 'disabled nil)
+#+end_src
+** For focused writing
+#+begin_src elisp
+(use-package olivetti)
 #+end_src
 * ORG-MODE
 #+begin_quote
@@ -828,6 +833,7 @@ I want my second brain too🗿.
 #+end_src
 ** Prettify mode symbols
 #+begin_src elisp
+  
   (add-hook 'org-mode-hook #'(lambda () (setq prettify-symbols-alist '(
                                                                       ("[ ]" . "☐ ")
                                                                       ("[-]" . "❍")
@@ -879,30 +885,6 @@ I make it use =dired= to open a project instead of just using =find-file=.
     :config
     (setq projectile-switch-project-action #'projectile-dired)
     (projectile-mode 1))
-#+end_src
-* PERSPECTIVE
-#+begin_src elisp
-  (use-package perspective
-    :custom
-    ;; NOTE! I have also set 'SCP P' to open the perspective menu.
-    ;; I'm only setting the additional binding because setting it
-    ;; helps suppress an annoying warning message.
-    (persp-mode-prefix-key (kbd "C-c M-p"))
-    :init 
-    (persp-mode)
-    :config
-    ;; Sets a file to write to when we save states
-    (setq persp-state-default-file (expand-file-name "sessions" user-emacs-directory)))
-
-  ;; This will group buffers by persp-name in ibuffer.
-  (add-hook 'ibuffer-hook
-            (lambda ()
-              (persp-ibuffer-set-filter-groups)
-              (unless (eq ibuffer-sorting-mode 'alphabetic)
-                (ibuffer-do-sort-by-alphabetic))))
-
-  ;; Automatically save perspective states to file when Emacs exits.
-  (add-hook 'kill-emacs-hook #'persp-state-save)
 #+end_src
 * PROGRAMMING
 ** Direnv
