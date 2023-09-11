@@ -750,7 +750,9 @@ Adds the next pair for =(= automatically.
 #+end_src
 ** For focused writing
 #+begin_src elisp
-(use-package olivetti)
+  (use-package olivetti
+    :config
+    (setq-default olivetti-body-width 80))
 #+end_src
 * ORG-MODE
 #+begin_quote
@@ -833,11 +835,10 @@ I want my second brain too🗿.
 #+end_src
 ** Prettify mode symbols
 #+begin_src elisp
-  
   (add-hook 'org-mode-hook #'(lambda () (setq prettify-symbols-alist '(
-                                                                      ("[ ]" . "☐ ")
-                                                                      ("[-]" . "❍")
-                                                                      ("[X]" . "☑ ")))))
+                                                                       ("[ ]" . "☐ ")
+                                                                       ("[-]" . "❍")
+                                                                       ("[X]" . "☑ ")))))
 #+end_src
 ** Babel
 *** languages
