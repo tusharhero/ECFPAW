@@ -230,6 +230,7 @@ Imenu. But I also am inside a huge =use-package= call.
       "b n" '(next-buffer :wk "Next buffer")
       "b p" '(previous-buffer :wk "Previous buffer")
       "b r" '(revert-buffer :wk "Revert buffer")
+      "b f" '(olivetti-mode :wk "center text and write")
       "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
       "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer"))
 #+end_src
@@ -752,7 +753,8 @@ Adds the next pair for =(= automatically.
 #+begin_src elisp
   (use-package olivetti
     :config
-    (setq-default olivetti-body-width 80))
+    (setq-default olivetti-body-width 80)
+    )
 #+end_src
 * ORG-MODE
 #+begin_quote
