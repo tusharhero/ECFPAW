@@ -838,9 +838,9 @@ I want my second brain too🗿.
 ** Prettify mode symbols
 #+begin_src elisp
   (add-hook 'org-mode-hook #'(lambda () (setq prettify-symbols-alist '(
-                                                                       ("[ ]" . "☐ ")
+                                                                       ("[ ]" . "☐  ")
                                                                        ("[-]" . "❍")
-                                                                       ("[X]" . "☑ ")))))
+                                                                       ("[X]" . "☑  ")))))
 #+end_src
 ** Babel
 *** languages
@@ -1050,4 +1050,5 @@ browser in a very integrated way. Here is a [[https://github.com/stsquad/emacs_c
                     (menu-bar-lines . t)
                     (window-system . x))))
 #+end_src
+
 
