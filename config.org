@@ -756,6 +756,11 @@ Adds the next pair for =(= automatically.
     (setq-default olivetti-body-width 80)
     )
 #+end_src
+* YASNIPPET
+#+begin_src elisp
+  (use-package yasnippet)
+  (use-package yasnippet-snippets :after yasnippets)
+#+end_src
 * ORG-MODE
 #+begin_quote
 ...
@@ -807,6 +812,19 @@ size and rendering method.
                           '(:foreground default :background default :scale 3 :html-foreground "Black" :html-background "Transparent" :html-scale 1 :matchers
                                         ("begin" "$1" "$" "$$" "\\(" "\\["))))
   (setq org-preview-latex-default-process 'dvisvgm)
+#+end_src
+** Latex math support
+#+begin_src elisp
+  (use-package cdlatex)
+  (use-package auctex)
+  (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
+
+  (defun ECFPAW/org-latex-yas ()
+    "Activate org and LaTeX yas expansion in org-mode buffers."
+    (yas-minor-mode)
+    (yas-activate-extra-mode 'latex-mode))
+
+  (add-hook 'org-mode-hook #'ECFPAW/org-latex-yas)
 #+end_src
 ** Roam
 I want my second brain too🗿. 
