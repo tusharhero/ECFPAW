@@ -963,6 +963,22 @@ Setting up Eglot for python. Also setting up black format on save!
                                                   (">="     .  "≥" )
                                                   ("=="     .  "≟" )
                                                   ("!="     .  "≠" )
+                                                  ("!="     .  "≠" )
+                                                  ("*"      .   "×")
+                                                  ("def"    .  "𝒻")
+                                                  ("class"  .  "𝓒")
+                                                  ("in"     . #x2208)
+                                                  ("not in" . #x2209)
+                                                  ("not"    .    "¬")
+                                                  ("return" .    #x27fc)
+                                                  ("yield"  .    #x27fb)
+                                                  ("for"    .    #x2200)
+                                                  ;; Base Types
+                                                  ("int"    .    #x2124)
+                                                  ("float"  .    #x211d)
+                                                  ("str"    .   #x1d54a)
+                                                  ("True"   .   #x1d54b)
+                                                  ("False"  .   #x1d53d)
                                                   ))))
 #+end_src
 **** C
@@ -1068,5 +1084,6 @@ browser in a very integrated way. Here is a [[https://github.com/stsquad/emacs_c
                     (menu-bar-lines . t)
                     (window-system . x))))
 #+end_src
+
 
 
