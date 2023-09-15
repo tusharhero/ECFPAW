@@ -141,7 +141,7 @@ comfortable in those keybindings.
     (evil-collection-init))
   (use-package evil-tutor)
   (use-package evil-numbers :after evil)
-  
+
   ;; Using RETURN to follow links in Org/Evil 
   ;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
   (with-eval-after-load 'evil-maps
@@ -150,6 +150,8 @@ comfortable in those keybindings.
     (define-key evil-motion-state-map (kbd "TAB") nil))
   ;; Setting RETURN key in org-mode to follow links
   (setq org-return-follows-link  t)
+(define-key evil-normal-state-map (kbd "{") 'forward-paragraph)
+(define-key evil-normal-state-map (kbd "}") 'backward-paragraph)
 #+end_src
 
 * WHICH-KEY 
@@ -387,7 +389,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
 Defining the various fonts Emacs will use.
 #+begin_src elisp
   (add-to-list 'default-frame-alist
-               '(font . "Iosevka Nerd Font Mono 14"))
+               '(font . "Jetbrains Mono 14"))
 #+end_src
 *** Zooming In/Out
 For =CTRL=/-= zooming shortcuts.
@@ -592,7 +594,10 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
     (defun ECFPAW/mode-line/cycle-formats ()
       "Cycle through line number types"
       (interactive)
-      (setq mode-line-format (pop ECFPAW/mode-line/formats))
+      (setq ECFPAW/current-mode-line-format (pop ECFPAW/mode-line/formats))
+      (setq mode-line-format ECFPAW/current-mode-line-format)
+      (setq-default mode-line-format ECFPAW/current-mode-line-format)
+      (setq-local mode-line-format ECFPAW/current-mode-line-format)
       (force-mode-line-update))
   #+end_src
 *** Diminish modes
@@ -816,9 +821,7 @@ size and rendering method.
 ** Latex math support
 #+begin_src elisp
   (use-package cdlatex)
-  (use-package auctex)
   (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
-
   (defun ECFPAW/org-latex-yas ()
     "Activate org and LaTeX yas expansion in org-mode buffers."
     (yas-minor-mode)
@@ -985,9 +988,17 @@ Setting up Eglot for python. Also setting up black format on save!
 ***** Prettify mode symbols
 #+begin_src elisp
   (add-hook 'c-mode-hook '(lambda () (setq prettify-symbols-alist
-                                           '(("<="     . "≤" )
-                                             (">="     . "≥" )
-                                             ("=="     . "≟" )
+                                           '(("<="     . "≤")
+                                             (">="     . "≥")
+                                             ("=="     . "≟")
+                                             ("!="     . "≠")
+                                             ("->"     . "→")
+                                             ("=>"     . "⇒")
+                                             ("<-"     . "←")
+                                             ("<<"     . "≪")
+                                             (">>"     . "≫")
+                                             ("<<"     . "≪")
+                                             (">>"     . "≫")
                                              ))))
 #+end_src
 ** REAL Grand-Unified-Debugger
