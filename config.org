@@ -412,10 +412,6 @@ Just too distracting.
   (menu-bar-mode -1)
   (tool-bar-mode -1)
 #+end_src
-*** Truncated Lines
-#+begin_src elisp
-  (global-visual-line-mode t)
-#+end_src
 *** Disable the scroll bar
 Because they are totally unnecessary and I don't use them. Even if I
 ever wanted to use my mouse, I would just use my mouse wheel instead
