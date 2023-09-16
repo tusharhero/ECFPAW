@@ -150,8 +150,11 @@ comfortable in those keybindings.
     (define-key evil-motion-state-map (kbd "TAB") nil))
   ;; Setting RETURN key in org-mode to follow links
   (setq org-return-follows-link  t)
-(define-key evil-normal-state-map (kbd "{") 'forward-paragraph)
-(define-key evil-normal-state-map (kbd "}") 'backward-paragraph)
+
+  ;; Tweak default Evil bindings
+  (with-eval-after-load 'evil-maps
+    (define-key evil-normal-state-map (kbd "{") 'forward-paragraph)
+    (define-key evil-normal-state-map (kbd "}") 'backward-paragraph))
 #+end_src
 
 * WHICH-KEY 
