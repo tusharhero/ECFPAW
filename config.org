@@ -760,7 +760,7 @@ Adds the next pair for =(= automatically.
     (setq-default olivetti-body-width 80)
     )
 #+end_src
-* YASNIPPET
+* SNIPPETS
 #+begin_src elisp
   (use-package yasnippet)
   (use-package yasnippet-snippets :after yasnippets)
@@ -859,7 +859,7 @@ I want my second brain too🗿.
 #+begin_src elisp
   (add-hook 'org-mode-hook #'(lambda () (setq prettify-symbols-alist '(
                                                                        ("[ ]" . "☐  ")
-                                                                       ("[-]" . "❍")
+                                                                       ("[-]" . "❍  ")
                                                                        ("[X]" . "☑  ")))))
 #+end_src
 ** Babel
