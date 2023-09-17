@@ -305,7 +305,8 @@ Imenu. But I also am inside a huge =use-package= call.
 #+begin_src elisp
   (ECFPAW/leader-keys
     "i" '(:ignore t :wk "insert")
-    "i e" '(emoji-insert :wk "insert emoji"))
+    "i e" '(emoji-insert :wk "insert emoji")
+    "i s" '(yas-insert-snippet :wk "insert snippet"))
 #+end_src
 ** Eval
 #+begin_src elisp
