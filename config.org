@@ -392,7 +392,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
 Defining the various fonts Emacs will use.
 #+begin_src elisp
   (add-to-list 'default-frame-alist
-               '(font . "Jetbrains Mono 14"))
+               '(font . "Iosevka Nerd Font Mono 14"))
 #+end_src
 *** Zooming In/Out
 For =CTRL=/-= zooming shortcuts.
@@ -815,7 +815,7 @@ size and rendering method.
   (custom-set-variables '(org-format-latex-options
                           '(:foreground default :background default :scale 3 :html-foreground "Black" :html-background "Transparent" :html-scale 1 :matchers
                                         ("begin" "$1" "$" "$$" "\\(" "\\["))))
-  (setq org-preview-latex-default-process 'dvisvgm)
+  (setq org-preview-latex-default-process 'imagemagick)
 #+end_src
 ** Latex math support
 #+begin_src elisp
