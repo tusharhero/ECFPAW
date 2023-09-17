@@ -725,8 +725,8 @@ use it everywhere its possible. I use it for flyspell as well.
     (helm-mode +1)
     )
 
-  (use-package helm-flyspell)
-  (use-package helm-themes)
+  (use-package helm-flyspell :after helm)
+  (use-package helm-themes :after helm)
 #+end_src
 * EMOJI
 Emojis, I need them.😅
