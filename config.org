@@ -917,6 +917,14 @@ I make it use =dired= to open a project instead of just using =find-file=.
     (projectile-mode 1))
 #+end_src
 * PROGRAMMING
+** Breadcrumbs
+Breadcrumbs are the little thingies at the top which show in which
+part of the document you are in and in which directory.
+#+begin_src elisp
+  (use-package breadcrumb
+    :elpaca (:host github :repo "joaotavora/breadcrumb")
+    :config (breadcrumb-mode t))
+#+end_src
 ** Direnv
 You also have you install the =direnv= package on your operating
 system. This package will manage all your environment needs. Its
