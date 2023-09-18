@@ -370,17 +370,17 @@ Imenu. But I also am inside a huge =use-package= call.
     "p a" '(eldoc :wk "eglot code actions")
     "p c" '(outline-minor-mode :wk "enable code-folding"))
 #+end_src
-** Last parens
-Don't know of a way to get rid of this...
-#+begin_src elisp
-  )
-#+end_src
 ** Narrowing
 #+begin_src elisp
   (ECFPAW/leader-keys
     "n" '(:ignore t :wk "Narrowing")
     "n n" '(narrow-to-region :wk "Narrow to region")
-    "n o" '(org-edit-special :wk "Narrow to org source block"))
+    "n w" '(widen :wk "Widen"))
+#+end_src
+** Last parens
+Don't know of a way to get rid of this...
+#+begin_src elisp
+  )
 #+end_src
 * GRAPHICS
 ** ALL THE ICONS 
