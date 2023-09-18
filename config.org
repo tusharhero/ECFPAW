@@ -334,15 +334,15 @@ Imenu. But I also am inside a huge =use-package= call.
 #+end_src
 ** Org-mode
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "o" '(:ignore t :wk "org-mode")
-      "o o" '(org-mode :wk "toggle org-mode")
-      "o r" '(:ignore t :wk "org-roam")
-      "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
-      "o i" '(:ignore :wk "insert")
-      "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
-    (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
-    (which-key-add-key-based-replacements "SPC o b" "babel")
+  (ECFPAW/leader-keys
+    "o" '(:ignore t :wk "org-mode")
+    "o o" '(org-mode :wk "toggle org-mode")
+    "o r" '(:ignore t :wk "org-roam")
+    "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
+    "o i" '(:ignore :wk "insert")
+    "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
+  (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
+  (which-key-add-key-based-replacements "SPC o b" "babel")
 #+end_src
 *** Org-roam
 #+begin_src elisp
@@ -375,7 +375,13 @@ Don't know of a way to get rid of this...
 #+begin_src elisp
   )
 #+end_src
-
+** Narrowing
+#+begin_src elisp
+  (ECFPAW/leader-keys
+    "n" '(:ignore t :wk "Narrowing")
+    "n n" '(narrow-to-region :wk "Narrow to region")
+    "n o" '(org-edit-special :wk "Narrow to org source block"))
+#+end_src
 * GRAPHICS
 ** ALL THE ICONS 
 This is an icon set that can be used with dashboard, dired, ibuffer and other Emacs programs.
