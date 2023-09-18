@@ -973,8 +973,6 @@ Setting up Eglot for python. Also setting up black format on save!
 #+begin_src elisp
   (add-hook 'python-mode-hook '(lambda () (setq prettify-symbols-alist
                                                 '(("lambda" .  955 )
-                                                  ("and"    .  8743)
-                                                  ("or"     .  8744)
                                                   ("->"     . "→  ")
                                                   ("<="     .  "≤" )
                                                   (">="     .  "≥" )
@@ -983,19 +981,8 @@ Setting up Eglot for python. Also setting up black format on save!
                                                   ("!="     .  "≠" )
                                                   ("*"      .   "×")
                                                   ("def"    .  "𝒻")
-                                                  ("class"  .  "𝓒")
                                                   ("in"     . #x2208)
                                                   ("not in" . #x2209)
-                                                  ("not"    .    "¬")
-                                                  ("return" .    #x27fc)
-                                                  ("yield"  .    #x27fb)
-                                                  ("for"    .    #x2200)
-                                                  ;; Base Types
-                                                  ("int"    .    #x2124)
-                                                  ("float"  .    #x211d)
-                                                  ("str"    .   #x1d54a)
-                                                  ("True"   .   #x1d54b)
-                                                  ("False"  .   #x1d53d)
                                                   ))))
 #+end_src
 **** C
