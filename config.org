@@ -156,7 +156,13 @@ comfortable in those keybindings.
     (define-key evil-normal-state-map (kbd "{") 'forward-paragraph)
     (define-key evil-normal-state-map (kbd "}") 'backward-paragraph))
 #+end_src
-
+** Converting the caps key to an ESC key
+Its very convenient to use the =capslock= key as an additional =ESC=
+key.
+*** Xorg
+#+begin_src shell :tangle nil
+setxkbmap -option caps:escape
+#+end_src
 * WHICH-KEY 
 =which-key= basically shows the shortcuts you have setup. Its very
 useful, because you may not which key you bonded to what.
