@@ -186,6 +186,7 @@ useful, because you may not which key you bonded to what.
      which-key-separator " → " )
     )
 #+end_src
+
 * GENERAL KEYBINDINGS
 I will use general package to create all the keybindings for ECFPAW. I
 only make key binds for the stuff I really need(That goes for the
@@ -770,8 +771,6 @@ Some stuff which are for text editing in general.
 *** Electric pairs
 Adds the next pair for =(= automatically.
 #+begin_src elisp
-  
-  
   (electric-pair-mode 1)
 #+end_src
 ** Prettify mode
