@@ -902,6 +902,19 @@ Enable babel execution for Python too.
    '((emacs-lisp . t)
      (python . t)))
 #+end_src
+* NEWS-TICKER
+=newsticker= is a feed reader for Emacs. To keep the feeds private, I
+have the feeds listed in a file called =feeds.el=.
+#+begin_src elisp
+  (load-file
+   (expand-file-name
+    "feeds.el"
+    user-emacs-directory))
+#+end_src
+** Making eww the default
+#+begin_src elisp
+  (setq browse-url-browser-function 'eww-browse-url)
+#+end_src
 * GIT
 [[https://git-scm.com][Git]] is the best version control system(The only one I have ever
 used). You can use it for anything BTW, not just programming. For
