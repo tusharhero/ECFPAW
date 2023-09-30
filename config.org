@@ -290,6 +290,12 @@ Imenu. But I also am inside a huge =use-package= call.
       "d d" '(dired :wk "Open dired")
       "d j" '(dired-jump :wk "Dired jump to current"))
 #+end_src
+** News-ticker
+#+begin_src elisp
+  (ECFPAW/leader-keys
+    "N" '(:ignore t :wk "Newsticker")
+    "N n" '(newsticker-treeview :wk "Treeview"))
+#+end_src
 ** Spelling
 #+begin_src elisp
     (ECFPAW/leader-keys
@@ -903,8 +909,10 @@ Enable babel execution for Python too.
      (python . t)))
 #+end_src
 * NEWS-TICKER
-=newsticker= is a feed reader for Emacs. To keep the feeds private, I
-have the feeds listed in a file called =feeds.el=.
+=newsticker= is a feed reader for Emacs. 
+** Loading feeds
+To keep the feeds private, I have the feeds listed in a file called
+=feeds.el=.
 #+begin_src elisp
   (load-file
    (expand-file-name
