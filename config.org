@@ -916,7 +916,7 @@ To keep the feeds private, I have the feeds listed in a file called
 #+begin_src elisp
   (load-file
    (expand-file-name
-    "feeds.el"
+    "feed.el"
     user-emacs-directory))
 #+end_src
 ** Making eww the default
