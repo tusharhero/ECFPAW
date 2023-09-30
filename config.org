@@ -112,7 +112,7 @@ Just a place for some custom functions I define.
             (jump-to-register ?u)))))
 
   (defun ECFPAW/make-cyclic-list (list)
-    "Create a "
+    "Create a cyclic list"
     (when list
       (setf (cdr (last list)) list)))
 
@@ -148,6 +148,7 @@ comfortable in those keybindings.
     (define-key evil-motion-state-map (kbd "SPC") nil)
     (define-key evil-motion-state-map (kbd "RET") nil)
     (define-key evil-motion-state-map (kbd "TAB") nil))
+
   ;; Setting RETURN key in org-mode to follow links
   (setq org-return-follows-link  t)
 
