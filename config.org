@@ -984,6 +984,11 @@ Also, you need to configure your shell for it to work. Since I use
 #+begin_src elisp
   (use-package direnv :config (direnv-mode 1))
 #+end_src
+** Compilation mode
+*** Enable colors 
+#+begin_src elisp
+  (add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
+#+end_src
 ** Rainbow delimiters
 This color codes =()= so that you never miss them.
 #+begin_src elisp
