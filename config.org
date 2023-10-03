@@ -1004,14 +1004,9 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
     (markdown-mode))
 #+end_src
 **** Python
-Setting up Eglot for python. Also setting up black format on save!
-***** Eglot
-#+begin_src elisp
-  (add-hook 'python-mode-hook 'eglot-ensure)
-#+end_src
 ***** Code formatting
+Setting up black format on save!
 #+begin_src elisp
-  ;; add blacken support
   (use-package blacken :config (add-hook 'python-mode-hook 'blacken-mode))
 #+end_src
 ***** Prettify mode symbols
@@ -1059,8 +1054,8 @@ Setting up Eglot for python. Also setting up black format on save!
 *** install language grammar
 use this SRC block to install support for more languages (You can also
 just call it using M-x)
-#+begin_src elisp
-  ;; (treesit-install-language-grammar "python")
+#+begin_src elisp tangle: nil
+  (treesit-install-language-grammar "python")
 #+end_src
 ** Eglot
 Get the latest version!
