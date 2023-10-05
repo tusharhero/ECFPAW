@@ -375,14 +375,16 @@ Imenu. But I also am inside a huge =use-package= call.
     "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
     "p r" '(eglot-rename :wk "eglot-rename")
 
+
     "p R" '(xref-find-references :wk "Find references")
     "p g" '(xref-find-definitions :wk "go to definitions")
     "p b" '(xref-go-back :wk "Go back to where you were")
 
+    "p c" '(compile :wk "compile")
     "p d" '(eldoc :wk "get docs")
     "p i" '(helm-imenu :wk "imenu")
     "p a" '(eldoc :wk "eglot code actions")
-    "p c" '(outline-minor-mode :wk "enable code-folding"))
+    "p f" '(outline-minor-mode :wk "enable code-folding"))
 #+end_src
 ** Narrowing
 #+begin_src elisp
