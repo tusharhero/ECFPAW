@@ -1061,7 +1061,7 @@ Setting up black format on save!
 *** install language grammar
 use this SRC block to install support for more languages (You can also
 just call it using M-x)
-#+begin_src elisp tangle: nil
+#+begin_src elisp :tangle nil
   (treesit-install-language-grammar "python")
 #+end_src
 ** Eglot
