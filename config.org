@@ -335,16 +335,17 @@ Imenu. But I also am inside a huge =use-package= call.
 #+end_src
 ** Toggling/Cycling
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "t" '(:ignore t :wk "Toggle/Cycle")
-      "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-      "t L" '(ECFPAW/cycle-line-number-type :wk "cycle line number types")
-      "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
-      "t T" '(visual-line-mode :wk "Toggle truncated lines")
-      "t c" '(outline-minor-mode :wk "enable code-folding")
-      "t o" '(org-mode :wk "toggle org-mode")
-      "t m" '(ECFPAW/mode-line/cycle-formats :wk "cycle mode line")
-      "t t" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes"))
+  (ECFPAW/leader-keys
+    "t" '(:ignore t :wk "Toggle/Cycle")
+    "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+    "t L" '(ECFPAW/cycle-line-number-type :wk "cycle line number types")
+    "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
+    "t T" '(visual-line-mode :wk "Toggle truncated lines")
+    "t c" '(outline-minor-mode :wk "enable code-folding")
+    "t o" '(org-mode :wk "toggle org-mode")
+    "t O" '(olivetti-mode :wk "center text and write")
+    "t m" '(ECFPAW/mode-line/cycle-formats :wk "cycle mode line")
+    "t t" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes"))
 #+end_src
 ** Org-mode
 #+begin_src elisp
