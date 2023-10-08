@@ -451,22 +451,27 @@ of this.
 #+end_src
 ** Pulsar
 #+begin_src elisp
-      (use-package pulsar :config
-        (setq pulsar-pulse t)
-        (setq pulsar-delay 0.055)
-        (setq pulsar-iterations 10)
-        (setq pulsar-face 'pulsar-magenta)
-        (setq pulsar-highlight-face 'pulsar-yellow)
-        (add-hook 'next-error-hook #'pulsar-pulse-line)
-        (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
+    (use-package pulsar :config
+      (setq pulsar-pulse t)
+      (setq pulsar-delay 0.055)
+      (setq pulsar-iterations 10)
+      (setq pulsar-face 'pulsar-magenta)
+      (setq pulsar-highlight-face 'pulsar-yellow)
+      (add-hook 'next-error-hook #'pulsar-pulse-line)
+      (add-hook 'evil-scroll-up #'pulsar-pulse-line)
+      (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
 
-        ;; integration with the built-in `imenu':
-        (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
-        (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
+      ;; integration with the built-in `imenu':
+      (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
+      (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
+      (pulsar-global-mode 1))
 
-        (with-eval-after-load 'evil-maps
-          (define-key evil-motion-state-map (kbd "z z") #'pulsar-recenter-center))
-        (pulsar-global-mode 1))
+#+end_src
+*** Adding support for some more functions
+#+begin_src elisp
+  (with-eval-after-load 'pulsar
+    (add-to-list 'pulsar-pulse-functions 'evil-scroll-down)
+    (add-to-list 'pulsar-pulse-functions 'evil-scroll-line-to-center))
 #+end_src
 ** THEME
 I will use Modus themes.
@@ -1145,6 +1150,3 @@ browser in a very integrated way. Here is a [[https://github.com/stsquad/emacs_c
                     (menu-bar-lines . t)
                     (window-system . x))))
 #+end_src
-
-
-
