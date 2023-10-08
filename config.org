@@ -164,6 +164,12 @@ key.
 #+begin_src shell :tangle nil
 setxkbmap -option caps:escape
 #+end_src
+* Disable BEEP bell
+It's very annoying to have that bell ringing all the time.
+#+begin_src elisp
+(setq visible-bell t)
+(setq ring-bell-function 'ignore)
+#+end_src
 * WHICH-KEY 
 =which-key= basically shows the shortcuts you have setup. Its very
 useful, because you may not which key you bonded to what.
