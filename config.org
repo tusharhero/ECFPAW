@@ -424,7 +424,7 @@ This is an icon set that can be used with dashboard, dired, ibuffer and other Em
 Defining the various fonts Emacs will use.
 #+begin_src elisp
   (add-to-list 'default-frame-alist
-               '(font . "Iosevka Nerd Font Mono 14"))
+               '(font . "Iosevka Nerd Font 14"))
 #+end_src
 *** Zooming In/Out
 For =CTRL=/-= zooming shortcuts.
