@@ -164,7 +164,7 @@ key.
 #+begin_src shell :tangle nil
 setxkbmap -option caps:escape
 #+end_src
-* Disable BEEP bell
+* DISABLE BELL
 It's very annoying to have that bell ringing all the time.
 #+begin_src elisp
 (setq visible-bell t)
@@ -457,26 +457,26 @@ of this.
 #+end_src
 ** Pulsar
 #+begin_src elisp
-    (use-package pulsar :config
-      (setq pulsar-pulse t)
-      (setq pulsar-delay 0.055)
-      (setq pulsar-iterations 10)
-      (setq pulsar-face 'pulsar-magenta)
-      (setq pulsar-highlight-face 'pulsar-yellow)
-      (add-hook 'next-error-hook #'pulsar-pulse-line)
-      (add-hook 'evil-scroll-up #'pulsar-pulse-line)
-      (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
+  (use-package pulsar :config
+    (setq pulsar-pulse t)
+    (setq pulsar-delay 0.055)
+    (setq pulsar-iterations 10)
+    (setq pulsar-face 'pulsar-magenta)
+    (setq pulsar-highlight-face 'pulsar-yellow)
+    (add-hook 'next-error-hook #'pulsar-pulse-line)
+    (add-hook 'evil-scroll-up #'pulsar-pulse-line)
+    (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
 
-      ;; integration with the built-in `imenu':
-      (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
-      (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
-      (pulsar-global-mode 1))
-
+    ;; integration with the built-in `imenu':
+    (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
+    (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
+    (pulsar-global-mode 1))
 #+end_src
 *** Adding support for some more functions
 #+begin_src elisp
   (with-eval-after-load 'pulsar
     (add-to-list 'pulsar-pulse-functions 'evil-scroll-down)
+    (add-to-list 'pulsar-pulse-functions 'evil-scroll-up)
     (add-to-list 'pulsar-pulse-functions 'evil-scroll-line-to-center))
 #+end_src
 ** THEME
