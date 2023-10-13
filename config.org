@@ -739,7 +739,8 @@ blindly copied from DistroTube worked. Lesson learned.
 * DASHBOARD
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
 dashboard which comes up when you start Emacs. I also disable the
-number lines for this one because it looked ugly.
+number lines for this one because it looked ugly. I have disabled the custom
+banner image for now as I feel like the default is cooler.
 #+begin_src elisp
   (use-package dashboard
     :ensure t 
@@ -747,7 +748,7 @@ number lines for this one because it looked ugly.
     (setq initial-buffer-choice 'dashboard-open)
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
-    (setq dashboard-startup-banner (locate-user-emacs-file "images/trancendent-gnu.png"))
+    ;; (setq dashboard-startup-banner (locate-user-emacs-file "images/trancendent-gnu.png"))
     (setq dashboard-banner-logo-title "ECFPAW")
     (setq dashboard-center-content t)
     (setq dashboard-items '((recents . 5)
