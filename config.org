@@ -149,6 +149,13 @@ comfortable in those keybindings.
     (define-key evil-motion-state-map (kbd "RET") nil)
     (define-key evil-motion-state-map (kbd "TAB") nil))
 
+  ;; Use =jk= as =ESC=.
+  (with-eval-after-load 'general
+    (general-imap "j"
+      (general-key-dispatch 'self-insert-command
+        :timeout 0.2
+        "k" 'evil-normal-state)))
+
   ;; Setting RETURN key in org-mode to follow links
   (setq org-return-follows-link  t)
 
