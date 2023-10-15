@@ -812,6 +812,12 @@ Adds the next pair for =(= automatically.
     (setq-default olivetti-body-width 80)
     )
 #+end_src
+* DOC-VIEW
+I use Doc-View to view documents within Emacs.
+#+begin_src elisp
+  (custom-set-variables
+   '(doc-view-continuous t))
+#+end_src
 * SNIPPETS
 #+begin_src elisp
   (use-package yasnippet :config
