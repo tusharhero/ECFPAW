@@ -209,7 +209,7 @@ Imenu. But I also am inside a huge =use-package= call.
 
     ;; set up ',' as major mode keybinds key
     (evil-define-key 'normal global-map (kbd ",") 'ECFPAW/major-mode-keybinds)
-    
+
     ;; set up 'SPC' as the global leader key
     (general-create-definer ECFPAW/leader-keys
       :states '(normal insert visual emacs)
@@ -751,11 +751,21 @@ banner image for now as I feel like the default is cooler.
     ;; (setq dashboard-startup-banner (locate-user-emacs-file "images/trancendent-gnu.png"))
     (setq dashboard-banner-logo-title "ECFPAW")
     (setq dashboard-center-content t)
-    (setq dashboard-items '((recents . 5)
+    (setq dashboard-projects-switch-function 'dired)
+    (setq dashboard-projects-backend 'project-el)
+    (setq dashboard-items '((recents  . 5)
                             (projects . 5)))
     (setq dashboard-footer-messages '("Emacs Config For Programming And Writing(ECFPAW)"))
     :config
     (dashboard-setup-startup-hook))
+#+end_src
+* PROJECT
+I was using projectile before but then I realized that I don't use
+most of its functionality(Basically it was bloated for me). That is
+why I have decided to switch to =project.el=, the builtin project
+management functionality of Emacs.
+#+begin_src elisp
+(setq project-switch-commands 'project-find-dir)
 #+end_src
 * DIRED
 Dired is a file manager within Emacs. It comes builtin.
@@ -966,22 +976,6 @@ Flycheck can do a lot of stuff including,
     :ensure t
     :defer t
     :init (global-flycheck-mode))
-#+end_src
-* PROJECTILE 
-Projectile is a project interaction library for Emacs.  It should be
-noted that many projectile commands do not work if you have set “fish”
-as the “shell-file-name” for Emacs.  I had initially set “fish” as the
-“shell-file-name” in the Vterm section of this config, but oddly
-enough I changed it to “bin/sh” and projectile now works as expected,
-and Vterm still uses “fish” because my default user “sh” on my Linux
-system is “fish”.
-
-I make it use =dired= to open a project instead of just using =find-file=.
-#+begin_src elisp
-  (use-package projectile
-    :config
-    (setq projectile-switch-project-action #'projectile-dired)
-    (projectile-mode 1))
 #+end_src
 * PROGRAMMING
 ** Breadcrumbs
