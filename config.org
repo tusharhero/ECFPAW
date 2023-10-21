@@ -1063,10 +1063,7 @@ Setting up black format on save!
                                              (">>"     . "≫")
                                              ))))
 #+end_src
-** REAL Grand-Unified-Debugger
-#+begin_src elisp
-  (use-package realgud)
-#+end_src
+
 ** code folding
 #+begin_src elisp
   (add-hook 'prog-mode-hook 'outline-minor-mode)
