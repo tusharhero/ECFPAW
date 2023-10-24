@@ -807,9 +807,79 @@ Adds the next pair for =(= automatically.
   (electric-pair-mode 1)
 #+end_src
 ** Prettify mode
+*** enabling it globally
 #+begin_src elisp
   (setq prettify-symbols-unprettify-at-point t)
   (global-prettify-symbols-mode)
+#+end_src
+*** Create symbol packs
+#+begin_src elisp
+  (defun ECFPAW/prettify-symbols-pack/belong-symbols ()
+    (setq prettify-symbols-alist (append prettify-symbols-alist
+                                         '(
+                                           ("in"     . #x2208)
+                                           ("not in" . #x2209)
+                                           )
+                                         ))
+    )
+
+  (defun ECFPAW/prettify-symbols-pack/in-equalities ()
+    (setq prettify-symbols-alist (append prettify-symbols-alist
+                                         '(
+                                           ("<="     .  "≤" )
+                                           (">="     .  "≥" )
+                                           ("=="     .  "≟" )
+                                           ("!="     .  "≠" )
+                                           ("!="     .  "≠" )
+                                           )
+                                         ))
+    )
+
+  (defun ECFPAW/prettify-symbols-pack/asterik-to-multiplication ()
+    (setq prettify-symbols-alist (append prettify-symbols-alist
+                                         '(
+                                           ("*"      .   "×")
+                                           )
+                                         ))
+    )
+
+  (defun ECFPAW/prettify-symbols-pack/lambda ()
+    (setq prettify-symbols-alist (append prettify-symbols-alist
+                                         '(
+                                           ("lambda" .  955 )
+                                           )
+                                         ))
+    )
+
+  (defun ECFPAW/prettify-symbols-pack/function ()
+    (setq prettify-symbols-alist (append prettify-symbols-alist
+                                         '(
+                                           ("def"    .  "𝒻")
+                                           )
+                                         ))
+    )
+
+
+  (defun ECFPAW/prettify-symbols-pack/pointers ()
+    (setq prettify-symbols-alist (append prettify-symbols-alist
+                                         '(
+                                           ("->"     . "→ ")
+                                           ("=>"     . "⇒ ")
+                                           ("<-"     . "← ")
+                                           )
+                                         ))
+    )
+
+  (defun ECFPAW/prettify-symbols-pack/redirections ()
+    (setq prettify-symbols-alist (append prettify-symbols-alist
+                                         '(
+                                           ("<<"     . "≪")
+                                           (">>"     . "≫")
+                                           ("<<"     . "≪")
+                                           (">>"     . "≫")
+                                           )
+                                         ))
+    )
 #+end_src
 ** Enable narrow to region
 #+begin_src elisp
@@ -1032,38 +1102,24 @@ Setting up black format on save!
 #+end_src
 ***** Prettify mode symbols
 #+begin_src elisp
-  (add-hook 'python-mode-hook '(lambda () (setq prettify-symbols-alist
-                                                '(("lambda" .  955 )
-                                                  ("->"     . "→  ")
-                                                  ("<="     .  "≤" )
-                                                  (">="     .  "≥" )
-                                                  ("=="     .  "≟" )
-                                                  ("!="     .  "≠" )
-                                                  ("!="     .  "≠" )
-                                                  ("*"      .   "×")
-                                                  ("def"    .  "𝒻")
-                                                  ("in"     . #x2208)
-                                                  ("not in" . #x2209)
-                                                  ))))
+  (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/in-equalities)
+  (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/asterik-to-multiplication)
+  (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/lambda)
+  (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/function)
 #+end_src
 **** C
 ***** Prettify mode symbols
 #+begin_src elisp
-  (add-hook 'c-mode-hook '(lambda () (setq prettify-symbols-alist
-                                           '(("<="     . "≤")
-                                             (">="     . "≥")
-                                             ("=="     . "≟")
-                                             ("!="     . "≠")
-                                             ("->"     . "→ ")
-                                             ("=>"     . "⇒ ")
-                                             ("<-"     . "← ")
-                                             ("<<"     . "≪")
-                                             (">>"     . "≫")
-                                             ("<<"     . "≪")
-                                             (">>"     . "≫")
-                                             ))))
+  (add-hook 'c-mode-hook 'ECFPAW/prettify-symbols-pack/in-equalities)
+  (add-hook 'c-mode-hook 'ECFPAW/prettify-symbols-pack/pointers)
 #+end_src
-
+**** C++
+***** Prettify mode symbols
+#+begin_src elisp
+    (add-hook 'c++-mode-hook 'ECFPAW/prettify-symbols-pack/in-equalities)
+    (add-hook 'c++-mode-hook 'ECFPAW/prettify-symbols-pack/pointers)
+    (add-hook 'c++-mode-hook 'ECFPAW/prettify-symbols-pack/redirections)
+#+end_src
 ** code folding
 #+begin_src elisp
   (add-hook 'prog-mode-hook 'outline-minor-mode)
