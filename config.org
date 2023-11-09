@@ -67,7 +67,7 @@ the new installer version on their git repository.
 (add-hook 'after-init-hook #'elpaca-process-queues)
 (elpaca `(,@elpaca-order))
 #+END_SRC
-***  use-package support.
+** use-package support.
 [[https://jwiegley.github.io/use-package/][use-package]] is useful for configuring and installing packages.
 #+begin_src elisp
   ;; Install use-package support
@@ -126,34 +126,52 @@ Just a place for some custom functions I define.
 * Load Evil Mode
 Getting evil mode installed because, I was Vim user and I am most
 comfortable in those keybindings.
+** Some annoyances with evil
 #+begin_src elisp
   (setq evil-want-C-u-scroll t) ;; fix C-u scrolling
   (setq evil-undo-system 'undo-redo) ;; fix undo redo system
+#+end_src
+** Actually load Evil
+#+begin_src elisp
   (use-package evil
-    :init ;; tweak evil's configuration before loading it.
+    :init
     (setq evil-want-integration t)
     (setq evil-want-keybinding nil)
     (setq evil-vsplit-window-right t)
     (setq evil-split-window-below t)
     (evil-mode))
+#+end_src
+** Additional evil packages
+*** Evil collection
+#+begin_src elisp
   (use-package evil-collection
     :after evil
     :config
     (evil-collection-init))
+#+end_src
+*** Evil-tutor
+#+begin_src elisp
   (use-package evil-tutor)
+#+end_src
+*** Evil-numbers
+#+begin_src elisp
   (use-package evil-numbers :after evil)
+#+end_src
 
-  ;; Using RETURN to follow links in Org/Evil 
-  ;; Unmap keys in 'evil-maps if not done, (setq org-return-follows-link t) will not work
+** Fixing links follow
+Evil binds these stuff to other stuff, so you need to disable it to be
+able to follow links.
+#+begin_src elisp
   (with-eval-after-load 'evil-maps
     (define-key evil-motion-state-map (kbd "SPC") nil)
     (define-key evil-motion-state-map (kbd "RET") nil)
     (define-key evil-motion-state-map (kbd "TAB") nil))
 
-  ;; Setting RETURN key in org-mode to follow links
   (setq org-return-follows-link  t)
+#+end_src
 
-  ;; Tweak default Evil bindings
+** Tweak default Evil bindings
+#+begin_src elisp
   (with-eval-after-load 'evil-maps
     (define-key evil-normal-state-map (kbd "{") 'forward-paragraph)
     (define-key evil-normal-state-map (kbd "}") 'backward-paragraph))
@@ -409,7 +427,8 @@ Don't know of a way to get rid of this...
 #+end_src
 * GRAPHICS
 ** ALL THE ICONS 
-This is an icon set that can be used with dashboard, dired, ibuffer and other Emacs programs.
+This is an icon set that can be used with dashboard, dired, ibuffer
+and other Emacs programs.
   
 #+begin_src emacs-lisp
   (use-package all-the-icons
@@ -457,6 +476,16 @@ of this.
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
 ** Pulsar
+=Pulsar= provides the sweet *pulsing* of light you see when you switch
+you buffers, or go to a place in the buffer. It's super nice for
+knowing where you are.
+
+Evaluate this to get a pulse 😄.
+#+begin_src elisp :tangle nil
+(pulsar-pulse-line)
+#+end_src
+
+*** basic setup
 #+begin_src elisp
   (use-package pulsar :config
     (setq pulsar-pulse t)
@@ -782,6 +811,9 @@ the display additional info by default because I get overwhelmed.
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 #+end_src
 * BE-FRAMED
+=BE-FRAME= divides all the buffers into different frames, basically
+different sets of buffers for different frames, it helps avoids making
+a big clutter (at least on surface).
 #+begin_src elisp
   (use-package beframe :config (beframe-mode 1))
 #+end_src
@@ -801,7 +833,7 @@ use it everywhere its possible. I use it for flyspell as well.
   (use-package helm-themes :after helm)
 #+end_src
 * EMOJI
-Emojis, I need them.😅
+Emojis, I need them. 😅
 #+begin_src elisp
 (use-package company-emoji :config 
   (add-to-list 'company-backends 'company-emoji))
@@ -813,6 +845,12 @@ Some stuff which are for text editing in general.
 Adds the next pair for =(= automatically.
 #+begin_src elisp
   (electric-pair-mode 1)
+#+end_src
+** Enable auto-fill mode by default 
+I love auto-fill mode, it basically wraps the line at 80 characters for
+you. So that the line is not too big and readable.
+#+begin_src elisp
+  (add-hook 'org-mode-hook 'auto-fill-mode)
 #+end_src
 ** Prettify mode
 *** enabling it globally
@@ -897,8 +935,7 @@ Adds the next pair for =(= automatically.
 #+begin_src elisp
   (use-package olivetti
     :config
-    (setq-default olivetti-body-width 80)
-    )
+    (setq-default olivetti-body-width 80))
 #+end_src
 * DOC-VIEW
 I use Doc-View to view documents within Emacs.
@@ -907,6 +944,7 @@ I use Doc-View to view documents within Emacs.
    '(doc-view-continuous t))
 #+end_src
 * SNIPPETS
+Snippets are very useful to quickly insert boilerplate.
 #+begin_src elisp
   (use-package yasnippet :config
     (yas-global-mode 1))
@@ -921,12 +959,6 @@ What is like the org-mode? What can make war against it?
 ** Enable spell checking by default
 #+begin_src elisp
   (add-hook 'org-mode-hook 'flyspell-mode)
-#+end_src
-** Enable auto-fill mode by default 
-I love auto-fill mode it basically wraps the line at 80 characters for
-you. So that the line is not too big and readable.
-#+begin_src elisp
-  (add-hook 'org-mode-hook 'auto-fill-mode)
 #+end_src
 ** Inserting time and date
 Here I will make a custom function which will help me insert time and date.
@@ -976,7 +1008,7 @@ size and rendering method.
   (add-hook 'org-mode-hook #'ECFPAW/org-latex-yas)
 #+end_src
 ** Roam
-I want my second brain too🗿. 
+I want my second brain too🗿.
 #+begin_src elisp
   (use-package org-roam
     :ensure t
@@ -1003,6 +1035,7 @@ I want my second brain too🗿.
           org-roam-ui-open-on-start t))
 #+end_src
 ** Prettify mode symbols
+I have separated this snippet because its a very special case.
 #+begin_src elisp
   (add-hook 'org-mode-hook #'(lambda () (setq prettify-symbols-alist '(
                                                                        ("[ ]" . "☐  ")
@@ -1010,6 +1043,7 @@ I want my second brain too🗿.
                                                                        ("[X]" . "☑  ")))))
 #+end_src
 ** Babel
+=Babel= allows you execute programming languages from within org-mode.
 *** languages
 Enable babel execution for Python too.
 #+begin_src elisp
@@ -1129,7 +1163,7 @@ Setting up black format on save!
     (add-hook 'c++-mode-hook 'ECFPAW/prettify-symbols-pack/pointers)
     (add-hook 'c++-mode-hook 'ECFPAW/prettify-symbols-pack/redirections)
 #+end_src
-** code folding
+** Code Folding
 #+begin_src elisp
   (add-hook 'prog-mode-hook 'outline-minor-mode)
 #+end_src
@@ -1157,7 +1191,6 @@ file without such privileges.
      "f u" '(sudo-edit-find-file :wk "Sudo find file")
      "f U" '(sudo-edit :wk "Sudo edit file")))
 #+end_src
-
 * SHELLS AND TERMINALS
 You do need shell, in our editor sometimes...
 ** Vterm
@@ -1193,6 +1226,7 @@ You do need shell, in our editor sometimes...
                     (window-height . 0.3))))
  #+end_src
 * TRAMP
+=Tramp= allows you to remote into other machines from within Emacs.
 #+begin_src elisp
   (custom-set-variables
    '(tramp-default-method "ssh")
