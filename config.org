@@ -765,12 +765,14 @@ most of its functionality(Basically it was bloated for me). That is
 why I have decided to switch to =project.el=, the builtin project
 management functionality of Emacs.
 #+begin_src elisp
-(setq project-switch-commands 'project-find-dir)
+  (use-package project
+    :config
+    (setq project-switch-commands 'project-find-dir))
 #+end_src
 * DIRED
-Dired is a file manager within Emacs. It comes builtin.
+Dired is a file manager within Emacs. It comes builtin. I am disabling
+the display additional info by default because I get overwhelmed.
 #+begin_src emacs-lisp
-  ;; disable overloading with info by default, shift+( to show details
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 #+end_src
 * BE-FRAMED
