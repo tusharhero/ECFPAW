@@ -1113,6 +1113,7 @@ Setting up black format on save!
   (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/asterik-to-multiplication)
   (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/lambda)
   (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/function)
+  (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/pointers)
 #+end_src
 **** C
 ***** Prettify mode symbols
