@@ -606,7 +606,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 
   (defvar-local ECFPAW/mode-line/jee-daily-countdown
       '(:eval
-        (propertize (format "Days until JEE mains: %i"
+        (propertize (format "JEE mains: %i"
                             (days-between "Jan 01 2024" (current-time-string)))
                     'face 'modus-themes-intense-red))
     "Mode line construct to display the JEE daily countdown 💀")
