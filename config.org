@@ -480,7 +480,7 @@ of this.
     (add-to-list 'pulsar-pulse-functions 'evil-scroll-line-to-center))
 #+end_src
 ** THEME
-I will use Modus themes.
+I use Modus themes.
 *** Extra Themes
 I have disabled the loading of all these themes for now. Because I
 don't use them.
@@ -525,10 +525,15 @@ I have a custom function for loading and cycling through my preferred themes.
     (disable-theme ECFPAW/current-theme) 
     (setq ECFPAW/current-theme (pop ECFPAW/themes))
     (load-theme ECFPAW/current-theme t))
+
+  (ECFPAW/cycle-my-theme)
 #+end_src
 *** Day and night switching
-I want the light theme at day and the dark theme at night.
-#+begin_src elisp
+This used to make theme switch to the light theme at day and the dark
+theme at night. But I have disabled for now, since I don't really like
+the light theme to be honest. If in the future I ever decide to use it
+again, I will turn it one.
+#+begin_src elisp :tangle nil
   (defvar ECFPAW/day-theme 'modus-operandi
     "Theme of choice for the day.")
   (defvar ECFPAW/night-theme 'modus-vivendi
