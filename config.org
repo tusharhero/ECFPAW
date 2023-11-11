@@ -380,7 +380,8 @@ Imenu. But I also am inside a huge =use-package= call.
     "o r" '(:ignore t :wk "org-roam")
     "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
     "o i" '(:ignore :wk "insert")
-    "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp"))
+    "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp")
+    "o i i" '(org-download-clipboard :wk "image"))
   (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
   (which-key-add-key-based-replacements "SPC o b" "babel")
 #+end_src
@@ -1051,6 +1052,14 @@ Enable babel execution for Python too.
    'org-babel-load-languages
    '((emacs-lisp . t)
      (python . t)))
+#+end_src
+** Org-Download
+This extension allows drag and drop of images.
+#+begin_src elisp
+  (use-package org-download
+    :config
+    ;; Drag-and-drop to `dired`
+    (add-hook 'dired-mode-hook 'org-download-enable))
 #+end_src
 * NEWS-TICKER
 =newsticker= is a feed reader for Emacs. 
