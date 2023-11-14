@@ -29,7 +29,6 @@ a appropriate theme. If its required, details in [[config.org][config]].
 #+NAME:   ECFPAW dashboard
 [[./images/ECFPAW_screenshot.png]]
 * Setup
-
 I am going to use it in GNU Linux only (I hope), and here the setup is
 quite simple.
 
@@ -59,13 +58,7 @@ quite simple.
 I want to document some workarounds.
 ** KDE
 For some reason, just setting up a Emacs server =systemctl= service file doesn't
-let me use =emacsclient= in GUI mode. So I had to hack my way
-through. I wrote a script called =emac=.
-#+begin_src bash
-  #!/bin/sh 
-  systemctl restart emacs --user
-#+end_src
-and made it auto start using KDE Plasma's settings options.
+let me use =emacsclient= in GUI mode.
 
-And it worked!
-
+Looking through the [[https://wiki.archlinux.org/][Archwiki]], I found this [[https://www.emacswiki.org/emacs/EmacsAsDaemon#h5o-17][page]] on the EmacsWiki. The
+instructions on it fixed the issue for me.
