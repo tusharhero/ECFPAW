@@ -1010,7 +1010,7 @@ size and rendering method.
   (add-hook 'org-mode-hook #'ECFPAW/org-latex-yas)
 #+end_src
 ** Roam
-I want my second brain too🗿.
+I have disabled it for now.
 #+begin_src elisp :tangle nil
   (use-package org-roam
     :ensure t
