@@ -431,6 +431,7 @@ Don't know of a way to get rid of this...
 This is an icon set that can be used with dashboard, dired, ibuffer
 and other Emacs programs.
   
+BTW, you need to run =all-the-icons-install-fonts=.
 #+begin_src emacs-lisp
   (use-package all-the-icons
     :ensure t
@@ -694,7 +695,7 @@ Hide some minor modes, and replace some with emojis™.
     (diminish 'flyspell-mode "s✔ ")
     (diminish 'flymake-mode  "m✔ ")
     (diminish 'helm-mode)
-    (diminish 'company-mode " 🗒️")
+    (diminish 'company-mode " 🗒️️")
     (diminish 'which-key-mode)
     (diminish 'company-box-mode)
     (diminish 'projectile-mode " 🗂️")
@@ -1010,7 +1011,7 @@ size and rendering method.
 #+end_src
 ** Roam
 I want my second brain too🗿.
-#+begin_src elisp
+#+begin_src elisp :tangle nil
   (use-package org-roam
     :ensure t
     :custom
