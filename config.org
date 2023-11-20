@@ -1089,6 +1089,21 @@ Magit (Maggot , magic IDK) is a git client for Emacs.
     :ensure t
     :defer t)
 #+end_src
+** PINENTRY
+For getting support for GPG(GNU Privacy Guard).
+
+To use, add "allow-emacs-pinentry" to "~/.gnupg/gpg-agent.conf",
+reload the configuration with "gpgconf --reload gpg-agent", and
+start the server with M-x pinentry-start.
+
+To enable gpgsigning for a repository, run this.
+#+begin_src shell :tangle nil
+  git config --local commit.gpgsign true
+#+end_src
+
+#+begin_src elisp
+  (use-package pinentry)
+#+end_src
 * FLYCHECK
 Flycheck can do a lot of stuff including,
 - Showing errors in programs,
