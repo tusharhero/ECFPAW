@@ -157,7 +157,6 @@ comfortable in those keybindings.
 #+begin_src elisp
   (use-package evil-numbers :after evil)
 #+end_src
-
 ** Fixing links follow
 Evil binds these stuff to other stuff, so you need to disable it to be
 able to follow links.
@@ -169,7 +168,6 @@ able to follow links.
 
   (setq org-return-follows-link  t)
 #+end_src
-
 ** Tweak default Evil bindings
 #+begin_src elisp
   (with-eval-after-load 'evil-maps
@@ -181,7 +179,7 @@ Its very convenient to use the =capslock= key as an additional =ESC=
 key.
 *** Xorg
 #+begin_src shell :tangle nil
-setxkbmap -option caps:escape
+  setxkbmap -option caps:escape
 #+end_src
 * DISABLE BELL
 It's very annoying to have that bell ringing all the time.
@@ -212,7 +210,6 @@ useful, because you may not which key you bonded to what.
      which-key-separator " → " )
     )
 #+end_src
-
 * GENERAL KEYBINDINGS
 I will use general package to create all the keybindings for ECFPAW. I
 only make key binds for the stuff I really need(That goes for the
