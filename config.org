@@ -1115,6 +1115,14 @@ Flycheck can do a lot of stuff including,
     :init (global-flycheck-mode))
 #+end_src
 * PROGRAMMING
+** Highlighting Indent Guides
+Its helpful to keep track indentation. Since I am trying to reduce the
+amount of indentation I do.
+#+begin_src elisp
+  (use-package highlight-indentation
+    :config
+    (setq highlight-indentation-set-offset 4))
+#+end_src
 ** Breadcrumbs
 Breadcrumbs are the little thingies at the top which show in which
 part of the document you are in and in which directory.
