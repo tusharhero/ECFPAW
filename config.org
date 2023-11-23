@@ -443,7 +443,7 @@ BTW, you need to run =all-the-icons-install-fonts=.
 Defining the various fonts Emacs will use.
 #+begin_src elisp
   (add-to-list 'default-frame-alist
-               '(font . "Iosevka Nerd Font 14"))
+               '(font . "Iosevka NF 14"))
 #+end_src
 *** Zooming In/Out
 For =CTRL=/-= zooming shortcuts.
