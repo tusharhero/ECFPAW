@@ -849,7 +849,7 @@ Adds the next pair for =(= automatically.
 I love auto-fill mode, it basically wraps the line at 80 characters for
 you. So that the line is not too big and readable.
 #+begin_src elisp
-  (add-hook 'org-mode-hook 'auto-fill-mode)
+  (add-hook 'text-mode-hook 'auto-fill-mode)
 #+end_src
 ** Prettify mode
 *** enabling it globally
