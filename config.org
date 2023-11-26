@@ -430,28 +430,31 @@ and other Emacs programs.
   
 BTW, you need to run =all-the-icons-install-fonts=.
 #+begin_src emacs-lisp
+  (if (display-graphic-p) 
   (use-package all-the-icons
     :ensure t
     :if (display-graphic-p))
 
   (use-package all-the-icons-dired
-    :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
+    :hook (dired-mode . (lambda () (all-the-icons-dired-mode t)))))
 #+end_src
 
 ** FONTS
 *** setting the fonts face
 Defining the various fonts Emacs will use.
 #+begin_src elisp
+  (if (display-graphic-p) 
   (add-to-list 'default-frame-alist
-               '(font . "Iosevka NF 14"))
+               '(font . "Iosevka NF 14")))
 #+end_src
 *** Zooming In/Out
 For =CTRL=/-= zooming shortcuts.
 #+begin_src elisp
+  (if (display-graphic-p) 
   (global-set-key (kbd "C-=") 'text-scale-increase)
   (global-set-key (kbd "C--") 'text-scale-decrease)
   (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease))
 #+end_src
 ** GRAPHICAL USER INTERFACE TWEAKS
 Let's make GNU Emacs look a little better.
@@ -468,11 +471,12 @@ Because they are totally unnecessary and I don't use them. Even if I
 ever wanted to use my mouse, I would just use my mouse wheel instead
 of this.
 #+begin_src elisp
-  (scroll-bar-mode -1)
+  (if (display-graphic-p) (scroll-bar-mode -1))
 #+end_src
 *** Start in maximised mode
 #+begin_src elisp
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (if (display-graphic-p) 
+  (add-to-list 'default-frame-alist '(fullscreen . maximized)))
 #+end_src
 ** Pulsar
 =Pulsar= provides the sweet *pulsing* of light you see when you switch
@@ -685,24 +689,25 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 *** Diminish modes
 Hide some minor modes, and replace some with emojis™. 
 #+begin_src elisp
-  (use-package diminish
-    :defer 3
-    :config
-    (diminish 'flycheck-mode "c✔ ")
-    (diminish 'flyspell-mode "s✔ ")
-    (diminish 'flymake-mode  "m✔ ")
-    (diminish 'helm-mode)
-    (diminish 'company-mode " 🗒️️")
-    (diminish 'which-key-mode)
-    (diminish 'company-box-mode)
-    (diminish 'projectile-mode " 🗂️")
-    (diminish 'org-indent-mode)
-    (diminish 'evil-collection-unimpaired-mode)
-    (diminish 'auto-fill-function " ✂")
-    (diminish 'visual-line-mode " ✂")
-    (diminish 'blacken-mode " ⚫")
-    (diminish 'outline-minor-mode " 📍")
-    (diminish 'eldoc-mode " 📜"))
+  (if (display-graphic-p)
+      (use-package diminish
+        :defer 3
+        :config
+        (diminish 'flycheck-mode "c✔ ")
+        (diminish 'flyspell-mode "s✔ ")
+        (diminish 'flymake-mode  "m✔ ")
+        (diminish 'helm-mode)
+        (diminish 'company-mode " 🗒️️")
+        (diminish 'which-key-mode)
+        (diminish 'company-box-mode)
+        (diminish 'projectile-mode " 🗂️")
+        (diminish 'org-indent-mode)
+        (diminish 'evil-collection-unimpaired-mode)
+        (diminish 'auto-fill-function " ✂")
+        (diminish 'visual-line-mode " ✂")
+        (diminish 'blacken-mode " ⚫")
+        (diminish 'outline-minor-mode " 📍")
+        (diminish 'eldoc-mode " 📜")))
 #+end_src
 
 ** TRANSPARENCY
@@ -970,9 +975,10 @@ Here I will make a custom function which will help me insert time and date.
 ** Enabling Org Bullets
 Org-bullets look nice.
 #+begin_src elisp
+  (if (display-graphic-p) 
   (add-hook 'org-mode-hook 'org-indent-mode)
   (use-package org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+end_src
 ** Enabling org-tempo
 This packages allows shortcuts for source blocks etc.
@@ -1036,10 +1042,10 @@ I have disabled it for now.
 ** Prettify mode symbols
 I have separated this snippet because its a very special case.
 #+begin_src elisp
+  (if (display-graphic-p) 
   (add-hook 'org-mode-hook #'(lambda () (setq prettify-symbols-alist '(
-                                                                       ("[ ]" . "☐  ")
-                                                                       ("[-]" . "❍  ")
-                                                                       ("[X]" . "☑  ")))))
+                                                                       ("[ ]" . "☐  ") ("[-]" . "❍  ")
+                                                                       ("[X]" . "☑  "))))))
 #+end_src
 ** Babel
 =Babel= allows you execute programming languages from within org-mode.
@@ -1101,6 +1107,7 @@ To enable gpgsigning for a repository, run this.
 #+begin_src shell :tangle nil
   git config --local commit.gpgsign true
 #+end_src
+
 * FLYCHECK
 Flycheck can do a lot of stuff including,
 - Showing errors in programs,
