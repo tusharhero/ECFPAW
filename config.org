@@ -770,6 +770,21 @@ blindly copied from DistroTube worked. Lesson learned.
     :after company
     :hook (company-mode . company-box-mode))
 #+end_src
+* LLM-SUPPORT
+I like to use Ollama on my local computer 😄. So to use this you need
+to get a model running and tweak this block.
+#+begin_src elisp
+  (use-package ellama
+    :init
+    (setopt ellama-language "English")
+    (require 'llm-ollama)
+
+    (setopt ellama-provider
+                    (make-llm-ollama
+                     :chat-model "rationalAI:latest"))
+
+    (setq ellama-assistant-nick "rationalAI"))
+ #+end_src
 * DASHBOARD
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
 dashboard which comes up when you start Emacs. I also disable the
