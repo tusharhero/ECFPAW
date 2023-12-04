@@ -424,7 +424,8 @@ Imenu. But I also am inside a huge =use-package= call.
     "," '(:ignore t :wk "LLM")
     ", a" '(:ignore t :wk "Ask")
     ", a s" '(ellama-ask-selection :wk "selection")
-    ", c" '(ellama-chat :wk "chat"))
+    ", c" '(ellama-chat :wk "chat")
+    )
 #+end_src
 ** Last parens
 Don't know of a way to get rid of this...
