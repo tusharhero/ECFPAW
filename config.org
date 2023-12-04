@@ -418,6 +418,14 @@ Imenu. But I also am inside a huge =use-package= call.
     "n n" '(narrow-to-region :wk "Narrow to region")
     "n w" '(widen :wk "Widen"))
 #+end_src
+** LLM
+#+begin_src elisp
+  (ECFPAW/leader-keys
+    "," '(:ignore t :wk "LLM")
+    ", a" '(:ignore t :wk "Ask")
+    ", a s" '(ellama-ask-selection :wk "selection")
+    ", c" '(ellama-chat :wk "chat"))
+#+end_src
 ** Last parens
 Don't know of a way to get rid of this...
 #+begin_src elisp
