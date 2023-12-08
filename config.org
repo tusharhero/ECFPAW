@@ -539,7 +539,7 @@ don't use them.
         (ECFPAW/cycle-my-theme))
 #+end_src
 **** VSCode theme
-#+begin_src elisp :tangle t
+#+begin_src elisp :tangle nil
   (use-package vscode-dark-plus-theme
     :ensure t)
 #+end_src
@@ -550,7 +550,7 @@ don't use them.
 *** Easy cycling
 I have a custom function for loading and cycling through my preferred themes.
 #+begin_src elisp
-  (defvar ECFPAW/themes (ECFPAW/make-cyclic-list '(vscode-dark-plus modus-vivendi modus-operandi))
+  (defvar ECFPAW/themes (ECFPAW/make-cyclic-list '(modus-vivendi modus-operandi))
     "A list of the themes I like and use.")
 
   (defvar ECFPAW/current-theme nil
