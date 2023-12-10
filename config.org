@@ -1138,7 +1138,7 @@ heading.
     "Return the total number of direct discendants."
     (format "[D: %s]" (ECFPAW/org-number-of-direct-descendant-subentries)))
   (push
-   '("\\[D:.*\\]" .
+   '("\\[D:[ ]*[0-9]*\\]" .
      ECPFAW/org-custom-cookies--direct-descendant-subentries)
    org-custom-cookies-alist)
 #+end_src
