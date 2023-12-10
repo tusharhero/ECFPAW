@@ -1085,10 +1085,10 @@ This extension allows drag and drop of images.
 ** Org custom cookies
 Cookies basically give you information about the list.
 :TODO:
-+ [-] Things that need to implemented [1/4]
++ [-] Things that need to implemented [2/4]
   + [ ] C-c C-c support for custom cookies
   + [X] Face support for custom cookies
-  + [ ] Add better face support for custom cookies
+  + [X] Add better face support for custom cookies
   + [ ] A custom percentage =[%]= statistic cookie
 :END:
 #+begin_src elisp
@@ -1103,7 +1103,10 @@ Cookies basically give you information about the list.
             . ECPFAW/org-custom-cookies--direct-descendant-subentries)
           org-custom-cookies-alist)
 
-    (font-lock-add-keywords 'org-mode '(("\\[D:[ ]*[0-9]*\\]" . 'org-checkbox-statistics-todo))))
+    (cl-loop for (regex . callback) in org-custom-cookies-alist
+             do (font-lock-add-keywords
+                 'org-mode
+                 `((,regex . 'org-checkbox-statistics-todo)))))
 #+end_src
 *** Subheading counting
 It will help me get the number of direct sub-entries in the
