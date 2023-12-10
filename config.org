@@ -1084,6 +1084,12 @@ This extension allows drag and drop of images.
 #+end_src
 ** Org custom cookies
 Cookies basically give you information about the list.
+:TODO:
++ [ ] Things that need to implemented [0/2]
+  + [ ] C-c C-c support for custom cookies
+  + [ ] Face support for custom cookies
+  + [ ] A custom percentage =[%]= statistic cookie.
+:END:
 #+begin_src elisp
   (use-package org-custom-cookies
     :ensure t
