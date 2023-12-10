@@ -1096,7 +1096,11 @@ Cookies basically give you information about the list.
     :after org
     :config
     (advice-add 'org-update-statistics-cookies :after
-          'org-custom-cookies-update-containing-subtree))
+          'org-custom-cookies-update-containing-subtree)
+
+    (push '("\\[D:[ ]*[0-9]*\\]"
+            . ECPFAW/org-custom-cookies--direct-descendant-subentries)
+          org-custom-cookies-alist))
 #+end_src
 *** Subheading counting
 It will help me get the number of direct sub-entries in the
@@ -1137,10 +1141,6 @@ heading.
   (defun ECPFAW/org-custom-cookies--direct-descendant-subentries ()
     "Return the total number of direct discendants."
     (format "[D: %s]" (ECFPAW/org-number-of-direct-descendant-subentries)))
-  (push
-   '("\\[D:[ ]*[0-9]*\\]" .
-     ECPFAW/org-custom-cookies--direct-descendant-subentries)
-   org-custom-cookies-alist)
 #+end_src
 * NEWS-TICKER
 =newsticker= is a feed reader for Emacs. 
