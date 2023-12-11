@@ -1093,6 +1093,7 @@ Cookies basically give you information about the list.
 :END:
 #+begin_src elisp
   (use-package org-custom-cookies
+    :elpaca (:host github :repo "tusharhero/org-custom-cookies")
     :ensure t
     :after org
     :config
@@ -1103,10 +1104,7 @@ Cookies basically give you information about the list.
             . ECPFAW/org-custom-cookies--direct-descendant-subentries)
           org-custom-cookies-alist)
 
-    (cl-loop for (regex . callback) in org-custom-cookies-alist
-             do (font-lock-add-keywords
-                 'org-mode
-                 `((,regex . 'org-checkbox-statistics-todo)))))
+    (org-custom-cookies--enable-cookie-face-for-all-custom-cookies))
 #+end_src
 *** Subheading counting
 It will help me get the number of direct sub-entries in the
