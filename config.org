@@ -521,7 +521,7 @@ Evaluate this to get a pulse 😄.
     (add-to-list 'pulsar-pulse-functions 'evil-scroll-line-to-center))
 #+end_src
 ** THEME
-I use Modus themes.
+I use Modus-tinted themes.
 *** Extra Themes
 I have disabled the loading of all these themes for now. Because I
 don't use them.
@@ -554,7 +554,8 @@ don't use them.
 *** Easy cycling
 I have a custom function for loading and cycling through my preferred themes.
 #+begin_src elisp
-  (defvar ECFPAW/themes (ECFPAW/make-cyclic-list '(modus-vivendi modus-operandi))
+  (defvar ECFPAW/themes (ECFPAW/make-cyclic-list
+                         '(modus-vivendi-tinted modus-operandi-tinted))
     "A list of the themes I like and use.")
 
   (defvar ECFPAW/current-theme nil
