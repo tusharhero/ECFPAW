@@ -482,6 +482,10 @@ of this.
 #+begin_src elisp
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 #+end_src
+*** Disable comp warnings
+#+begin_src elisp
+  (custom-set-variables '(warning-suppress-types '((comp))))
+#+end_src
 ** Pulsar
 =Pulsar= provides the sweet *pulsing* of light you see when you switch
 you buffers, or go to a place in the buffer. It's super nice for
