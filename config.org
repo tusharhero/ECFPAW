@@ -822,9 +822,7 @@ most of its functionality(Basically it was bloated for me). That is
 why I have decided to switch to =project.el=, the builtin project
 management functionality of Emacs.
 #+begin_src elisp
-  (use-package project
-    :config
-    (setq project-switch-commands 'project-find-dir))
+  (setq project-switch-commands 'project-find-dir)
 #+end_src
 * DIRED
 Dired is a file manager within Emacs. It comes builtin. I am disabling
@@ -1166,8 +1164,12 @@ versions for you.
 Magit (Maggot , magic IDK) is a git client for Emacs.
 #+begin_src elisp
   (use-package magit
-    :ensure t
-    :defer t)
+      :ensure t
+      :defer t
+      :config
+      (setq package-install-upgrade-built-in t)
+      (use-package transient :elpaca nil)
+      (progn (unload-feature 'transient t) (require 'transient)))
 #+end_src
 ** PINENTRY
 For getting support for GPG(GNU Privacy Guard).
@@ -1285,11 +1287,6 @@ use this SRC block to install support for more languages (You can also
 just call it using M-x)
 #+begin_src elisp :tangle nil
   (treesit-install-language-grammar "python")
-#+end_src
-** Eglot
-Get the latest version!
-#+begin_src elisp
-  (use-package eglot :ensure t)
 #+end_src
 * SUDO EDIT
 [[https://github.com/nflath/sudo-edit][sudo-edit]] gives us the ability to open files with sudo privileges or
