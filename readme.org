@@ -32,22 +32,35 @@ a appropriate theme. If its required, details in [[config.org][config]].
 I am going to use it in GNU Linux only (I hope), and here the setup is
 quite simple.
 
-- Install GNU Emacs using your package manager,
-  for me its Archlinux
+I use Archlinux currently, and I have also started to use =master= git
+branch.
+
+- Get the =AUR PKGBUILD= repository,
   #+begin_src shell 
-    sudo pacman -S emacs
+    git clone https://aur.archlinux.org/emacs-git.git
   #+end_src
-  Don't use the =emacs-wayland= package. It gave me quite a few
-  problems. Just use the regular =emacs= package on wayland as well.
+
+- Edit the =PKGBUILD= to your liking, I use a =PGTK= build(Because I
+  use Wayland as well).
+
+- Compile and install the package,
+  #+begin_src shell
+    makepkg -si
+  #+end_src
+
+  /...wait.../
+
 - Get the configuration in the right place, 
   #+begin_src shell
     git clone https://github.com/tusharhero/ECFPAW ~/.config/emacs
   #+end_src
+
 - enable the Emacs server and start it.
   #+begin_src shell
     systemctl enable emacs --user
     systemctl start emacs --user
   #+end_src
+
 - Run emacs using emacsclient
   #+begin_src shell
     emacsclient -nc
