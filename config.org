@@ -214,12 +214,10 @@ useful, because you may not which key you bonded to what.
 I will use general package to create all the keybindings for ECFPAW. I
 only make key binds for the stuff I really need(That goes for the
 configuration in general as well).
-
-I had to do add all these different headings to get support for
-Imenu. But I also am inside a huge =use-package= call.
 ** Installation and basic config
 #+begin_src elisp
   (use-package general
+    :demand t
     :config
     (general-evil-setup)
 
@@ -231,205 +229,222 @@ Imenu. But I also am inside a huge =use-package= call.
       :states '(normal insert visual emacs)
       :keymaps 'override
       :prefix "SPC" ;; set leader
-      :global-prefix "M-SPC") ;; access leader in insert mode
+      :global-prefix "M-SPC")) ;; access leader in insert mode
 #+end_src
 ** Direct convenient keybindings
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "SPC" '(helm-M-x :wk "Execute command")
-      "TAB" '(mode-line-other-buffer :wk "Last buffer")
-      ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
-      "c" '(comment-dwim :wk "Comment lines")
-      "'" '(vterm-toggle :wk "Toggle vterm")
-      "a" '(evil-numbers/inc-at-pt :wk "Increment number")
-      "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
-      "g" '(magit :wk "Magit")
-      "." '(pulsar-pulse-line :wk "Pulse the current line"))
+  (with-eval-after-load 'ECFPAW/leader-keys
+      (ECFPAW/leader-keys
+        "SPC" '(helm-M-x :wk "Execute command")
+        "TAB" '(mode-line-other-buffer :wk "Last buffer")
+        ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
+        "c" '(comment-dwim :wk "Comment lines")
+        "'" '(vterm-toggle :wk "Toggle vterm")
+        "a" '(evil-numbers/inc-at-pt :wk "Increment number")
+        "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
+        "g" '(magit :wk "Magit")
+        "." '(pulsar-pulse-line :wk "Pulse the current line")))
 #+end_src
 ** Help
 #+begin_src elisp
+  (with-eval-after-load 'ECFPAW/leader-keys
     (ECFPAW/leader-keys
       "h" '(:ignore t :wk "Help")
       "h h" '(help :wk "Help Help!")
       "h f" '(describe-function :wk "Describe function")
-      "h v" '(describe-variable :wk "Describe variable"))
+      "h v" '(describe-variable :wk "Describe variable")))
 #+end_src
 ** Buffer
 #+begin_src elisp
-  (ECFPAW/leader-keys
-    "b" '(:ignore t :wk "buffer")
-    "b B" '(helm-mini :wk "Switch buffer(global)")
-    "b b" '(beframe-switch-buffer :wk "Switch buffer")
-    "b i" '(ibuffer :wk "Ibuffer")
-    "b d" '(kill-this-buffer :wk "Kill this buffer")
-    "b x" '(kill-this-buffer :wk "Kill this buffer")
-    "b n" '(next-buffer :wk "Next buffer")
-    "b p" '(previous-buffer :wk "Previous buffer")
-    "b r" '(revert-buffer :wk "Revert buffer")
-    "b f" '(olivetti-mode :wk "center text and write")
-    "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
-    "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer"))
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "b" '(:ignore t :wk "buffer")
+      "b B" '(helm-mini :wk "Switch buffer(global)")
+      "b b" '(beframe-switch-buffer :wk "Switch buffer")
+      "b i" '(ibuffer :wk "Ibuffer")
+      "b d" '(kill-this-buffer :wk "Kill this buffer")
+      "b x" '(kill-this-buffer :wk "Kill this buffer")
+      "b n" '(next-buffer :wk "Next buffer")
+      "b p" '(previous-buffer :wk "Previous buffer")
+      "b r" '(revert-buffer :wk "Revert buffer")
+      "b f" '(olivetti-mode :wk "center text and write")
+      "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
+      "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer")))
 #+end_src
 ** Window management
 #+begin_src elisp
-  ;; window management keybindings
-  (ECFPAW/leader-keys
-    "w" '(:ignore t :wk "Windows")
-    ;; Window splits
-    "w d" '(evil-window-delete :wk "Close window")
-    "w x" '(evil-window-delete :wk "Close window")
-    "w s" '(evil-window-split :wk "Horizontal split window")
-    "w v" '(evil-window-vsplit :wk "Vertical split window") 
-    "w /" '(evil-window-vsplit :wk "Vertical split window")
-    "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
-    ;; Window motions
-    "w h" '(windmove-left :wk "Window left")
-    "w j" '(windmove-down :wk "Window down")
-    "w k" '(windmove-up :wk "Window up")
-    "w l" '(windmove-right :wk "Window right")
-    "w w" '(other-window :wk "Goto next window"))
-  ;; different keybindgings to resize windows.
-  (global-set-key (kbd "<C-down>") 'shrink-window)  
-  (global-set-key (kbd "<C-up>") 'enlarge-window)  
-  (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
-  (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
+  (with-eval-after-load 'ECFPAW/leader-keys
+        (ECFPAW/leader-keys
+          "w" '(:ignore t :wk "Windows")
+          ;; Window splits
+          "w d" '(evil-window-delete :wk "Close window")
+          "w x" '(evil-window-delete :wk "Close window")
+          "w s" '(evil-window-split :wk "Horizontal split window")
+          "w v" '(evil-window-vsplit :wk "Vertical split window") 
+          "w /" '(evil-window-vsplit :wk "Vertical split window")
+          "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
+          ;; Window motions
+          "w h" '(windmove-left :wk "Window left")
+          "w j" '(windmove-down :wk "Window down")
+          "w k" '(windmove-up :wk "Window up")
+          "w l" '(windmove-right :wk "Window right")
+          "w w" '(other-window :wk "Goto next window")))
+      ;; different keybindgings to resize windows.
+      (global-set-key (kbd "<C-down>") 'shrink-window)  
+      (global-set-key (kbd "<C-up>") 'enlarge-window)  
+      (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
+      (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)
  #+end_src
 ** File 
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "f" '(:ignore t :wk "files")
-      "f f" '(helm-find-files :wk "Find file")
-      "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
-      "f r" '(recentf :wk "Find recent files")
-      "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
-                :wk "Reload emacs config"))
+  (with-eval-after-load 'ECFPAW/leader-keys
+  (ECFPAW/leader-keys
+    "f" '(:ignore t :wk "files")
+    "f f" '(helm-find-files :wk "Find file")
+    "f c" '((lambda () (interactive) (find-file
+                                 (locate-user-emacs-file "config.org")))
+            :wk "Edit emacs config")
+    "f r" '(recentf :wk "Find recent files")
+    "f e r" '((lambda () (interactive) (load-file
+                                   (locate-user-emacs-file "init.el"))
+                (ignore (elpaca-process-queues)))
+              :wk "Reload emacs config")))
 #+end_src
 ** Dired 
 #+begin_src elisp
-    ;; dired related keybindings
+  (with-eval-after-load 'ECFPAW/leader-keys
     (ECFPAW/leader-keys
       "d" '(:ignore t :wk "Dired")
       "d d" '(dired :wk "Open dired")
-      "d j" '(dired-jump :wk "Dired jump to current"))
+      "d j" '(dired-jump :wk "Dired jump to current")))
 #+end_src
 ** News-ticker
 #+begin_src elisp
-  (ECFPAW/leader-keys
-    "N" '(:ignore t :wk "Newsticker")
-    "N n" '(newsticker-treeview :wk "Treeview"))
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "N" '(:ignore t :wk "Newsticker")
+      "N n" '(newsticker-treeview :wk "Treeview")))
 #+end_src
 ** Spelling
 #+begin_src elisp
+  (with-eval-after-load 'ECFPAW/leader-keys
     (ECFPAW/leader-keys
       "S" '(:ignore t :wk "Spelling")
       "S s" '(helm-flyspell-correct :wk "correct the word")
-      "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
+      "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")))
 #+end_src
 ** Frame 
 #+begin_src elisp
+  (with-eval-after-load 'ECFPAW/leader-keys
     (ECFPAW/leader-keys
       "F" '(:ignore t :wk "frame")
-      "F t" '(ECFPAW/change-current-transparency-to :wk "change transparency"))
+      "F t" '(ECFPAW/change-current-transparency-to :wk "change transparency")))
 #+end_src
 ** Bookmarks
 #+begin_src elisp
+  (with-eval-after-load 'ECFPAW/leader-keys
     (ECFPAW/leader-keys
       "B" '(:ignore t :wk "bookmark")
       "B s" '(bookmark-set :wk "bookmark set")
-      "B l" '(bookmark-bmenu-list :wk "bookmark list"))
+      "B l" '(bookmark-bmenu-list :wk "bookmark list")))
 #+end_src
 ** Insert
 #+begin_src elisp
-  (ECFPAW/leader-keys
-    "i" '(:ignore t :wk "insert")
-    "i e" '(emoji-insert :wk "insert emoji")
-    "i s" '(yas-insert-snippet :wk "insert snippet"))
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "i" '(:ignore t :wk "insert")
+      "i e" '(emoji-insert :wk "insert emoji")
+      "i s" '(yas-insert-snippet :wk "insert snippet")))
 #+end_src
 ** Eval
 #+begin_src elisp
+  (with-eval-after-load 'ECFPAW/leader-keys
     (ECFPAW/leader-keys
       "e" '(:ignore t :wk "Evaluate")    
       "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
       "e d" '(eval-defun :wk "Evaluate defun containing or after point")
       "e e" '(eval-expression :wk "Evaluate and elisp expression")
       "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-      "e r" '(eval-region :wk "Evaluate elisp in region"))
+      "e r" '(eval-region :wk "Evaluate elisp in region")))
 #+end_src
 ** Toggling/Cycling
 #+begin_src elisp
-  (ECFPAW/leader-keys
-    "t" '(:ignore t :wk "Toggle/Cycle")
-    "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-    "t L" '(ECFPAW/cycle-line-number-type :wk "cycle line number types")
-    "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
-    "t T" '(visual-line-mode :wk "Toggle truncated lines")
-    "t c" '(outline-minor-mode :wk "enable code-folding")
-    "t o" '(org-mode :wk "toggle org-mode")
-    "t O" '(olivetti-mode :wk "center text and write")
-    "t m" '(ECFPAW/mode-line/cycle-formats :wk "cycle mode line")
-    "t t" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes"))
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "t" '(:ignore t :wk "Toggle/Cycle")
+      "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
+      "t L" '(ECFPAW/cycle-line-number-type :wk "cycle line number types")
+      "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
+      "t T" '(visual-line-mode :wk "Toggle truncated lines")
+      "t c" '(outline-minor-mode :wk "enable code-folding")
+      "t o" '(org-mode :wk "toggle org-mode")
+      "t O" '(olivetti-mode :wk "center text and write")
+      "t m" '(ECFPAW/mode-line/cycle-formats :wk "cycle mode line")
+      "t t" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes")))
 #+end_src
 ** Org-mode
 #+begin_src elisp
-  (ECFPAW/leader-keys
-    "o" '(:ignore t :wk "org-mode")
-    "o o" '(org-mode :wk "toggle org-mode")
-    "o r" '(:ignore t :wk "org-roam")
-    "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
-    "o i" '(:ignore :wk "insert")
-    "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp")
-    "o i i" '(org-download-clipboard :wk "image"))
-  (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
-  (which-key-add-key-based-replacements "SPC o b" "babel")
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "o" '(:ignore t :wk "org-mode")
+      "o o" '(org-mode :wk "toggle org-mode")
+      "o r" '(:ignore t :wk "org-roam")
+      "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
+      "o i" '(:ignore :wk "insert")
+      "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp")
+      "o i i" '(org-download-clipboard :wk "image")))
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map))
+  (with-eval-after-load 'which-key
+    (which-key-add-key-based-replacements "SPC o b" "babel"))
 #+end_src
 *** Org-roam
 #+begin_src elisp :tangle nil
+  (with-eval-after-load 'ECFPAW/leader-keys
     (ECFPAW/leader-keys
       "o r l" '(org-roam-buffer-toggle :wk "Buffer Toggle")
       "o r f" '(org-roam-node-find  :wk "Node find")
       "o r g" '(org-roam-graph  :wk "Graph")
       "o r i" '(org-roam-node-insert :wk "Node insert")
-      "o r c" '(org-roam-capture :wk "Capture"))
+      "o r c" '(org-roam-capture :wk "Capture")))
 #+end_src
 ** Programming
 #+begin_src elisp
-  (ECFPAW/leader-keys
-    "p" '(:ignore t :wk "Programming")
-    "p e" '(eglot :wk "Turn on eglot")
-    "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
-    "p r" '(eglot-rename :wk "eglot-rename")
-    "p f" '(eglot-format-buffer :wk "format buffer")
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "p" '(:ignore t :wk "Programming")
+      "p e" '(eglot :wk "Turn on eglot")
+      "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
+      "p r" '(eglot-rename :wk "eglot-rename")
+      "p f" '(eglot-format-buffer :wk "format buffer")
 
 
-    "p R" '(xref-find-references :wk "Find references")
-    "p g" '(xref-find-definitions :wk "go to definitions")
-    "p b" '(xref-go-back :wk "Go back to where you were")
+      "p R" '(xref-find-references :wk "Find references")
+      "p g" '(xref-find-definitions :wk "go to definitions")
+      "p b" '(xref-go-back :wk "Go back to where you were")
 
-    "p c" '(compile :wk "compile")
-    "p d" '(eldoc :wk "get docs")
-    "p i" '(helm-imenu :wk "imenu")
-    "p a" '(eldoc :wk "eglot code actions")
-    "p F" '(outline-minor-mode :wk "enable code-folding"))
+      "p c" '(compile :wk "compile")
+      "p d" '(eldoc :wk "get docs")
+      "p i" '(helm-imenu :wk "imenu")
+      "p a" '(eldoc :wk "eglot code actions")
+      "p F" '(outline-minor-mode :wk "enable code-folding")))
 #+end_src
 ** Narrowing
 #+begin_src elisp
-  (ECFPAW/leader-keys
-    "n" '(:ignore t :wk "Narrowing")
-    "n n" '(narrow-to-region :wk "Narrow to region")
-    "n w" '(widen :wk "Widen"))
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "n" '(:ignore t :wk "Narrowing")
+      "n n" '(narrow-to-region :wk "Narrow to region")
+      "n w" '(widen :wk "Widen")))
 #+end_src
 ** LLM
 #+begin_src elisp
-  (ECFPAW/leader-keys
-    "," '(:ignore t :wk "LLM")
-    ", a" '(:ignore t :wk "Ask")
-    ", a s" '(ellama-ask-selection :wk "selection")
-    ", a a" '(ellama-ask :wk "mini-buffer"))
-#+end_src
-** Last parens
-Don't know of a way to get rid of this...
-#+begin_src elisp
-  )
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "," '(:ignore t :wk "LLM")
+      ", a" '(:ignore t :wk "Ask")
+      ", a s" '(ellama-ask-selection :wk "selection")
+      ", a a" '(ellama-ask :wk "mini-buffer")))
 #+end_src
 * GRAPHICS
 ** ALL THE ICONS 
