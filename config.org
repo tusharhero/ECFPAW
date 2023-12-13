@@ -383,7 +383,7 @@ Imenu. But I also am inside a huge =use-package= call.
   (which-key-add-key-based-replacements "SPC o b" "babel")
 #+end_src
 *** Org-roam
-#+begin_src elisp
+#+begin_src elisp :tangle nil
     (ECFPAW/leader-keys
       "o r l" '(org-roam-buffer-toggle :wk "Buffer Toggle")
       "o r f" '(org-roam-node-find  :wk "Node find")
