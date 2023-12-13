@@ -1109,16 +1109,9 @@ Cookies basically give you information about the list.
     (push '("\\[[.0-9]+\\]"
             . ECPFAW/org-custom-cookies--direct-descendant-subentries)
           org-custom-cookies-alist)
-    
-    (defun ECFPAW/org-custom-cookie-ctrl-c-ctrl-c ()
-      "Add Ctrl-c Ctrl-c support for custom org cookies."
-      (catch 'updated-cookie
-        (cl-loop for (regex . callback) in org-custom-cookies-alist
-                 do (if (org-in-regexp regex)
-                        (progn
-                          (org-custom-cookies--update-nearest-heading-cookie regex callback)
-                          (throw 'updated-cookie 1))))))
-    (add-hook 'org-ctrl-c-ctrl-c-hook 'ECFPAW/org-custom-cookie-ctrl-c-ctrl-c)
+
+    (add-hook 'org-ctrl-c-ctrl-c-hook
+              'org-custom-cookies--update-cookie-ctrl-c-ctrl-c)
 
     (org-custom-cookies--enable-cookie-face-for-all-custom-cookies))
 #+end_src
