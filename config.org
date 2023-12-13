@@ -1088,12 +1088,13 @@ This extension allows drag and drop of images.
 ** Org custom cookies
 Cookies basically give you information about the list.
 :TODO:
-+ [-] Things that need to implemented [2/4]
-  + [ ] C-c C-c support for custom cookies
-    + [ ] Stop other org-ctrl-c-ctrl-c functions from running if our
++ [-] Things that need to implemented [3/5]
+  + [X] C-c C-c support for custom cookies
+    + [X] Stop other org-ctrl-c-ctrl-c functions from running if our
       function has already run.
   + [X] Face support for custom cookies
   + [X] Add better face support for custom cookies
+  + [ ] Fix heading color bug.
   + [ ] A custom percentage =[%]= statistic cookie
 :END:
 #+begin_src elisp
@@ -1108,12 +1109,15 @@ Cookies basically give you information about the list.
     (push '("\\[[.0-9]+\\]"
             . ECPFAW/org-custom-cookies--direct-descendant-subentries)
           org-custom-cookies-alist)
-
+    
     (defun ECFPAW/org-custom-cookie-ctrl-c-ctrl-c ()
       "Add Ctrl-c Ctrl-c support for custom org cookies."
-      (cl-loop for (regex . callback) in org-custom-cookies-alist
-               do (if (org-in-regexp regex)
-                      (org-custom-cookies--update-nearest-heading-cookie regex callback))))
+      (catch 'updated-cookie
+        (cl-loop for (regex . callback) in org-custom-cookies-alist
+                 do (if (org-in-regexp regex)
+                        (progn
+                          (org-custom-cookies--update-nearest-heading-cookie regex callback)
+                          (throw 'updated-cookie 1))))))
     (add-hook 'org-ctrl-c-ctrl-c-hook 'ECFPAW/org-custom-cookie-ctrl-c-ctrl-c)
 
     (org-custom-cookies--enable-cookie-face-for-all-custom-cookies))
