@@ -310,21 +310,6 @@ configuration in general as well).
                 (ignore (elpaca-process-queues)))
               :wk "Reload emacs config")))
 #+end_src
-** Dired 
-#+begin_src elisp
-  (with-eval-after-load 'ECFPAW/leader-keys
-    (ECFPAW/leader-keys
-      "d" '(:ignore t :wk "Dired")
-      "d d" '(dired :wk "Open dired")
-      "d j" '(dired-jump :wk "Dired jump to current")))
-#+end_src
-** News-ticker
-#+begin_src elisp
-  (with-eval-after-load 'ECFPAW/leader-keys
-    (ECFPAW/leader-keys
-      "N" '(:ignore t :wk "Newsticker")
-      "N n" '(newsticker-treeview :wk "Treeview")))
-#+end_src
 ** Spelling
 #+begin_src elisp
   (with-eval-after-load 'ECFPAW/leader-keys
@@ -382,53 +367,6 @@ configuration in general as well).
       "t m" '(ECFPAW/mode-line/cycle-formats :wk "cycle mode line")
       "t t" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes")))
 #+end_src
-** Org-mode
-#+begin_src elisp
-  (with-eval-after-load 'ECFPAW/leader-keys
-    (ECFPAW/leader-keys
-      "o" '(:ignore t :wk "org-mode")
-      "o o" '(org-mode :wk "toggle org-mode")
-      "o r" '(:ignore t :wk "org-roam")
-      "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
-      "o i" '(:ignore :wk "insert")
-      "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp")
-      "o i i" '(org-download-clipboard :wk "image")))
-  (with-eval-after-load 'evil
-    (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map))
-  (with-eval-after-load 'which-key
-    (which-key-add-key-based-replacements "SPC o b" "babel"))
-#+end_src
-*** Org-roam
-#+begin_src elisp :tangle nil
-  (with-eval-after-load 'ECFPAW/leader-keys
-    (ECFPAW/leader-keys
-      "o r l" '(org-roam-buffer-toggle :wk "Buffer Toggle")
-      "o r f" '(org-roam-node-find  :wk "Node find")
-      "o r g" '(org-roam-graph  :wk "Graph")
-      "o r i" '(org-roam-node-insert :wk "Node insert")
-      "o r c" '(org-roam-capture :wk "Capture")))
-#+end_src
-** Programming
-#+begin_src elisp
-  (with-eval-after-load 'ECFPAW/leader-keys
-    (ECFPAW/leader-keys
-      "p" '(:ignore t :wk "Programming")
-      "p e" '(eglot :wk "Turn on eglot")
-      "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
-      "p r" '(eglot-rename :wk "eglot-rename")
-      "p f" '(eglot-format-buffer :wk "format buffer")
-
-
-      "p R" '(xref-find-references :wk "Find references")
-      "p g" '(xref-find-definitions :wk "go to definitions")
-      "p b" '(xref-go-back :wk "Go back to where you were")
-
-      "p c" '(compile :wk "compile")
-      "p d" '(eldoc :wk "get docs")
-      "p i" '(helm-imenu :wk "imenu")
-      "p a" '(eldoc :wk "eglot code actions")
-      "p F" '(outline-minor-mode :wk "enable code-folding")))
-#+end_src
 ** Narrowing
 #+begin_src elisp
   (with-eval-after-load 'ECFPAW/leader-keys
@@ -436,15 +374,6 @@ configuration in general as well).
       "n" '(:ignore t :wk "Narrowing")
       "n n" '(narrow-to-region :wk "Narrow to region")
       "n w" '(widen :wk "Widen")))
-#+end_src
-** LLM
-#+begin_src elisp
-  (with-eval-after-load 'ECFPAW/leader-keys
-    (ECFPAW/leader-keys
-      "," '(:ignore t :wk "LLM")
-      ", a" '(:ignore t :wk "Ask")
-      ", a s" '(ellama-ask-selection :wk "selection")
-      ", a a" '(ellama-ask :wk "mini-buffer")))
 #+end_src
 * GRAPHICS
 ** ALL THE ICONS 
@@ -801,6 +730,7 @@ blindly copied from DistroTube worked. Lesson learned.
 * LLM-SUPPORT
 I like to use Ollama on my local computer 😄. So to use this you need
 to get a model running and tweak this block.
+** Configuration
 #+begin_src elisp
   (use-package ellama
     :init
@@ -813,6 +743,15 @@ to get a model running and tweak this block.
 
     (setq ellama-assistant-nick "rationalAI"))
  #+end_src
+** Keybindings
+#+begin_src elisp
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "," '(:ignore t :wk "LLM")
+      ", a" '(:ignore t :wk "Ask")
+      ", a s" '(ellama-ask-selection :wk "selection")
+      ", a a" '(ellama-ask :wk "mini-buffer")))
+#+end_src
 * DASHBOARD
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
 dashboard which comes up when you start Emacs. I also disable the
@@ -847,8 +786,17 @@ management functionality of Emacs.
 * DIRED
 Dired is a file manager within Emacs. It comes builtin. I am disabling
 the display additional info by default because I get overwhelmed.
+** Configuration
 #+begin_src emacs-lisp
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+#+end_src
+** Keybindings
+#+begin_src elisp
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "d" '(:ignore t :wk "Dired")
+      "d d" '(dired :wk "Open dired")
+      "d j" '(dired-jump :wk "Dired jump to current")))
 #+end_src
 * BE-FRAMED
 =BE-FRAME= divides all the buffers into different frames, basically
@@ -1160,6 +1108,32 @@ heading.
     "Return the total number of direct discendants."
     (format "[%s]" (ECFPAW/org-number-of-direct-descendant-subentries)))
 #+end_src
+** Keybindings
+#+begin_src elisp
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "o" '(:ignore t :wk "org-mode")
+      "o o" '(org-mode :wk "toggle org-mode")
+      "o r" '(:ignore t :wk "org-roam")
+      "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
+      "o i" '(:ignore :wk "insert")
+      "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp")
+      "o i i" '(org-download-clipboard :wk "image")))
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map))
+  (with-eval-after-load 'which-key
+    (which-key-add-key-based-replacements "SPC o b" "babel"))
+#+end_src
+*** Org-roam
+#+begin_src elisp :tangle nil
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "o r l" '(org-roam-buffer-toggle :wk "Buffer Toggle")
+      "o r f" '(org-roam-node-find  :wk "Node find")
+      "o r g" '(org-roam-graph  :wk "Graph")
+      "o r i" '(org-roam-node-insert :wk "Node insert")
+      "o r c" '(org-roam-capture :wk "Capture")))
+#+end_src
 * NEWS-TICKER
 =newsticker= is a feed reader for Emacs. 
 ** Loading feeds
@@ -1174,6 +1148,13 @@ To keep the feeds private, I have the feeds listed in a file called
 ** Making eww the default
 #+begin_src elisp
   (setq browse-url-browser-function 'eww-browse-url)
+#+end_src
+** Configuration
+#+begin_src elisp
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "N" '(:ignore t :wk "Newsticker")
+      "N n" '(newsticker-treeview :wk "Treeview")))
 #+end_src
 * GIT
 [[https://git-scm.com][Git]] is the best version control system(The only one I have ever
@@ -1307,6 +1288,27 @@ use this SRC block to install support for more languages (You can also
 just call it using M-x)
 #+begin_src elisp :tangle nil
   (treesit-install-language-grammar "python")
+#+end_src
+** Keybindings
+#+begin_src elisp
+  (with-eval-after-load 'ECFPAW/leader-keys
+    (ECFPAW/leader-keys
+      "p" '(:ignore t :wk "Programming")
+      "p e" '(eglot :wk "Turn on eglot")
+      "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
+      "p r" '(eglot-rename :wk "eglot-rename")
+      "p f" '(eglot-format-buffer :wk "format buffer")
+
+
+      "p R" '(xref-find-references :wk "Find references")
+      "p g" '(xref-find-definitions :wk "go to definitions")
+      "p b" '(xref-go-back :wk "Go back to where you were")
+
+      "p c" '(compile :wk "compile")
+      "p d" '(eldoc :wk "get docs")
+      "p i" '(helm-imenu :wk "imenu")
+      "p a" '(eldoc :wk "eglot code actions")
+      "p F" '(outline-minor-mode :wk "enable code-folding")))
 #+end_src
 * SUDO EDIT
 [[https://github.com/nflath/sudo-edit][sudo-edit]] gives us the ability to open files with sudo privileges or
