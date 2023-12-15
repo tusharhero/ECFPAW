@@ -1194,10 +1194,10 @@ For getting support for GPG(GNU Privacy Guard).
   (use-package pinentry :config (pinentry-start))
 #+end_src
 
-To use, add "allow-emacs-pinentry" to "~/.gnupg/gpg-agent.conf",
-reload the configuration with "gpgconf --reload gpg-agent".
+To use, add =allow-emacs-pinentry= to =~/.gnupg/gpg-agent.conf=,
+reload the configuration with =gpgconf --reload gpg-agent=.
 
-To enable gpgsigning for a repository, run this.
+To enable =gpgsigning= for a repository, run this.
 #+begin_src shell :tangle nil
   git config --local commit.gpgsign true
 #+end_src
