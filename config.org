@@ -1096,6 +1096,11 @@ Cookies basically give you information about the list.
   + [X] Add better face support for custom cookies
   + [ ] Fix heading color bug.
   + [ ] A custom percentage =[%]= statistic cookie
+    + Here is a regex for that,
+      #+begin_src elisp :tangle nil
+        "\\[?\\(?:[0-9]*\\)?\\!%]"
+      #+end_src
+      It will use the =[!%]= symbol to avoid conflicts with =[%]=.
 :END:
 #+begin_src elisp
   (use-package org-custom-cookies
