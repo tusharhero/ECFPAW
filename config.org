@@ -1191,12 +1191,11 @@ Magit (Maggot , magic IDK) is a git client for Emacs.
 For getting support for GPG(GNU Privacy Guard).
 
 #+begin_src elisp
-  (use-package pinentry)
+  (use-package pinentry :config (pinentry-start))
 #+end_src
 
 To use, add "allow-emacs-pinentry" to "~/.gnupg/gpg-agent.conf",
-reload the configuration with "gpgconf --reload gpg-agent", and
-start the server with M-x pinentry-start.
+reload the configuration with "gpgconf --reload gpg-agent".
 
 To enable gpgsigning for a repository, run this.
 #+begin_src shell :tangle nil
