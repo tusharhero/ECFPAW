@@ -1088,13 +1088,13 @@ This extension allows drag and drop of images.
 ** Org custom cookies
 Cookies basically give you information about the list.
 :TODO:
-+ [-] Things that need to implemented [3/5]
++ [-] Things that need to implemented [4/5]
   + [X] C-c C-c support for custom cookies
     + [X] Stop other org-ctrl-c-ctrl-c functions from running if our
       function has already run.
   + [X] Face support for custom cookies
   + [X] Add better face support for custom cookies
-  + [ ] Fix heading color bug.
+  + [X] Fix heading color bug.
   + [ ] A custom percentage =[%]= statistic cookie
     + Here is a regex for that,
       #+begin_src elisp :tangle nil
@@ -1118,7 +1118,8 @@ Cookies basically give you information about the list.
     (add-hook 'org-ctrl-c-ctrl-c-hook
               'org-custom-cookies--update-cookie-ctrl-c-ctrl-c)
 
-    (org-custom-cookies--enable-cookie-face-for-all-custom-cookies))
+    (add-hook 'org-font-lock-set-keywords-hook
+              'org-custom-cookies--cookie-face-for-all-custom-cookies))
 #+end_src
 *** Subheading counting
 It will help me get the number of direct sub-entries in the
