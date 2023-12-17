@@ -1109,7 +1109,7 @@ Cookies basically give you information about the list.
     :after org
     :config
     (advice-add 'org-update-statistics-cookies :after
-                'org-custom-cookies--update-current-heading-cookie)
+                'org-custom-cookies--update-all-cookies-current-heading)
 
     (push '("\\[[.0-9]+\\]"
             . ECPFAW/org-custom-cookies--direct-descendant-subentries)
