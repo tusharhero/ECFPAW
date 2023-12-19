@@ -647,7 +647,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 #+begin_src elisp
   (defvar-local ECFPAW/mode-line/title
       '(:eval
-        (propertize "ECFPAW" 'face 'modus-themes-tab-active))
+        (propertize "ECFPAW" 'face 'modus-themes-bold))
     "Mode line construct to display ECFPAW.")
   (put 'ECFPAW/mode-line/title 'risky-local-variable t)
 
@@ -661,7 +661,8 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 
   (defvar-local ECFPAW/mode-line/major-mode
       '(:eval 
-        (propertize (capitalize (symbol-name major-mode)) 'face 'modus-themes-refine-blue))
+        (propertize
+         (capitalize (symbol-name major-mode)) 'face 'modus-themes-fg-cyan-intense))
     "Mode line construct to display the major mode.")
   (put 'ECFPAW/mode-line/major-mode 'risky-local-variable t)
 
@@ -673,7 +674,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 
   (defvar-local ECFPAW/mode-line/time
       '(:eval 
-        (propertize (current-time-string) 'face 'modus-themes-special-calm))
+        (propertize (current-time-string) 'face 'mode-line-emphasis))
     "Mode line construct to display the time")
   (put 'ECFPAW/mode-line/time 'risky-local-variable t)
 #+end_src
