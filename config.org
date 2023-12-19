@@ -591,8 +591,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 *** Mode-line formats
 #+begin_src elisp
   (defvar ECFPAW/mode-line/full-format
-      '("@ "
-        ECFPAW/mode-line/title
+      '(
         " "
         ECFPAW/mode-line/major-mode
         " "
@@ -610,17 +609,21 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
         " "
         ECFPAW/mode-line/jee-daily-countdown
         " "
+        mode-line-modes
+        " "
+        mode-line-format-right-align
+        ""
         ECFPAW/mode-line/time
         " "
-        mode-line-modes
+        "@"
+        ECFPAW/mode-line/title
         )
       "full mode line format, for when the mode-line has enough space."
       )
 
 
   (defvar ECFPAW/mode-line/mini-format
-      '("@@"
-        ECFPAW/mode-line/title
+      '(
         " "
         ECFPAW/mode-line/major-mode
         " "
@@ -638,7 +641,12 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
         " "
         ECFPAW/mode-line/jee-daily-countdown
         " "
+        mode-line-format-right-align
+        ""
         ECFPAW/mode-line/time
+        " "
+        "@@"
+        ECFPAW/mode-line/title
         )
       "mini mode line format, for when the mode-line doesn't have enough space."
       )
