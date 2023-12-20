@@ -688,7 +688,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 #+end_src
 *** Default mode-line, and cycling.
 #+begin_src elisp
-    (setq-default mode-line-format ECFPAW/mode-line/full-format)
+    (setq-default mode-line-format ECFPAW/mode-line/mini-format)
 
     (defvar ECFPAW/mode-line/formats
       (ECFPAW/make-cyclic-list
