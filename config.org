@@ -670,7 +670,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
   (defvar-local ECFPAW/mode-line/major-mode
       '(:eval 
         (propertize
-         (capitalize (symbol-name major-mode)) 'face 'modus-themes-fg-cyan-intense))
+         (capitalize (symbol-name major-mode)) 'face 'modus-themes-subtle-yellow))
     "Mode line construct to display the major mode.")
   (put 'ECFPAW/mode-line/major-mode 'risky-local-variable t)
 
