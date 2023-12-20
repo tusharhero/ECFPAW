@@ -828,7 +828,27 @@ banner image for now as I feel like the default is cooler.
                             (projects . 5)))
     (setq dashboard-footer-messages '("Emacs Config For Programming And Writing(ECFPAW)"))
     :config
+    (add-to-list 'dashboard-item-generators  '(toolboxes . ECFPAW/dashboard-widget/toolboxes))
+    (add-to-list 'dashboard-items '(toolboxes) t)
     (dashboard-setup-startup-hook))
+#+end_src
+** List toolboxes
+I will use it to get a list of toolbox on by dashboard.
+#+begin_src elisp
+  (defun ECFPAW/get-toolboxes-names ()
+    (mapcar #'cadr (tramp-toolbox--completion-function "toolbox")))
+
+  (defun ECFPAW/dashboard-widget/toolboxes (list-size)
+    (dashboard-insert-section
+     "Toolboxes:"
+     (ECFPAW/get-toolboxes-names)
+     list-size
+     nil
+     nil
+     `(lambda (&rest _)
+        (dired
+         (format "/toolbox:%s:~" ,el)))
+     (format "%s" el)))
 #+end_src
 * PROJECT
 I was using projectile before but then I realized that I don't use
