@@ -588,6 +588,14 @@ again, I will turn it one.
 #+end_src
 ** MODE-LINE
 I am going to make my own mode-line, I followed [[https://protesilaos.com/codelog/2023-07-29-emacs-custom-modeline-tutorial/][Prot's tutorial]].
+*** Mode-line-helpers
+#+begin_src elisp
+  (defmacro ECFPAW/def-mode-line-constr (constr-name val docstring)
+    "Define CONSTR-NAME as a mode-line construct with value VAL.
+  DOCSTRING is used a docstring."
+    `(progn (defvar-local ,constr-name ,val ,docstring)
+           (put ',constr-name 'risky-local-variable t)))
+#+end_src
 *** Mode-line formats
 #+begin_src elisp
   (defvar ECFPAW/mode-line/full-format
@@ -653,38 +661,33 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
   #+end_src
 *** Mode-line constructs
 #+begin_src elisp
-  (defvar-local ECFPAW/mode-line/title
+  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/title
       '(:eval
         (propertize "ECFPAW" 'face 'modus-themes-bold))
     "Mode line construct to display ECFPAW.")
-  (put 'ECFPAW/mode-line/title 'risky-local-variable t)
 
-  (defvar-local ECFPAW/mode-line/jee-daily-countdown
+  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/jee-daily-countdown
       '(:eval
         (propertize (format "JEE mains: %i"
                             (days-between "Jan 01 2024" (current-time-string)))
                     'face 'modus-themes-intense-red))
     "Mode line construct to display the JEE daily countdown 💀")
-  (put 'ECFPAW/mode-line/jee-daily-countdown 'risky-local-variable t)
 
-  (defvar-local ECFPAW/mode-line/major-mode
+  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/major-mode
       '(:eval 
         (propertize
          (capitalize (symbol-name major-mode)) 'face 'modus-themes-subtle-yellow))
     "Mode line construct to display the major mode.")
-  (put 'ECFPAW/mode-line/major-mode 'risky-local-variable t)
 
-  (defvar-local ECFPAW/mode-line/buffer-name
+  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/buffer-name
       '(:eval 
         (propertize (buffer-name) 'face 'modus-themes-nuanced-blue))
     "Mode line construct to display the buffer-name.")
-  (put 'ECFPAW/mode-line/buffer-name 'risky-local-variable t)
 
-  (defvar-local ECFPAW/mode-line/time
+  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/time
       '(:eval 
         (propertize (current-time-string) 'face 'mode-line-emphasis))
     "Mode line construct to display the time")
-  (put 'ECFPAW/mode-line/time 'risky-local-variable t)
 #+end_src
 *** Default mode-line, and cycling.
 #+begin_src elisp
