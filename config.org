@@ -841,8 +841,14 @@ I will use it to get a list of toolbox on by dashboard.
 
   (defun ECFPAW/dashboard-widget/toolboxes (list-size)
     "Toolboxes widget for dashboard."
+    (dashboard-insert-heading "Toolboxes:"
+                              nil
+                              (all-the-icons-faicon "laptop"
+                                                    :height 1.2
+                                                    :v-adjust 0.0
+                                                    :face 'dashboard-heading))
     (dashboard-insert-section
-     "Toolboxes:"
+     ""
      (ECFPAW/get-toolboxes-names)
      list-size
      nil
