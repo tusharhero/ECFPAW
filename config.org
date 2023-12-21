@@ -936,73 +936,60 @@ you. So that the line is not too big and readable.
   (global-prettify-symbols-mode)
 #+end_src
 *** Create symbol packs
+**** Marco for creating symbol pack
+This macro will create a function which can then be hooked to the mode
+you want to hook them to 💀. My mind is struggling to comprehend that.
 #+begin_src elisp
-  (defun ECFPAW/prettify-symbols-pack/belong-symbols ()
-    (setq prettify-symbols-alist (append prettify-symbols-alist
-                                         '(
-                                           ("in"     . #x2208)
-                                           ("not in" . #x2209)
-                                           )
-                                         ))
-    )
+  (defmacro ECFPAW/def-pretty-sym-pack (name symbols-alist)
+    "A macro to create a function NAME to apply symbols in SYMBOLS-ALIST.
+  The generated function can be hooked to any mode."
+    `(progn
+       (defun ,name ()
+         (setq prettify-symbols-alist (append prettify-symbols-alist
+                                              ',symbols-alist
+                                              )))))
+#+end_src
+**** Symbol packs themselves
+#+begin_src elisp
+  (ECFPAW/def-pretty-sym-pack
+   ECFPAW/prettify-symbols-pack/belong-symbols
+   (("in"     . #x2208)
+    ("not in" . #x2209)))
 
-  (defun ECFPAW/prettify-symbols-pack/in-equalities ()
-    (setq prettify-symbols-alist (append prettify-symbols-alist
-                                         '(
-                                           ("<="     .  "≤" )
-                                           (">="     .  "≥" )
-                                           ("=="     .  "≟" )
-                                           ("!="     .  "≠" )
-                                           ("!="     .  "≠" )
-                                           )
-                                         ))
-    )
+  (ECFPAW/def-pretty-sym-pack
+   ECFPAW/prettify-symbols-pack/in-equalities
+   (("<="     .  "≤" )
+    (">="     .  "≥" )
+    ("=="     .  "≟" )
+    ("!="     .  "≠" )
+    ("!="     .  "≠" )))
 
-  (defun ECFPAW/prettify-symbols-pack/asterik-to-multiplication ()
-    (setq prettify-symbols-alist (append prettify-symbols-alist
-                                         '(
-                                           ("*"      .   "×")
-                                           )
-                                         ))
-    )
+  (ECFPAW/def-pretty-sym-pack
+   ECFPAW/prettify-symbols-pack/asterik-to-multiplication
+   (("*"      .   "×")))
 
-  (defun ECFPAW/prettify-symbols-pack/lambda ()
-    (setq prettify-symbols-alist (append prettify-symbols-alist
-                                         '(
-                                           ("lambda" .  955 )
-                                           )
-                                         ))
-    )
+  (ECFPAW/def-pretty-sym-pack
+   ECFPAW/prettify-symbols-pack/lambda
+   (("lambda" .  955 )))
 
-  (defun ECFPAW/prettify-symbols-pack/function ()
-    (setq prettify-symbols-alist (append prettify-symbols-alist
-                                         '(
-                                           ("def"    .  "𝒻")
-                                           )
-                                         ))
-    )
+  (ECFPAW/def-pretty-sym-pack
+   ECFPAW/prettify-symbols-pack/function
+   (("def"    .  "𝒻")))
 
 
-  (defun ECFPAW/prettify-symbols-pack/pointers ()
-    (setq prettify-symbols-alist (append prettify-symbols-alist
-                                         '(
-                                           ("->"     . "→ ")
-                                           ("=>"     . "⇒ ")
-                                           ("<-"     . "← ")
-                                           )
-                                         ))
-    )
+  (ECFPAW/def-pretty-sym-pack
+   ECFPAW/prettify-symbols-pack/pointers
+   (("->"     . "→ ")
+    ("=>"     . "⇒ ")
+    ("<-"     . "← ")))
 
-  (defun ECFPAW/prettify-symbols-pack/redirections ()
-    (setq prettify-symbols-alist (append prettify-symbols-alist
-                                         '(
-                                           ("<<"     . "≪")
-                                           (">>"     . "≫")
-                                           ("<<"     . "≪")
-                                           (">>"     . "≫")
-                                           )
-                                         ))
-    )
+
+  (ECFPAW/def-pretty-sym-pack
+   ECFPAW/prettify-symbols-pack/redirections
+   (("<<"     . "≪")
+    (">>"     . "≫")
+    ("<<"     . "≪")
+    (">>"     . "≫")))
 #+end_src
 ** Enable narrow to region
 #+begin_src elisp
