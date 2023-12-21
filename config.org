@@ -820,7 +820,8 @@ banner image for now as I feel like the default is cooler.
     (setq dashboard-set-heading-icons t)
     (setq dashboard-set-file-icons t)
     ;; (setq dashboard-startup-banner (locate-user-emacs-file "images/trancendent-gnu.png"))
-    (setq dashboard-banner-logo-title "ECFPAW")
+    (setq dashboard-banner-logo-title
+          "ECFPAW: Emacs Configuration For Programming and Writing")
     (setq dashboard-center-content t)
     (setq dashboard-projects-switch-function 'dired)
     (setq dashboard-projects-backend 'project-el)
@@ -831,7 +832,8 @@ banner image for now as I feel like the default is cooler.
     (add-to-list 'dashboard-items '(toolboxes) t)
     (dashboard-setup-startup-hook))
 #+end_src
-** List toolboxes
+** Widgets
+*** List toolboxes
 I will use it to get a list of toolbox on by dashboard.
 #+begin_src elisp
   (defun ECFPAW/get-toolboxes-names ()
