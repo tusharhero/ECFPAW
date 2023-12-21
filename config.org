@@ -836,9 +836,11 @@ banner image for now as I feel like the default is cooler.
 I will use it to get a list of toolbox on by dashboard.
 #+begin_src elisp
   (defun ECFPAW/get-toolboxes-names ()
+    "Get a list of all the toolboxes available."
     (mapcar #'cadr (tramp-toolbox--completion-function "toolbox")))
 
   (defun ECFPAW/dashboard-widget/toolboxes (list-size)
+    "Toolboxes widget for dashboard."
     (dashboard-insert-section
      "Toolboxes:"
      (ECFPAW/get-toolboxes-names)
