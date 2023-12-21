@@ -1045,12 +1045,18 @@ Here I will make a custom function which will help me insert time and date.
     (interactive)
     (org-insert-time-stamp (current-time) t))
 #+end_src
-** Enabling Org Bullets
-Org-bullets look nice.
+** Org-indent
+It indents the org tree so its nice to look at.
 #+begin_src elisp
   (add-hook 'org-mode-hook 'org-indent-mode)
-  (use-package org-bullets)
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+#+end_src
+** Enabling Org Superstar
+Org-Superstar look nice.
+#+begin_src elisp
+  (use-package org-superstar
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+    (setq org-superstar-headline-bullets-list '("☯" "○" "✸" "⁖")))
 #+end_src
 ** Enabling org-tempo
 This packages allows shortcuts for source blocks etc.
