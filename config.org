@@ -852,16 +852,17 @@ I will use it to get a list of toolbox on by dashboard.
 #+begin_src elisp
   (defun ECFPAW/get-toolboxes-names ()
     "Get a list of all the toolboxes available."
+    (require 'tramp)
     (mapcar #'cadr (tramp-toolbox--completion-function "toolbox")))
 
   (defun ECFPAW/dashboard-widget/toolboxes (list-size)
     "Toolboxes widget for dashboard."
     (dashboard-insert-heading "Toolboxes:"
-                              nil
-                              (all-the-icons-faicon "laptop"
-                                                    :height 1.2
-                                                    :v-adjust 0.0
-                                                    :face 'dashboard-heading))
+			      nil
+			      (all-the-icons-faicon "laptop"
+						    :height 1.2
+						    :v-adjust 0.0
+						    :face 'dashboard-heading))
     (dashboard-insert-section
      ""
      (ECFPAW/get-toolboxes-names)
@@ -1006,13 +1007,14 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
 Add manpages from all the toolboxes. This will solve any issues I have
 with documentation.
 #+begin_src elisp
+  (require 'woman)
   (setq
    woman-manpath
    (append (mapcar (lambda
-                     (toolbox-name)
-                     (format "/toolbox:%s:/usr/share/man" toolbox-name))
-                   (ECFPAW/get-toolboxes-names))
-           woman-manpath))
+		     (toolbox-name)
+		     (format "/toolbox:%s:/usr/share/man" toolbox-name))
+		   (ECFPAW/get-toolboxes-names))
+	   woman-manpath))
 #+end_src
 * DOC-VIEW
 I use Doc-View to view documents within Emacs.
