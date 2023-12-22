@@ -1003,9 +1003,9 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
     (setq-default olivetti-body-width 80))
 #+end_src
 * MANUALS
+This will solve any issues I have with documentation.
 ** Woman
-Add manpages from all the toolboxes. This will solve any issues I have
-with documentation.
+Add manpages from all the toolboxes.
 #+begin_src elisp
   (require 'woman)
   (setq
@@ -1015,6 +1015,15 @@ with documentation.
 		     (format "/toolbox:%s:/usr/share/man" toolbox-name))
 		   (ECFPAW/get-toolboxes-names))
 	   woman-manpath))
+#+end_src
+** Texinfo
+Add info manual from a custom location.
+#+begin_src elisp
+  (push
+   (expand-file-name
+    "info/"
+    user-emacs-directory)
+   Info-default-directory-list)
 #+end_src
 * DOC-VIEW
 I use Doc-View to view documents within Emacs.
