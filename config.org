@@ -1248,6 +1248,26 @@ Magit (Maggot , magic IDK) is a git client for Emacs.
       (use-package transient :elpaca nil)
       (progn (unload-feature 'transient t) (require 'transient)))
 #+end_src
+*** TRAMP BUG
+Workaround for this [[https://github.com/magit/magit/issues/4720][issue]].
+#+begin_src elisp
+(require 'custom)
+(require 'tramp)
+
+(defun my--tramp-send-command--workaround-stty-icanon-bug (conn-vec orig-command &rest args)
+  "See: https://github.com/magit/magit/issues/4720"
+  (let ((command
+         (if (string= "stty -icrnl -icanon min 1 time 0" orig-command)
+             "stty -icrnl"
+           orig-command)))
+    (append (list conn-vec command) args)))
+
+(defun my--tramp-send-command--workaround-stty-icanon-bug--filter-args (args)
+  (apply #'my--tramp-send-command--workaround-stty-icanon-bug args))
+
+(advice-add 'tramp-send-command :filter-args
+            #'my--tramp-send-command--workaround-stty-icanon-bug--filter-args)
+#+end_src
 ** PINENTRY
 For getting support for GPG(GNU Privacy Guard).
 
