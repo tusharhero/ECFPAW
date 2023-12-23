@@ -979,13 +979,11 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
    ECFPAW/prettify-symbols-pack/function
    (("def"    .  "𝒻")))
 
-
   (ECFPAW/def-pretty-sym-pack
    ECFPAW/prettify-symbols-pack/pointers
    (("->"     . "→ ")
     ("=>"     . "⇒ ")
     ("<-"     . "← ")))
-
 
   (ECFPAW/def-pretty-sym-pack
    ECFPAW/prettify-symbols-pack/redirections
@@ -993,6 +991,13 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
     (">>"     . "≫")
     ("<<"     . "≪")
     (">>"     . "≫")))
+
+  (ECFPAW/def-pretty-sym-pack
+   ECFPAW/prettify-symbols-pack/org-checkboxes
+   (
+    ("[ ]" . "☐  ")
+    ("[-]" . #("□–" 0 2 (composition ((2)))))
+    ("[X]" . "☑  ")))
 #+end_src
 ** Enable narrow to region
 #+begin_src elisp
@@ -1131,12 +1136,11 @@ I have disabled it for now.
           org-roam-ui-open-on-start t))
 #+end_src
 ** Prettify mode symbols
-I have separated this snippet because its a very special case.
+I have had this part separated but decided to just put it in its right
+place now.
 #+begin_src elisp
-  (add-hook 'org-mode-hook #'(lambda () (setq prettify-symbols-alist '(
-                                                                       ("[ ]" . "☐  ")
-                                                                       ("[-]" . #("□–" 0 2 (composition ((2)))))
-                                                                       ("[X]" . "☑  ")))))
+  (add-hook 'org-mode-hook
+            'ECFPAW/prettify-symbols-pack/org-checkboxes)
 #+end_src
 ** Babel
 =Babel= allows you execute programming languages from within org-mode.
