@@ -1135,7 +1135,7 @@ I have separated this snippet because its a very special case.
 #+begin_src elisp
   (add-hook 'org-mode-hook #'(lambda () (setq prettify-symbols-alist '(
                                                                        ("[ ]" . "☐  ")
-                                                                       ("[-]" . "❍  ")
+                                                                       ("[-]" . #("□–" 0 2 (composition ((2)))))
                                                                        ("[X]" . "☑  ")))))
 #+end_src
 ** Babel
