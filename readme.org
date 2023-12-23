@@ -35,12 +35,17 @@ quite simple.
 I use Archlinux currently, and I have also started to use =master= git
 branch.
 
+- Get the dependencies,
+  #+begin_src shell
+    sudo pacman -S noto-fonts-emoji ttc-iosevka ispell
+  #+end_src
+
 - Get the =AUR PKGBUILD= repository,
   #+begin_src shell 
     git clone https://aur.archlinux.org/emacs-git.git
   #+end_src
 
-- Edit the =PKGBUILD= to your liking, I use a =PGTK= build(Because I
+- Edit the =PKGBUILD= to your liking, I use a =PGTK= build (Because I
   use Wayland as well).
 
 - Compile and install the package,
