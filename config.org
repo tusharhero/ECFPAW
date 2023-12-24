@@ -670,28 +670,33 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
   #+end_src
 *** Mode-line constructs
 #+begin_src elisp
-  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/title
-      '(:eval
-        (propertize "ECFPAW" 'face 'modus-line))
-      "Mode line construct to display ECFPAW.")
+  (ECFPAW/def-mode-line-constr
+   ECFPAW/mode-line/title
+   '(:eval
+     (propertize "ECFPAW" 'face 'modus-line))
+   "Mode line construct to display ECFPAW.")
 
   (ECFPAW/def-mode-line-constr
    ECFPAW/mode-line/jee-daily-countdown
-      '(:eval
-        (propertize (format "JEE mains: %i"
-                            (days-between "Jan 01 2024" (current-time-string)))
-                    'face 'mode-line-emphasis))
-      "Mode line construct to display the JEE daily countdown 💀")
+   '(:eval
+     (propertize
+      (format "%i"
+              (days-between "Jan 25 2024" (current-time-string)))
+      'face 'mode-line-emphasis
+      'help-echo "Number of days until JEE Mains"
+      'mouse-face 'mode-line-highlight))
+   "Mode line construct to display the JEE daily countdown 💀")
 
-  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/major-mode
-      '(:eval 
-        (propertize
-         (capitalize (symbol-name major-mode)) 'face 'modus-line))
-      "Mode line construct to display the major mode.")
+  (ECFPAW/def-mode-line-constr
+   ECFPAW/mode-line/major-mode
+   '(:eval 
+     (propertize
+      (capitalize (symbol-name major-mode)) 'face 'modus-line))
+   "Mode line construct to display the major mode.")
 
   (ECFPAW/def-mode-line-constr
    ECFPAW/mode-line/time
-   '(:eval 
+   '(:eval
      (propertize
       (format-time-string "%R %a %d-%b-%y")
       'face 'mode-line-emphasis
