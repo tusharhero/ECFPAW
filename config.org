@@ -610,7 +610,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
         " "
         ECFPAW/mode-line/major-mode
         " "
-        ECFPAW/mode-line/buffer-name
+        mode-line-buffer-identification
         " "
         (vc-mode vc-mode)
         " "
@@ -644,7 +644,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
         " "
         ECFPAW/mode-line/major-mode
         " "
-        ECFPAW/mode-line/buffer-name
+        mode-line-buffer-identification
         " "
         (vc-mode vc-mode)
         " "
@@ -672,56 +672,64 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 #+begin_src elisp
   (ECFPAW/def-mode-line-constr ECFPAW/mode-line/title
       '(:eval
-        (propertize "ECFPAW" 'face 'modus-themes-bold))
-    "Mode line construct to display ECFPAW.")
+        (propertize "ECFPAW" 'face 'modus-line))
+      "Mode line construct to display ECFPAW.")
 
-  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/jee-daily-countdown
+  (ECFPAW/def-mode-line-constr
+   ECFPAW/mode-line/jee-daily-countdown
       '(:eval
         (propertize (format "JEE mains: %i"
                             (days-between "Jan 01 2024" (current-time-string)))
-                    'face 'modus-themes-intense-red))
-    "Mode line construct to display the JEE daily countdown 💀")
+                    'face 'mode-line-emphasis))
+      "Mode line construct to display the JEE daily countdown 💀")
 
   (ECFPAW/def-mode-line-constr ECFPAW/mode-line/major-mode
       '(:eval 
         (propertize
-         (capitalize (symbol-name major-mode)) 'face 'modus-themes-subtle-yellow))
-    "Mode line construct to display the major mode.")
+         (capitalize (symbol-name major-mode)) 'face 'modus-line))
+      "Mode line construct to display the major mode.")
 
-  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/buffer-name
-      '(:eval 
-        (propertize (buffer-name) 'face 'modus-themes-nuanced-blue))
-    "Mode line construct to display the buffer-name.")
+  (ECFPAW/def-mode-line-constr
+   ECFPAW/mode-line/time
+   '(:eval 
+     (propertize
+      (format-time-string "%R %a %d-%b-%y")
+      'face 'mode-line-emphasis
+      'help-echo
+      (current-time-string)
+      'mouse-face 'mode-line-highlight))
+   "Mode line construct to display the time")
 
-  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/time
-      '(:eval 
-        (propertize (current-time-string) 'face 'mode-line-emphasis))
-    "Mode line construct to display the time")
-
-  (ECFPAW/def-mode-line-constr ECFPAW/mode-line/toolbox-name
-      '(:eval
-        (propertize
-         (substring (shell-command-to-string "cat /run/.containerenv | grep 'name='") 6 -2)
-                    'face 'modus-themes-heading-1))
-    "Mode line construct to display current toolbox-name.")
+  (ECFPAW/def-mode-line-constr
+   ECFPAW/mode-line/toolbox-name
+   '(:eval
+     (propertize
+      (substring (shell-command-to-string
+                  "cat /run/.containerenv | grep 'name='")
+                 6 -2)
+      'face 'mode-line
+      'help-echo
+      (purecopy "Current toolbox")
+      'mouse-face 'mode-line-highlight))
+   "Mode line construct to display current toolbox-name.")
 #+end_src
 *** Default mode-line, and cycling.
 #+begin_src elisp
-    (setq-default mode-line-format ECFPAW/mode-line/mini-format)
+  (setq-default mode-line-format ECFPAW/mode-line/mini-format)
 
-    (defvar ECFPAW/mode-line/formats
-      (ECFPAW/make-cyclic-list
-       (list  ECFPAW/mode-line/full-format ECFPAW/mode-line/mini-format))
-      "A list of all the modelines available")
+  (defvar ECFPAW/mode-line/formats
+    (ECFPAW/make-cyclic-list
+     (list  ECFPAW/mode-line/full-format ECFPAW/mode-line/mini-format))
+    "A list of all the modelines available")
 
-    (defun ECFPAW/mode-line/cycle-formats ()
-      "Cycle through line number types"
-      (interactive)
-      (setq ECFPAW/current-mode-line-format (pop ECFPAW/mode-line/formats))
-      (setq mode-line-format ECFPAW/current-mode-line-format)
-      (setq-default mode-line-format ECFPAW/current-mode-line-format)
-      (setq-local mode-line-format ECFPAW/current-mode-line-format)
-      (force-mode-line-update))
+  (defun ECFPAW/mode-line/cycle-formats ()
+    "Cycle through line number types"
+    (interactive)
+    (setq ECFPAW/current-mode-line-format (pop ECFPAW/mode-line/formats))
+    (setq mode-line-format ECFPAW/current-mode-line-format)
+    (setq-default mode-line-format ECFPAW/current-mode-line-format)
+    (setq-local mode-line-format ECFPAW/current-mode-line-format)
+    (force-mode-line-update))
   #+end_src
 *** Diminish modes
 Hide some minor modes, and replace some with emojis™. 
