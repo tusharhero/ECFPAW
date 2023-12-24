@@ -36,8 +36,15 @@ I use Archlinux currently, and I have also started to use =master= git
 branch.
 
 - Get the dependencies,
+  | Dependency       | Reason      |
+  |------------------+-------------|
+  | noto-fonts-emoji | Emojis      |
+  | ttc-iosevka      | Font        |
+  | ispell           | Spellcheck  |
+  | ghostscript      | PDF support |
+  | xpdf             | PDF support |
   #+begin_src shell
-    sudo pacman -S noto-fonts-emoji ttc-iosevka ispell
+    sudo pacman -S noto-fonts-emoji ttc-iosevka ispell ghostscript xpdf
   #+end_src
 
 - Get the =AUR PKGBUILD= repository,
