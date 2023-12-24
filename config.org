@@ -712,7 +712,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
       (substring (shell-command-to-string
                   "cat /run/.containerenv | grep 'name='")
                  6 -2)
-      'face 'mode-line
+      'face 'mode-line-emphasis
       'help-echo
       (purecopy "Current toolbox")
       'mouse-face 'mode-line-highlight))
