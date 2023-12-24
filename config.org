@@ -240,24 +240,24 @@ Imenu. But I also am inside a huge =use-package= call.
 #+end_src
 ** Direct convenient keybindings
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "SPC" '(helm-M-x :wk "Execute command")
-      "TAB" '(mode-line-other-buffer :wk "Last buffer")
-      ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
-      "c" '(comment-dwim :wk "Comment lines")
-      "'" '(vterm-toggle :wk "Toggle vterm")
-      "a" '(evil-numbers/inc-at-pt :wk "Increment number")
-      "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
-      "g" '(magit :wk "Magit")
-      "." '(pulsar-pulse-line :wk "Pulse the current line"))
+  (ECFPAW/leader-keys
+    "SPC" '(helm-M-x :wk "Execute command")
+    "TAB" '(mode-line-other-buffer :wk "Last buffer")
+    ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
+    "c" '(comment-dwim :wk "Comment lines")
+    "'" '(vterm-toggle :wk "Toggle vterm")
+    "a" '(evil-numbers/inc-at-pt :wk "Increment number")
+    "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
+    "g" '(magit :wk "Magit")
+    "." '(pulsar-pulse-line :wk "Pulse the current line"))
 #+end_src
 ** Help
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "h" '(:ignore t :wk "Help")
-      "h h" '(help :wk "Help Help!")
-      "h f" '(describe-function :wk "Describe function")
-      "h v" '(describe-variable :wk "Describe variable"))
+  (ECFPAW/leader-keys
+    "h" '(:ignore t :wk "Help")
+    "h h" '(help :wk "Help Help!")
+    "h f" '(describe-function :wk "Describe function")
+    "h v" '(describe-variable :wk "Describe variable"))
 #+end_src
 ** Buffer
 #+begin_src elisp
@@ -301,21 +301,21 @@ Imenu. But I also am inside a huge =use-package= call.
  #+end_src
 ** File 
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "f" '(:ignore t :wk "files")
-      "f f" '(helm-find-files :wk "Find file")
-      "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
-      "f r" '(recentf :wk "Find recent files")
-      "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
-                :wk "Reload emacs config"))
+  (ECFPAW/leader-keys
+    "f" '(:ignore t :wk "files")
+    "f f" '(helm-find-files :wk "Find file")
+    "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
+    "f r" '(recentf :wk "Find recent files")
+    "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
+              :wk "Reload emacs config"))
 #+end_src
 ** Dired 
 #+begin_src elisp
-    ;; dired related keybindings
-    (ECFPAW/leader-keys
-      "d" '(:ignore t :wk "Dired")
-      "d d" '(dired :wk "Open dired")
-      "d j" '(dired-jump :wk "Dired jump to current"))
+  ;; dired related keybindings
+  (ECFPAW/leader-keys
+    "d" '(:ignore t :wk "Dired")
+    "d d" '(dired :wk "Open dired")
+    "d j" '(dired-jump :wk "Dired jump to current"))
 #+end_src
 ** News-ticker
 #+begin_src elisp
@@ -325,23 +325,23 @@ Imenu. But I also am inside a huge =use-package= call.
 #+end_src
 ** Spelling
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "S" '(:ignore t :wk "Spelling")
-      "S s" '(helm-flyspell-correct :wk "correct the word")
-      "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
+  (ECFPAW/leader-keys
+    "S" '(:ignore t :wk "Spelling")
+    "S s" '(helm-flyspell-correct :wk "correct the word")
+    "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
 #+end_src
 ** Frame 
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "F" '(:ignore t :wk "frame")
-      "F t" '(ECFPAW/change-current-transparency-to :wk "change transparency"))
+  (ECFPAW/leader-keys
+    "F" '(:ignore t :wk "frame")
+    "F t" '(ECFPAW/change-current-transparency-to :wk "change transparency"))
 #+end_src
 ** Bookmarks
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "B" '(:ignore t :wk "bookmark")
-      "B s" '(bookmark-set :wk "bookmark set")
-      "B l" '(bookmark-bmenu-list :wk "bookmark list"))
+  (ECFPAW/leader-keys
+    "B" '(:ignore t :wk "bookmark")
+    "B s" '(bookmark-set :wk "bookmark set")
+    "B l" '(bookmark-bmenu-list :wk "bookmark list"))
 #+end_src
 ** Insert
 #+begin_src elisp
@@ -352,13 +352,13 @@ Imenu. But I also am inside a huge =use-package= call.
 #+end_src
 ** Eval
 #+begin_src elisp
-    (ECFPAW/leader-keys
-      "e" '(:ignore t :wk "Evaluate")    
-      "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-      "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-      "e e" '(eval-expression :wk "Evaluate and elisp expression")
-      "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-      "e r" '(eval-region :wk "Evaluate elisp in region"))
+  (ECFPAW/leader-keys
+    "e" '(:ignore t :wk "Evaluate")
+    "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
+    "e d" '(eval-defun :wk "Evaluate defun containing or after point")
+    "e e" '(eval-expression :wk "Evaluate and elisp expression")
+    "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
+    "e r" '(eval-region :wk "Evaluate elisp in region"))
 #+end_src
 ** Toggling/Cycling
 #+begin_src elisp
@@ -389,12 +389,12 @@ Imenu. But I also am inside a huge =use-package= call.
 #+end_src
 *** Org-roam
 #+begin_src elisp :tangle nil
-    (ECFPAW/leader-keys
-      "o r l" '(org-roam-buffer-toggle :wk "Buffer Toggle")
-      "o r f" '(org-roam-node-find  :wk "Node find")
-      "o r g" '(org-roam-graph  :wk "Graph")
-      "o r i" '(org-roam-node-insert :wk "Node insert")
-      "o r c" '(org-roam-capture :wk "Capture"))
+  (ECFPAW/leader-keys
+    "o r l" '(org-roam-buffer-toggle :wk "Buffer Toggle")
+    "o r f" '(org-roam-node-find  :wk "Node find")
+    "o r g" '(org-roam-graph  :wk "Graph")
+    "o r i" '(org-roam-node-insert :wk "Node insert")
+    "o r c" '(org-roam-capture :wk "Capture"))
 #+end_src
 ** Programming
 #+begin_src elisp
