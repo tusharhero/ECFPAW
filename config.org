@@ -505,8 +505,8 @@ Evaluate this to get a pulse 😄.
 #+begin_src elisp
   (use-package pulsar :config
     (setq pulsar-pulse t)
-    (setq pulsar-delay 0.055)
-    (setq pulsar-iterations 10)
+    (setq pulsar-delay 0.001)
+    (setq pulsar-iterations 1)
     (setq pulsar-face 'pulsar-magenta)
     (setq pulsar-highlight-face 'pulsar-yellow)
     (add-hook 'next-error-hook #'pulsar-pulse-line)
