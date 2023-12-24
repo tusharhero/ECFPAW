@@ -187,6 +187,11 @@ It's very annoying to have that bell ringing all the time.
 (setq visible-bell t)
 (setq ring-bell-function 'ignore)
 #+end_src
+* FILES
+Make emacs stop littering my directories with backup files 😄.
+#+begin_src elisp
+  (setq backup-directory-alist '("." . ".emacs-file-backups"))
+#+end_src
 * WHICH-KEY 
 =which-key= basically shows the shortcuts you have setup. Its very
 useful, because you may not which key you bonded to what.
