@@ -93,16 +93,17 @@ Just a place for some custom functions I define.
 ** Functions
 #+begin_src elisp
   (defun ECFPAW/major-mode-keybinds ()
-    "Map major mode keybindings to C-c"
+    "Map major mode keybindings to `C-c'."
     (interactive)
     (setq unread-command-events (listify-key-sequence (kbd "C-c"))))
 
   ;; Toggle between split windows and a single window
   (defun ECFPAW/toggle-windows-split()
-    "Switch back and forth between one window and whatever split of
-      windows we might have in the frame. The idea is to maximize the
-      current buffer, while being able to go back to the previous split
-      of windows in the frame simply by calling this command again."
+    "Switch back and forth between one window.
+  And whatever split of windows we might have in the frame.  The idea is
+  to maximize the current buffer, while being able to go back to the
+  previous split of windows in the frame simply by calling this command
+  again."
     (interactive)
     (if (not(window-minibuffer-p (selected-window)))
         (progn
@@ -113,15 +114,20 @@ Just a place for some custom functions I define.
             (jump-to-register ?u)))))
 
   (defun ECFPAW/make-cyclic-list (list)
-    "Create a cyclic list"
+    "Create a cyclic list."
     (when list
       (setf (cdr (last list)) list)))
 
   (defun ECFPAW/is-it-day ()
-    "Return a boolean representation of whether its day or not. Any
-    time between 7 and 18 is defined as day."
+    "Return a boolean representation of whether its day or not.
+  Any time between 7 and 18 is defined as day."
     (interactive)
     (< 7 (decoded-time-hour (decode-time (current-time))) 18))
+
+  (defun ECFPAW/get-toolboxes-names ()
+    "Get a list of all the toolboxes available."
+    (require 'tramp)
+    (mapcar #'cadr (tramp-toolbox--completion-function "toolbox")))
 #+end_src
 * Load Evil Mode
 Getting evil mode installed because, I was Vim user and I am most
@@ -852,12 +858,7 @@ banner image for now as I feel like the default is cooler.
 *** List toolboxes
 I will use it to get a list of toolbox on by dashboard.
 #+begin_src elisp
-  (defun ECFPAW/get-toolboxes-names ()
-    "Get a list of all the toolboxes available."
-    (require 'tramp)
-    (mapcar #'cadr (tramp-toolbox--completion-function "toolbox")))
-
-  (defun ECFPAW/dashboard-widget/toolboxes (list-size)
+    (defun ECFPAW/dashboard-widget/toolboxes (list-size)
     "Toolboxes widget for dashboard."
     (dashboard-insert-heading "Toolboxes:"
 			      nil
