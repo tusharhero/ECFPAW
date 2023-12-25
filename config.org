@@ -89,7 +89,8 @@ This is will fix text glitches in vterm(see [[*SHELLS AND TERMINALS]]).
   (prefer-coding-system 'utf-8)
 #+end_src
 * CUSTOM
-Just a place for some custom functions I define.
+Just a place for some custom functions I defined and don't really fit
+into their own category.
 ** Functions
 #+begin_src elisp
   (defun ECFPAW/major-mode-keybinds ()
@@ -123,20 +124,6 @@ Just a place for some custom functions I define.
   Any time between 7 and 18 is defined as day."
     (interactive)
     (< 7 (decoded-time-hour (decode-time (current-time))) 18))
-
-  (defun ECFPAW/get-toolboxes-names ()
-    "Get a list of all the toolboxes available."
-    (require 'tramp)
-    (mapcar #'cadr (tramp-toolbox--completion-function "toolbox")))
-
-  (defun ECFPAW/open-toolbox (toolbox-name)
-    "Open TOOLBOX-NAME's home directory in Dired."
-    (interactive
-     (list
-      (completing-read "Select toolbox: "
-                       (ECFPAW/get-toolboxes-names))))
-    (dired
-     (format "/toolbox:%s:~" toolbox-name)))
 #+end_src
 * Load Evil Mode
 Getting evil mode installed because, I was Vim user and I am most
@@ -831,6 +818,25 @@ to get a model running and tweak this block.
 
     (setq ellama-assistant-nick "rationalAI"))
  #+end_src
+* TOOLBOXES
+Toolboxes are containers which can be used to isolate and use
+different GNU+Linux distributions easily and without the overhead of
+an virtual machine.
+#+begin_src elisp
+(defun ECFPAW/get-toolboxes-names ()
+  "Get a list of all the toolboxes available."
+  (require 'tramp)
+  (mapcar #'cadr (tramp-toolbox--completion-function "toolbox")))
+
+(defun ECFPAW/open-toolbox (toolbox-name)
+  "Open TOOLBOX-NAME's home directory in Dired."
+  (interactive
+   (list
+    (completing-read "Select toolbox: "
+                     (ECFPAW/get-toolboxes-names))))
+  (dired
+   (format "/toolbox:%s:~" toolbox-name)))
+#+end_src
 * DASHBOARD
 ** configuration
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
