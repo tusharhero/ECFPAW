@@ -491,6 +491,7 @@ of this.
   (custom-set-variables '(warning-suppress-types '((comp))))
 #+end_src
 ** Pulsar
+*** Introduction
 =Pulsar= provides the sweet *pulsing* of light you see when you switch
 you buffers, or go to a place in the buffer. It's super nice for
 knowing where you are.
@@ -499,13 +500,12 @@ Evaluate this to get a pulse 😄.
 #+begin_src elisp :tangle nil
 (pulsar-pulse-line)
 #+end_src
-
 *** basic setup
 #+begin_src elisp
   (use-package pulsar :config
     (setq pulsar-pulse t)
-    (setq pulsar-delay 0.001)
-    (setq pulsar-iterations 1)
+    (setq pulsar-delay 0.2)
+    (setq pulsar-iterations 2)
     (setq pulsar-face 'pulsar-magenta)
     (setq pulsar-highlight-face 'pulsar-yellow)
     (add-hook 'next-error-hook #'pulsar-pulse-line)
