@@ -1254,6 +1254,12 @@ heading.
 ** Loading feeds
 To keep the feeds private, I have the feeds listed in a file called
 =feeds.el=.
+
+To remove this from your =git= tracking use this,
+#+begin_src shell :tangle nil
+git update-index --assume-unchanged feed.el
+#+end_src
+
 #+begin_src elisp
   (load-file
    (expand-file-name
