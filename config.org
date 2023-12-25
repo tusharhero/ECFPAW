@@ -611,8 +611,6 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
         " "
         mode-line-buffer-identification
         " "
-        (vc-mode vc-mode)
-        " "
         "L%l"
         " "
         "%I"
@@ -644,8 +642,6 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
         ECFPAW/mode-line/major-mode
         " "
         mode-line-buffer-identification
-        " "
-        (vc-mode vc-mode)
         " "
         "L%l"
         " "
