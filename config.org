@@ -818,6 +818,7 @@ to get a model running and tweak this block.
     (setq ellama-assistant-nick "rationalAI"))
  #+end_src
 * DASHBOARD
+** configuration
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
 dashboard which comes up when you start Emacs. I also disable the
 number lines for this one because it looked ugly. I have disabled the custom
@@ -838,8 +839,12 @@ banner image for now as I feel like the default is cooler.
     (setq dashboard-items '((recents  . 5)
                             (projects . 5)))
     :config
-    (push "What is like the org-mode? What can make war against it?"
-          dashboard-footer-messages)
+    (setq dashboard-footer-messages
+          (append dashboard-footer-messages
+                  (list
+                   "What is like the org-mode? What can make war against it?"
+                   "I teach Quantum Mechanics to toddlers."
+                   "STOP HAVING FUN !!! 😠")))
     (add-to-list 'dashboard-item-generators  '(toolboxes . ECFPAW/dashboard-widget/toolboxes))
     (add-to-list 'dashboard-items '(toolboxes) t)
     (dashboard-setup-startup-hook))
