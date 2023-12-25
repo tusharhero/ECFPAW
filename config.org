@@ -128,6 +128,15 @@ Just a place for some custom functions I define.
     "Get a list of all the toolboxes available."
     (require 'tramp)
     (mapcar #'cadr (tramp-toolbox--completion-function "toolbox")))
+
+  (defun ECFPAW/open-toolbox (toolbox-name)
+    "Open TOOLBOX-NAME's home directory in Dired."
+    (interactive
+     (list
+      (completing-read "Select toolbox: "
+                       (ECFPAW/get-toolboxes-names))))
+    (dired
+     (format "/toolbox:%s:~" toolbox-name)))
 #+end_src
 * Load Evil Mode
 Getting evil mode installed because, I was Vim user and I am most
