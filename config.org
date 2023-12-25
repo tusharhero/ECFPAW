@@ -668,7 +668,10 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
   (ECFPAW/def-mode-line-constr
    ECFPAW/mode-line/title
    '(:eval
-     (propertize "ECFPAW" 'face 'modus-line))
+     (propertize "ECFPAW"
+                 'face 'modus-line
+                 'help-echo
+                 "Emacs Configuration For Programming And Writing."))
    "Mode line construct to display ECFPAW.")
 
   (ECFPAW/def-mode-line-constr
