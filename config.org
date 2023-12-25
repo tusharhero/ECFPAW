@@ -565,14 +565,23 @@ I have a custom function for loading and cycling through my preferred themes.
     "A list of the themes I like and use.")
 
   (defvar ECFPAW/current-theme nil
-    "My current theme")
+    "ECFPAW's current theme.")
+
+  (defun ECFPAW/load-theme (theme)
+    "Load THEME properly by disabling the previous theme first."
+    (interactive
+     (list
+      (intern (completing-read "Load custom theme: "
+                               (mapcar #'symbol-name
+                                       (custom-available-themes))))))
+    (disable-theme ECFPAW/current-theme)
+    (setq ECFPAW/current-theme theme)
+    (load-theme ECFPAW/current-theme t))
 
   (defun ECFPAW/cycle-my-theme ()
-    "Cycle through a list of themes, ECFPAW/themes"
+    "Cycle through a list of themes, `ECFPAW/themes'."
     (interactive)
-    (disable-theme ECFPAW/current-theme) 
-    (setq ECFPAW/current-theme (pop ECFPAW/themes))
-    (load-theme ECFPAW/current-theme t))
+    (ECFPAW/load-theme (pop ECFPAW/themes)))
 
   (ECFPAW/cycle-my-theme)
 #+end_src
