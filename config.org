@@ -2,7 +2,7 @@
 #+AUTHOR: tusharhero
 #+EMAIL: tusharhero@sdf.org
 #+DESCRIPTION: It actually does more than just programming and writing.
-#+STARTUP: overview
+#+STARTUP: content
 * LICENSE NOTICE
   :PROPERTIES:
   :VISIBILITY: folded
