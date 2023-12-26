@@ -25,8 +25,9 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+end_src
-* TODO CHORES [1/1]
+* TODO CHORES [0/2]
 ** TODO Use =use-package= properly to reduce startup time.
+** TODO Add more key bindings.
 * IMPORTANT PROGRAMS TO LOAD FIRST
 ** Package Manager
 I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manager. You might want to check for
