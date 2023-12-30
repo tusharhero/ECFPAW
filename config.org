@@ -387,7 +387,9 @@ Imenu. But I also am inside a huge =use-package= call.
     "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
     "o i" '(:ignore :wk "insert")
     "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp")
-    "o i i" '(org-download-clipboard :wk "image"))
+    "o i i" '(org-download-clipboard :wk "image")
+    "o e" '(:ignore :wk "export")
+    "o e p" '(org-latex-export-to-pdf :wk "PDF"))
   (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
   (which-key-add-key-based-replacements "SPC o b" "babel")
 #+end_src
@@ -433,7 +435,9 @@ Imenu. But I also am inside a huge =use-package= call.
     "," '(:ignore t :wk "LLM")
     ", a" '(:ignore t :wk "Ask")
     ", a s" '(ellama-ask-selection :wk "selection")
-    ", a a" '(ellama-ask :wk "mini-buffer"))
+    ", a a" '(ellama-ask :wk "mini-buffer")
+    ", i" '(:ignore t :wk "Improve")
+    ", i w" '(ellama-improve-wording t :wk "Improve"))
 #+end_src
 ** Last parens
 Don't know of a way to get rid of this...
