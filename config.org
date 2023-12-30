@@ -950,7 +950,7 @@ blindly copied from DistroTube worked. Lesson learned.
     :defer 2
     :init
     (global-company-mode t)
-    (add-to-list 'company-backends 'company-ispell))
+    (push 'company-ispell 'company-backends))
 
   (use-package
     company-box
