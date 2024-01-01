@@ -1473,7 +1473,8 @@ You do need shell, in our editor sometimes...
  setting sets the shell to be used in M-x shell, M-x term, M-x
  ansi-term and M-x vterm.
  #+begin_src emacs-lisp
-   (use-package vterm)
+   (use-package vterm
+     :custom (vterm-shell "/bin/fish"))
  #+end_src
 ** Vterm-Toggle 
  [[https://github.com/jixiuf/vterm-toggle][vterm-toggle]] toggles between the vterm buffer and whatever buffer you are editing.
