@@ -1470,8 +1470,10 @@ file without such privileges.
 You do need shell, in our editor sometimes...
 ** Vterm
  Vterm is a terminal emulator within Emacs.  The 'shell-file-name'
- setting sets the shell to be used in M-x shell, M-x term, M-x
- ansi-term and M-x vterm.
+ setting sets the shell to be used in =M-x shell=, =M-x term=, =M-x
+ ansi-term= and =M-x vterm=. But I don't use that since I want to keep
+ using sh/bash because they are =POSIX=, but I use =fish= as my
+ interactive shell because its nice.
  #+begin_src emacs-lisp
    (use-package vterm
      :custom (vterm-shell "/bin/fish"))
