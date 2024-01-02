@@ -934,12 +934,21 @@ a big clutter (at least on surface).
 + [ ] Add support for spell checking with Fido and ispell.
 :END:
 ** Fido
+:TODO:
++ [ ] Add support for spell checking with Fido and ispell.
+:END:
 I used to use Helm, but I am trying out Fido now.
 #+begin_src emacs-lisp
   (fido-mode)
   (fido-vertical-mode)
 #+end_src
 ** Corfu
+:TODO:
++ [ ] Fix this corfu error
+#+begin_src :tangle nil
+Error running timer ‘corfu--auto-complete-deferred’: (wrong-number-of-arguments #<subr evil-normalize-keymaps> 4)
+#+end_src
+:END:
 I used to use Company but that had some issue like, dictionary
 disabling all the other symbols.
 
@@ -972,7 +981,7 @@ helped me with this setup :) )
       (with-eval-after-load 'evil
         (evil-define-key 'insert corfu-mode-map
           (kbd "C-n")       #'corfu-next
-          (kbd "C-p")     #'corfu-previous))
+          (kbd "C-p")     #'corfu-previous)))
 
   (use-package corfu-terminal
     :unless window-system
