@@ -939,33 +939,60 @@ I used to use Helm, but I am trying out Fido now.
   (fido-mode)
   (fido-vertical-mode)
 #+end_src
-** Company
-[[https://company-mode.github.io/][Company]] is a text completion framework for Emacs. The name stands for
-"complete anything".  Completion will start automatically after you
-type a few letters. Use M-n and M-p to select, <return> to complete or
-<tab> to complete the common part.
+** Corfu
+I used to use Company but that had some issue like, dictionary
+disabling all the other symbols.
 
-#+begin_quote
-Company was giving me troubles, removing all the customization, I
-blindly copied from DistroTube worked. Lesson learned.
-#+end_quote
+The following configuration has been copied from this [[https://github.com/Icy-Thought/emacs.d/blob/main/irkalla/site-lisp/editor/coding/init-corfu.el][config]]. (They
+helped me with this setup :) )
 #+begin_src emacs-lisp
-  (use-package company
-    :defer 2
-    :init
-    (global-company-mode t)
-    (push 'company-ispell company-backends))
+  (use-package corfu
+      :preface
+      (defun corfu-enable-in-minibuffer ()
+        "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+        (when (where-is-internal #'completion-at-point (list (current-local-map)))
+          (setq-local corfu-echo-delay nil
+                      corfu-popupinfo-delay nil)
+          (corfu-mode 1)))
+      :hook ((elpaca-after-init . global-corfu-mode)
+             (minibuffer-setup . corfu-enable-in-minibuffer))
+      :custom
+      (corfu-auto t)
+      (corfu-cycle t)
+      (corfu-preselect t)
+      (corfu-auto-prefix 1)
+      (corfu-auto-delay 0.05)
+      (corfu-count 16)
+      (corfu-scroll-margin 5)
+      (corfu-separator ?\s)
+      (corfu-on-exact-match nil)
+      (corfu-preview-current 'insert)
+      (corfu-quit-no-match 'separator)
+      :config
+      (with-eval-after-load 'evil
+        (evil-define-key 'insert corfu-mode-map
+          (kbd "TAB")       #'corfu-next
+          (kbd "<tab>")     #'corfu-next
+          (kbd "S-TAB")     #'corfu-previous
+          (kbd "<backtab>") #'corfu-previous)))
 
-  (use-package
-    company-box
-    :after company
-    :hook (company-mode . company-box-mode))
-#+end_src
-* EMOJI
-Emojis, I need them. 😅
-#+begin_src elisp
-(use-package company-emoji :config 
-  (add-to-list 'company-backends 'company-emoji))
+  (use-package corfu-terminal
+    :unless window-system
+    :hook (corfu-mode . corfu-terminal-mode))
+
+  ;; :NOTE| Posframe like completion menu
+  (use-package corfu-popupinfo
+    :elpaca nil
+    :hook (corfu-mode . corfu-popupinfo-mode)
+    :custom (corfu-popupinfo-delay '(0.5 . 0.2)))
+
+  ;; :NOTE| Completion at point through Cape
+  (use-package cape
+    :preface
+    (defun setup-cape-extensions ()
+      (dolist (cape-fn '(dict emoji)) ;; keyword file  dabbrev tex emoji elisp-symbol))
+        (add-to-list 'completion-at-point-functions (intern (format "cape-%s" cape-fn)))))
+    :hook (corfu-mode . setup-cape-extensions))
 #+end_src
 * TEXT
 Some stuff which are for text editing in general.
