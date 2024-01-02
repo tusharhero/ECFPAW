@@ -506,7 +506,7 @@ you buffers, or go to a place in the buffer. It's super nice for
 knowing where you are.
 
 Evaluate this to get a pulse 😄.
-#+begin_src elisp :tangle nil
+#+begin_src elisp :tangle nil :results nil
 (pulsar-pulse-line)
 #+end_src
 *** basic setup
