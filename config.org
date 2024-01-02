@@ -961,8 +961,8 @@ helped me with this setup :) )
       (corfu-cycle t)
       (corfu-preselect t)
       (corfu-auto-prefix 1)
-      (corfu-auto-delay 0.05)
-      (corfu-count 16)
+      (corfu-auto-delay 0.3)
+      (corfu-count 5)
       (corfu-scroll-margin 5)
       (corfu-separator ?\s)
       (corfu-on-exact-match nil)
@@ -971,10 +971,8 @@ helped me with this setup :) )
       :config
       (with-eval-after-load 'evil
         (evil-define-key 'insert corfu-mode-map
-          (kbd "TAB")       #'corfu-next
-          (kbd "<tab>")     #'corfu-next
-          (kbd "S-TAB")     #'corfu-previous
-          (kbd "<backtab>") #'corfu-previous)))
+          (kbd "C-n")       #'corfu-next
+          (kbd "C-p")     #'corfu-previous))
 
   (use-package corfu-terminal
     :unless window-system
