@@ -3,7 +3,7 @@
 #+EMAIL: tusharhero@sdf.org
 #+DESCRIPTION: It actually does more than just programming and writing.
 #+STARTUP: content
-#+PROPERTY: header-args:emacs-lisp :tangle init.el
+#+PROPERTY: header-args :tangle init.el
 * LICENSE NOTICE
   :PROPERTIES:
   :VISIBILITY: folded
