@@ -967,7 +967,8 @@ I used to use Helm, but I am trying out Fido now.
 #+begin_src :tangle nil
 Error running timer ‘corfu--auto-complete-deferred’: (wrong-number-of-arguments #<subr evil-normalize-keymaps> 4)
 #+end_src
-+ [ ] Foreshadowing completion support for most cases... Basically I
++ [ ] Setup the cape extensions properly
++ [X] Foreshadowing completion support for most cases... Basically I
   need this package , https://code.bsdgeek.org/adam/corfu-candidate-overlay
   I need to do a bit more research though because a lot of stuff uses
   my =TAB= key.
@@ -979,32 +980,30 @@ The following configuration has been copied from this [[https://github.com/Icy-T
 helped me with this setup :) )
 #+begin_src emacs-lisp
   (use-package corfu
-      :preface
-      (defun corfu-enable-in-minibuffer ()
-        "Enable Corfu in the minibuffer if `completion-at-point' is bound."
-        (when (where-is-internal #'completion-at-point (list (current-local-map)))
-          (setq-local corfu-echo-delay nil
-                      corfu-popupinfo-delay nil)
-          (corfu-mode 1)))
-      :hook ((elpaca-after-init . global-corfu-mode)
-             (minibuffer-setup . corfu-enable-in-minibuffer))
-      :custom
-      (corfu-auto t)
-      (corfu-cycle t)
-      (corfu-preselect t)
-      (corfu-auto-prefix 1)
-      (corfu-auto-delay 0.3)
-      (corfu-count 5)
-      (corfu-scroll-margin 5)
-      (corfu-separator ?\s)
-      (corfu-on-exact-match nil)
-      (corfu-preview-current 'insert)
-      (corfu-quit-no-match 'separator)
-      :config
-      (with-eval-after-load 'evil
-        (evil-define-key 'insert corfu-mode-map
-          (kbd "C-n")       #'corfu-next
-          (kbd "C-p")     #'corfu-previous)))
+    :preface
+    (defun corfu-enable-in-minibuffer ()
+      "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+      (when (where-is-internal #'completion-at-point (list (current-local-map)))
+        (setq-local corfu-echo-delay nil
+                    corfu-popupinfo-delay nil)
+        (corfu-mode 1)))
+    :hook ((elpaca-after-init . global-corfu-mode)
+           (minibuffer-setup . corfu-enable-in-minibuffer))
+    :custom
+    (corfu-cycle t)
+    (corfu-preselect t)
+    (corfu-count 5)
+    (corfu-scroll-margin 5)
+    (corfu-separator ?\s)
+    (corfu-on-exact-match nil)
+    (corfu-preview-current 'insert)
+    (corfu-quit-no-match 'separator)
+    :config
+    (with-eval-after-load 'evil
+      (evil-define-key 'insert corfu-mode-map
+        (kbd "C-n")       #'corfu-next
+        (kbd "C-p")     #'corfu-previous
+        (kbd "C-<tab>") #'completion-at-point)))
 
   (use-package corfu-terminal
     :unless window-system
@@ -1023,6 +1022,16 @@ helped me with this setup :) )
       (dolist (cape-fn '(dict emoji)) ;; keyword file  dabbrev tex emoji elisp-symbol))
         (add-to-list 'completion-at-point-functions (intern (format "cape-%s" cape-fn)))))
     :hook (corfu-mode . setup-cape-extensions))
+
+  (use-package corfu-candidate-overlay
+    :after corfu
+    :config
+    ;; enable corfu-candidate-overlay mode globally
+    ;; this relies on having corfu-auto set to nil
+    (corfu-candidate-overlay-mode t)
+    (with-eval-after-load 'evil
+      (evil-define-key 'insert corfu-mode-map
+        (kbd "<tab>") #'corfu-candidate-overlay-complete-at-point)))
 #+end_src
 * TEXT
 Some stuff which are for text editing in general.
