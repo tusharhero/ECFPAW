@@ -936,6 +936,12 @@ the display additional info by default because I get overwhelmed.
 #+begin_src emacs-lisp
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 #+end_src
+
+Add human readable directory sizes in the directory listing, because,
+/well/, *I AM A HUMAN!*
+#+begin_src emacs-lisp
+  (setopt dired-listing-switches (concat dired-listing-switches "h"))
+#+end_src
 * BE-FRAMED
 =BE-FRAME= divides all the buffers into different frames, basically
 different sets of buffers for different frames, it helps avoids making
