@@ -15,5 +15,5 @@
 /auto-save-list/
 /amx-items
 /games/
-/init.el
-/early-init.el
+init.el
+early-init.el

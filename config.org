@@ -3,7 +3,7 @@
 #+EMAIL: tusharhero@sdf.org
 #+DESCRIPTION: It actually does more than just programming and writing.
 #+STARTUP: content
-#+PROPERTY: header-args :tangle init.el
+#+PROPERTY: header-args:emacs-lisp :tangle init.el
 * LICENSE NOTICE
   :PROPERTIES:
   :VISIBILITY: folded
@@ -34,6 +34,12 @@
 ** Disable inbuilt package manager
 #+begin_src emacs-lisp :tangle early-init.el
   (setq package-enable-at-startup nil)
+#+end_src
+** Avoid initial eye eating light theme
+#+begin_src emacs-lisp :tangle early-init.el
+  (setq mode-line-format nil)
+  (set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
+  (set-face-attribute 'mode-line nil :background "#000000" :foreground "#ffffff" :box 'unspecified)
 #+end_src
 * IMPORTANT PROGRAMS TO LOAD FIRST
 ** Package Manager
@@ -971,9 +977,9 @@ I used to use Helm, but I am trying out Fido now.
 ** Corfu
 :TODO:
 + [ ] Fix this corfu error
-#+begin_src :tangle nil
+#+begin_example
 Error running timer ‘corfu--auto-complete-deferred’: (wrong-number-of-arguments #<subr evil-normalize-keymaps> 4)
-#+end_src
+#+end_example
 + [ ] Setup the cape extensions properly
 + [X] Foreshadowing completion support for most cases... Basically I
   need this package , https://code.bsdgeek.org/adam/corfu-candidate-overlay
