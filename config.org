@@ -952,9 +952,6 @@ a big clutter (at least on surface).
   (use-package beframe :config (beframe-mode 1))
 #+end_src
 * COMPLETION
-:TODO:
-+ [ ] Add support for spell checking with Fido and ispell.
-:END:
 ** Fido
 :TODO:
 + [ ] Add support for spell checking with Fido and ispell.
