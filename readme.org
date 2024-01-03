@@ -57,6 +57,14 @@ branch.
     git clone https://github.com/tusharhero/ECFPAW ~/.config/emacs
   #+end_src
 
+- /Bootstrap/ the configuration, basically I don't ship the ~init.el~,
+  ~early-init.el~. I only ship the literate configuration
+  ~config.org~. You need to produce the files before starting Emacs
+  for the first time. I have created a script for this purpose called
+  ~bootstrap-config.el~, to run it,
+#+begin_src shell
+  ./bootstrap-config.el
+#+end_src
 - enable the Emacs server and start it.
   #+begin_src shell
     systemctl enable emacs --user
