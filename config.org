@@ -1147,6 +1147,10 @@ I use Doc-View to view documents within Emacs.
   (custom-set-variables
    '(doc-view-continuous t))
 #+end_src
+* PDF-Tools MODE
+#+begin_src elisp
+  (use-package pdf-tools :init (pdf-loader-install))
+#+end_src
 * SNIPPETS
 Snippets are very useful to quickly insert boilerplate.
 #+begin_src elisp
