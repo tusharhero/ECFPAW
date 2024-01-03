@@ -564,11 +564,24 @@ don't use them.
 #+begin_src elisp :tangle nil
 (use-package catppuccin-theme :ensure t)
 #+end_src
+**** Ef-themes
+#+begin_src elisp
+  (use-package ef-themes)
+#+end_src
 *** Easy cycling
+:TODO:
++ [ ] Figure out a way to automatically wait for the correct package to
+  load before running ~ECFPAW/cycle-theme~, I tried doing it using
+  this code, but that does not really work.
+  #+begin_src elisp :tangle nil
+  (with-eval-after-load (car ECFPAW/themes)
+    (ECFPAW/cycle-my-theme))
+  #+end_src
+:END:
 I have a custom function for loading and cycling through my preferred themes.
 #+begin_src elisp
   (defvar ECFPAW/themes (ECFPAW/make-cyclic-list
-                         '(modus-vivendi modus-operandi))
+                         '(ef-autumn ef-summer))
     "A list of the themes I like and use.")
 
   (defvar ECFPAW/current-theme nil
@@ -590,7 +603,8 @@ I have a custom function for loading and cycling through my preferred themes.
     (interactive)
     (ECFPAW/load-theme (pop ECFPAW/themes)))
 
-  (ECFPAW/cycle-my-theme)
+  (with-eval-after-load "ef-themes"
+    (ECFPAW/cycle-my-theme))
 #+end_src
 *** Day and night switching
 This used to make theme switch to the light theme at day and the dark
