@@ -894,7 +894,9 @@ banner image for now as I feel like the default is cooler.
                   (list
                    "What is like the org-mode? What can make war against it?"
                    "I teach Quantum Mechanics to toddlers."
-                   "STOP HAVING FUN !!! 😠")))
+                   "STOP HAVING FUN !!! 😠"
+                   "Why did the Emacs user switch to Vim? Because they wanted to be able to exit the editor."
+                   )))
     (add-to-list 'dashboard-item-generators  '(toolboxes . ECFPAW/dashboard-widget/toolboxes))
     (add-to-list 'dashboard-items '(toolboxes) t)
     (dashboard-setup-startup-hook))
