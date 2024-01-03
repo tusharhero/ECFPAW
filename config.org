@@ -1507,6 +1507,9 @@ file without such privileges.
 * SHELLS AND TERMINALS
 You do need shell, in our editor sometimes...
 ** Vterm
+:TODO:
++ [ ] make everything use fish by default, please.
+:END:
  Vterm is a terminal emulator within Emacs.  The 'shell-file-name'
  setting sets the shell to be used in =M-x shell=, =M-x term=, =M-x
  ansi-term= and =M-x vterm=. But I don't use that since I want to keep
