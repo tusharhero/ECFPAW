@@ -28,19 +28,27 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+end_src
 
-* TODO CHORES [0/2]
+* TODO CHORES [0/4]
 ** TODO Use =use-package= properly to reduce startup time.
 ** TODO Add more key bindings.
+** TODO Make menu bar and mouse based menus obey the current theme.
+** TODO Add shortcut to bold, italicize, etc. in [[ORG-MODE]].
+** TODO Correct the key bindings for annot-list mode.
+** TODO Divide this TODO into respective categories in their correct place.
 * EARLY-INIT (SUPER EARLY)
 ** Disable inbuilt package manager
 #+begin_src emacs-lisp :tangle early-init.el
   (setq package-enable-at-startup nil)
 #+end_src
 ** Avoid initial eye eating light theme
-#+begin_src emacs-lisp :tangle early-init.el
+#+begin_src emacs-lisp :tangle nil
   (setq mode-line-format nil)
   (set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
   (set-face-attribute 'mode-line nil :background "#000000" :foreground "#ffffff" :box 'unspecified)
+  (add-hook 'after-make-frame-functions (lambda ()
+                                           (when-let
+                                               ((theme (car custom-enabled-themes)))
+                                             (enable-theme theme))))
 #+end_src
 * IMPORTANT PROGRAMS TO LOAD FIRST
 ** Package Manager
