@@ -596,7 +596,7 @@ don't use them.
 I have a custom function for loading and cycling through my preferred themes.
 #+begin_src elisp
   (defvar ECFPAW/themes (ECFPAW/make-cyclic-list
-			 (list 'ef-autumn 'ef-summer))
+                         (list 'modus-vivendi 'ef-day))
     "A list of the themes I like and use.")
 
   (defvar ECFPAW/current-theme nil
