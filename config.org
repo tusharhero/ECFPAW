@@ -444,20 +444,21 @@ Imenu. But I also am inside a huge =use-package= call.
     "n w" '(widen :wk "Widen"))
 #+end_src
 ** LLM
-#+begin_src elisp
+#+begin_src emacs-lisp
   (ECFPAW/leader-keys
     "," '(:ignore t :wk "LLM")
-    ", a" '(:ignore t :wk "Ask")
-    ", a s" '(ellama-ask-selection :wk "selection")
-    ", a a" '(ellama-ask :wk "mini-buffer")
-    ", i" '(:ignore t :wk "Improve")
-    ", i w" '(ellama-improve-wording t :wk "Improve"))
+    ", a" '(gptel :wk "gptel buffer")
+    ;; I need to call gptel with a prefix argument to create a new GPTel buffer.
+    ", c" '((lambda () (interactive) (setq current-prefix-arg '(4)) (call-interactively 'gptel)) :wk "create gptel buffer")
+    ", m" '(gptel-menu :wk "GPTel Menu")
+    ", A" '(gptel-abort :wk "GPTel abort"))
 #+end_src
 ** Last parens
 Don't know of a way to get rid of this...
 #+begin_src elisp
   )
 #+end_src
+
 * GRAPHICS
 ** ALL THE ICONS 
 This is an icon set that can be used with dashboard, dired, ibuffer
@@ -851,17 +852,20 @@ default because they are super distracting.
 I like to use Ollama on my local computer 😄. So to use this you need
 to get a model running and tweak this block.
 #+begin_src elisp
-  (use-package ellama
-    :init
-    (setopt ellama-language "English")
-    (require 'llm-ollama)
-
-    (setopt ellama-provider
-                    (make-llm-ollama
-                     :chat-model "rationalAI:latest"))
-
-    (setq ellama-assistant-nick "rationalAI"))
- #+end_src
+    (use-package gptel
+      :elpaca (:host github :repo "karthink/gptel" :branch "copilot")
+      :config
+      (setq-default gptel-model "gemma:2b" ;Pick your default model
+                    gptel-backend
+                    (gptel-make-ollama "Ollama"
+                      :host "localhost:11434"
+                      :stream t
+                      :models '("orca-mini:latest"
+                                "tinyllama:latest"
+                                "gemma:2b"
+                                "qwen:0.5b")))
+    (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
+#+end_src
 * TOOLBOXES
 Toolboxes are containers which can be used to isolate and use
 different GNU+Linux distributions easily and without the overhead of
