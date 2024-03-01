@@ -28,14 +28,13 @@
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+end_src
 
-* TODO CHORES [0/4]
+* TODO CHORES [0/6]
 ** TODO Use =use-package= properly to reduce startup time.
 ** TODO Add more key bindings.
 ** TODO Make menu bar and mouse based menus obey the current theme.
 ** TODO Add shortcut to bold, italicize, etc. in [[ORG-MODE]].
 ** TODO Correct the key bindings for annot-list mode.
 ** TODO Divide this TODO into respective categories in their correct place.
-** TODO Fix Org tempo.
 * EARLY-INIT (SUPER EARLY)
 ** Disable inbuilt package manager
 #+begin_src emacs-lisp :tangle early-init.el
@@ -1048,6 +1047,8 @@ Error running timer ‘corfu--auto-complete-deferred’: (wrong-number-of-argume
 I used to use Company but that had some issue like, dictionary
 disabling all the other symbols.
 
+To complete, please use ~C-<tab>~
+
 The following configuration has been copied from this [[https://github.com/Icy-Thought/emacs.d/blob/main/irkalla/site-lisp/editor/coding/init-corfu.el][config]]. (They
 helped me with this setup :) )
 #+begin_src emacs-lisp
@@ -1100,10 +1101,7 @@ helped me with this setup :) )
     :config
     ;; enable corfu-candidate-overlay mode globally
     ;; this relies on having corfu-auto set to nil
-    (corfu-candidate-overlay-mode t)
-    (with-eval-after-load 'evil
-      (evil-define-key 'insert corfu-mode-map
-        (kbd "<tab>") #'corfu-candidate-overlay-complete-at-point)))
+    (corfu-candidate-overlay-mode t))
 #+end_src
 * TEXT
 Some stuff which are for text editing in general.
