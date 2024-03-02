@@ -864,6 +864,12 @@ I currently just use Ollama, I have 2 backends defined one of them is
 the local Ollama backend which uses the port ~11434~, the other one is
 the remote backend, which uses the port ~11435~. You are supposed use
 ssh redirection to redirect your remote ollama server to the port ~11435~.
+
+To redirect any port from a remote machine, use the following command:
+```
+ssh -L local_port:remote_address:remote_port username@server.com
+```
+
 #+begin_src elisp
   (use-package gptel
     :elpaca (:host github :repo "karthink/gptel" :branch "copilot")
@@ -881,7 +887,9 @@ ssh redirection to redirect your remote ollama server to the port ~11435~.
   (gptel-make-ollama "Ollama(remote)"
                       :host "localhost:11435"
                       :stream t
-                      :models '("qwen:0.5b"))
+                      :models '("qwen:0.5b"
+                                "qwen:1.8b"
+                                ))
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
 #+end_src
 ** System Prompts
@@ -890,7 +898,10 @@ ssh redirection to redirect your remote ollama server to the port ~11435~.
 :END:
 #+begin_src elisp
   (setq gptel-directives
-        `((default .
+        `(
+          (default .
+  "You are a large language model living in Emacs and a helpful assistant. Respond concisely.")
+          (nobullshit .
   "To assist:  Be terse.  Do not offer unprompted advice or clarifications. Speak in specific,
    topic relevant terminology. Do NOT hedge or qualify. Do not waffle. Speak
    directly and be willing to make creative guesses. Explain your reasoning. if you
