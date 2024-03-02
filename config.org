@@ -928,6 +928,24 @@ ssh redirection to redirect your remote ollama server to the port ~11435~.
   You will NOT write word salads, you will only talk sense.")
   ))
 #+end_src
+** Ollama management
+I find myself needing to manage my ollama instances.
+*** Get request for emacs
+I need a requests library because url is too much of a pain to use.
+#+begin_src elisp
+  (use-package plz)
+#+end_src
+*** Get a list of Ollama instances
+#+begin_src elisp
+  (defun ECFPAW/ollama-get-model-names (ollama-host)
+      "Gets the names of models available in OLLAMA-HOST as a list."
+      (require 'plz)
+      (mapcar (lambda (model) (alist-get 'name model))
+              (alist-get 'models
+                         (plz 'get
+                           (format "http://%s/api/tags" ollama-host)
+                           :as #'json-read))))
+#+end_src
 * TOOLBOXES
 Toolboxes are containers which can be used to isolate and use
 different GNU+Linux distributions easily and without the overhead of
