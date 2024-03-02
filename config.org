@@ -860,6 +860,10 @@ default because they are super distracting.
 I like to use Ollama on my local computer 😄. So to use this you need
 to get a model running and tweak this block.
 ** Configuration
+I currently just use Ollama, I have 2 backends defined one of them is
+the local Ollama backend which uses the port ~11434~, the other one is
+the remote backend, which uses the port ~11435~. You are supposed use
+ssh redirection to redirect your remote ollama server to the port ~11435~.
 #+begin_src elisp
   (use-package gptel
     :elpaca (:host github :repo "karthink/gptel" :branch "copilot")
@@ -872,7 +876,12 @@ to get a model running and tweak this block.
                     :models '("orca-mini:latest"
                               "tinyllama:latest"
                               "gemma:2b"
-                              "qwen:0.5b")))
+                              "qwen:0.5b"
+                              "phi")))
+  (gptel-make-ollama "Ollama(remote)"
+                      :host "localhost:11435"
+                      :stream t
+                      :models '("qwen:0.5b"))
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
 #+end_src
 ** System Prompts
