@@ -636,8 +636,9 @@ dark theme at night.
     "Theme of choice for the night.")
   (defun ECFPAW/switch-theme-day-night ()
     (if (ECFPAW/is-it-day)
-        (load-theme ECFPAW/day-theme)
-        (load-theme ECFPAW/night-theme)))
+        (ECFPAW/load-theme ECFPAW/day-theme)
+        (ECFPAW/load-theme ECFPAW/night-theme)))
+  (ECFPAW/switch-theme-day-night)
   (run-at-time t 3600 'ECFPAW/switch-theme-day-night)
 #+end_src
 ** MODE-LINE
