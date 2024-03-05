@@ -604,7 +604,7 @@ don't use them.
 I have a custom function for loading and cycling through my preferred themes.
 #+begin_src elisp
   (defvar ECFPAW/themes (ECFPAW/make-cyclic-list
-                         (list 'modus-vivendi 'ef-day))
+                         (list 'modus-vivendi 'modus-operandi 'ef-day))
     "A list of the themes I like and use.")
 
   (defvar ECFPAW/current-theme nil
@@ -625,16 +625,11 @@ I have a custom function for loading and cycling through my preferred themes.
     "Cycle through a list of themes, `ECFPAW/themes'."
     (interactive)
     (ECFPAW/load-theme (pop ECFPAW/themes)))
-
-  (with-eval-after-load "ef-themes"
-    (ECFPAW/cycle-my-theme))
 #+end_src
 *** Day and night switching
-This used to make theme switch to the light theme at day and the dark
-theme at night. But I have disabled for now, since I don't really like
-the light theme to be honest. If in the future I ever decide to use it
-again, I will turn it one.
-#+begin_src elisp :tangle nil
+This is used to make theme switch to the light theme at day and the
+dark theme at night.
+#+begin_src elisp
   (defvar ECFPAW/day-theme 'modus-operandi
     "Theme of choice for the day.")
   (defvar ECFPAW/night-theme 'modus-vivendi
@@ -643,7 +638,7 @@ again, I will turn it one.
     (if (ECFPAW/is-it-day)
         (load-theme ECFPAW/day-theme)
         (load-theme ECFPAW/night-theme)))
-  (run-at-time nil 3600 'ECFPAW/switch-theme-day-night)
+  (run-at-time t 3600 'ECFPAW/switch-theme-day-night)
 #+end_src
 ** MODE-LINE
 I am going to make my own mode-line, I followed [[https://protesilaos.com/codelog/2023-07-29-emacs-custom-modeline-tutorial/][Prot's tutorial]].
