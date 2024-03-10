@@ -97,9 +97,9 @@ the new installer version on their git repository.
 #+begin_src elisp
   ;; Install use-package support
   (elpaca elpaca-use-package
-    ;; Enable :elpaca use-package keyword.
+    ;; Enable :ensure use-package keyword.
     (elpaca-use-package-mode)
-    ;; Assume :elpaca t unless otherwise specified.
+    ;; Assume :ensure t unless otherwise specified.
     (setq elpaca-use-package-by-default t))
   ;; Block until current queue processed.
   (elpaca-wait)
@@ -868,7 +868,7 @@ ssh -L local_port:remote_address:remote_port username@server.com
 
 #+begin_src elisp
   (use-package gptel
-    :elpaca (:host github :repo "karthink/gptel" :branch "copilot")
+    :ensure (:host github :repo "karthink/gptel" :branch "copilot")
     :config
     (setq-default gptel-model "gemma:2b" ;Pick your default model
                   gptel-backend
@@ -1118,7 +1118,7 @@ helped me with this setup :) )
 
   ;; :NOTE| Posframe like completion menu
   (use-package corfu-popupinfo
-    :elpaca nil
+    :ensure nil
     :hook (corfu-mode . corfu-popupinfo-mode)
     :custom (corfu-popupinfo-delay '(0.5 . 0.2)))
 
@@ -1413,7 +1413,7 @@ Cookies basically give you information about the list.
 :END:
 #+begin_src elisp
   (use-package org-custom-cookies
-    :elpaca (:host github :repo "tusharhero/org-custom-cookies")
+    :ensure (:host github :repo "tusharhero/org-custom-cookies")
     :ensure t
     :after org
     :config
@@ -1500,7 +1500,7 @@ Magit (Maggot , magic IDK) is a git client for Emacs.
       :defer t
       :config
       (setq package-install-upgrade-built-in t)
-      (use-package transient :elpaca nil)
+      (use-package transient :ensure nil)
       (progn (unload-feature 'transient t) (require 'transient)))
 #+end_src
 ** PINENTRY
