@@ -438,7 +438,7 @@ Imenu. But I also am inside a huge =use-package= call.
     "p g" '(xref-find-definitions :wk "go to definitions")
     "p b" '(xref-go-back :wk "Go back to where you were")
 
-    "p c" '(compile :wk "compile")
+    "p c" '(project-compile :wk "compile")
     "p d" '(eldoc :wk "get docs")
     "p i" '(imenu :wk "imenu")
     "p a" '(eldoc :wk "eglot code actions")
