@@ -146,9 +146,9 @@ into their own category.
 
   (defun ECFPAW/is-it-day ()
     "Return a boolean representation of whether its day or not.
-  Any time between 7 and 18 is defined as day."
+  Any time between 6 and 18 is defined as day."
     (interactive)
-    (< 7 (decoded-time-hour (decode-time (current-time))) 18))
+    (< 6 (decoded-time-hour (decode-time (current-time))) 18))
 #+end_src
 * Load Evil Mode
 Getting evil mode installed because, I was Vim user and I am most
