@@ -559,8 +559,6 @@ Evaluate this to get a pulse 😄.
 ** THEME
 I use Modus themes.
 *** Extra Themes
-I have disabled the loading of all these themes for now. Because I
-don't use them.
 **** VSCode theme
 #+begin_src elisp
   (use-package vscode-dark-plus-theme
@@ -832,8 +830,7 @@ default because they are super distracting.
       (setq display-line-numbers (pop ECFPAW/line-number-list)))
 #+end_src
 * LLM-SUPPORT
-I like to use Ollama on my local computer 😄. So to use this you need
-to get a model running and tweak this block.
+I like to use Ollama on my local(and remote) computers 😄.
 ** Ollama management
 I find myself needing to manage my ollama instances.
 *** Get request for emacs
