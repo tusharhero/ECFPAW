@@ -835,7 +835,26 @@ default because they are super distracting.
 * LLM-SUPPORT
 I like to use Ollama on my local computer 😄. So to use this you need
 to get a model running and tweak this block.
-** Configuration
+** Ollama management
+I find myself needing to manage my ollama instances.
+*** Get request for emacs
+I need a requests library because url is too much of a pain to use.
+#+begin_src elisp
+  (use-package plz)
+#+end_src
+*** Get a list of Ollama instances
+#+begin_src elisp
+  (defun ECFPAW/ollama-get-model-names (ollama-host)
+      "Gets the names of models available in OLLAMA-HOST as a list."
+      (require 'plz)
+      (mapcar (lambda (model) (alist-get 'name model))
+              (alist-get 'models
+                         (plz 'get
+                           (format "http://%s/api/tags" ollama-host)
+                           :as #'json-read))))
+#+end_src
+** GPTEL
+*** Configuration
 I currently just use Ollama, I have 2 backends defined one of them is
 the local Ollama backend which uses the port ~11434~, the other one is
 the remote backend, which uses the port ~11435~. You are supposed use
@@ -845,30 +864,26 @@ To redirect any port from a remote machine, use the following command:
 ```
 ssh -L local_port:remote_address:remote_port username@server.com
 ```
-
 #+begin_src elisp
   (use-package gptel
     :ensure (:host github :repo "karthink/gptel" :branch "copilot")
     :config
-    (setq-default gptel-model "gemma:2b" ;Pick your default model
-                  gptel-backend
+    (setq-default gptel-backend
                   (gptel-make-ollama "Ollama"
                     :host "localhost:11434"
                     :stream t
-                    :models '("orca-mini:latest"
-                              "tinyllama:latest"
-                              "gemma:2b"
-                              "qwen:0.5b"
-                              "phi")))
+                    :models (condition-case nil
+                                (ECFPAW/ollama-get-model-names "localhost:11434")
+                              (plz-error nil))))
   (gptel-make-ollama "Ollama(remote)"
                       :host "localhost:11435"
                       :stream t
-                      :models '("qwen:0.5b"
-                                "qwen:1.8b"
-                                ))
+                      :models (condition-case nil
+                                  (ECFPAW/ollama-get-model-names "localhost:11435")
+                                (plz-error nil)))
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
 #+end_src
-** System Prompts
+*** System Prompts
 :TODO:
 + [ ] Perhaps write elisp code extract this info from an org-tree instead.
 :END:
@@ -914,24 +929,6 @@ ssh -L local_port:remote_address:remote_port username@server.com
   You will hold a position in accordance with reason and evidence ONLY.
   You will NOT write word salads, you will only talk sense.")
   ))
-#+end_src
-** Ollama management
-I find myself needing to manage my ollama instances.
-*** Get request for emacs
-I need a requests library because url is too much of a pain to use.
-#+begin_src elisp
-  (use-package plz)
-#+end_src
-*** Get a list of Ollama instances
-#+begin_src elisp
-  (defun ECFPAW/ollama-get-model-names (ollama-host)
-      "Gets the names of models available in OLLAMA-HOST as a list."
-      (require 'plz)
-      (mapcar (lambda (model) (alist-get 'name model))
-              (alist-get 'models
-                         (plz 'get
-                           (format "http://%s/api/tags" ollama-host)
-                           :as #'json-read))))
 #+end_src
 * TOOLBOXES
 Toolboxes are containers which can be used to isolate and use
