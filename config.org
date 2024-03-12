@@ -106,7 +106,6 @@ the new installer version on their git repository.
   (elpaca-wait)
 #+end_src
 * SET LOCALE
-This is will fix text glitches in vterm(see [[*SHELLS AND TERMINALS]]).
 #+begin_src elisp
   (setq locale-coding-system 'utf-8)
   (set-terminal-coding-system 'utf-8)
