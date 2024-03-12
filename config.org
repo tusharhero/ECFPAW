@@ -561,30 +561,13 @@ I use Modus themes.
 *** Extra Themes
 I have disabled the loading of all these themes for now. Because I
 don't use them.
-**** Doom Themes
-#+begin_src elisp :tangle nil
-      (use-package doom-themes
-        :ensure t
-        :config
-        ;; Global settings (defaults)
-        (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-              doom-themes-enable-italic t) ; if nil, italics is universally disabled
-        ;; Enable flashing mode-line on errors
-        ;; (doom-themes-visual-bell-config)
-
-        ;; Corrects (and improves) org-mode's native fontification.
-        (doom-themes-org-config)
-
-
-        (ECFPAW/cycle-my-theme))
-#+end_src
 **** VSCode theme
-#+begin_src elisp :tangle nil
+#+begin_src elisp
   (use-package vscode-dark-plus-theme
     :ensure t)
 #+end_src
 **** Catpuccin theme
-#+begin_src elisp :tangle nil
+#+begin_src elisp
 (use-package catppuccin-theme :ensure t)
 #+end_src
 **** Ef-themes
