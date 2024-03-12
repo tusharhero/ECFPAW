@@ -31,8 +31,7 @@
 * TODO CHORES [0/6]
 ** TODO Use =use-package= properly to reduce startup time.
 ** TODO Add more key bindings.
-** TODO Make menu bar and mouse based menus obey the current theme.
-** TODO Add shortcut to bold, italicize, etc. in [[ORG-MODE]].
+*** TODO Add shortcut to bold, italicize, etc. in [[ORG-MODE]].
 ** TODO Correct the key bindings for annot-list mode.
 ** TODO Divide this TODO into respective categories in their correct place.
 * EARLY-INIT (SUPER EARLY)
