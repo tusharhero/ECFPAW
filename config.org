@@ -1144,6 +1144,13 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
                                               ',symbols-alist
                                               )))))
 #+end_src
+**** Function for adding pretty symbols pack to a mode
+#+begin_src elisp
+  (defun ECFPAW/add-pretty-sym-pack (mode-hook pack-list)
+    "Add all the packs present in PACK-LIST to MODE-HOOK."
+    (dolist (pack pack-list)
+      (add-hook mode-hook pack)))
+#+end_src
 **** Symbol packs themselves
 #+begin_src elisp
   (ECFPAW/def-pretty-sym-pack
@@ -1573,23 +1580,29 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
 #+end_src
 ***** Prettify mode symbols
 #+begin_src elisp
-  (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/in-equalities)
-  (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/asterik-to-multiplication)
-  (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/lambda)
-  (add-hook 'python-mode-hook 'ECFPAW/prettify-symbols-pack/pointers)
+  (ECFPAW/add-pretty-sym-pack 'python-mode-hook '(ECFPAW/prettify-symbols-pack/in-equalities
+                                                  ECFPAW/prettify-symbols-pack/asterik-to-multiplication
+                                                  ECFPAW/prettify-symbols-pack/lambda
+                                                  ECFPAW/prettify-symbols-pack/pointers))
+  (ECFPAW/add-pretty-sym-pack 'python-ts-mode-hook '(ECFPAW/prettify-symbols-pack/in-equalities
+                                                     ECFPAW/prettify-symbols-pack/asterik-to-multiplication
+                                                     ECFPAW/prettify-symbols-pack/lambda
+                                                     ECFPAW/prettify-symbols-pack/pointers))
 #+end_src
 **** C
 ***** Prettify mode symbols
 #+begin_src elisp
-  (add-hook 'c-mode-hook 'ECFPAW/prettify-symbols-pack/in-equalities)
-  (add-hook 'c-mode-hook 'ECFPAW/prettify-symbols-pack/pointers)
+  (ECFPAW/add-pretty-sym-pack 'c-mode-hook
+                              '(ECFPAW/prettify-symbols-pack/in-equalities
+                                ECFPAW/prettify-symbols-pack/pointers))
 #+end_src
 **** C++
 ***** Prettify mode symbols
 #+begin_src elisp
-    (add-hook 'c++-mode-hook 'ECFPAW/prettify-symbols-pack/in-equalities)
-    (add-hook 'c++-mode-hook 'ECFPAW/prettify-symbols-pack/pointers)
-    (add-hook 'c++-mode-hook 'ECFPAW/prettify-symbols-pack/redirections)
+  (ECFPAW/add-pretty-sym-pack 'c++-mode-hook
+                              '(ECFPAW/prettify-symbols-pack/in-equalities
+                                ECFPAW/prettify-symbols-pack/pointers
+                                'ECFPAW/prettify-symbols-pack/redirections))
 #+end_src
 ** Code Folding
 #+begin_src elisp
