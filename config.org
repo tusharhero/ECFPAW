@@ -585,7 +585,7 @@ I use Modus themes.
 I have a custom function for loading and cycling through my preferred themes.
 #+begin_src elisp
   (defvar ECFPAW/themes (ECFPAW/make-cyclic-list
-                         (list 'modus-vivendi 'modus-operandi 'ef-day))
+                         (list 'ef-night 'modus-vivendi 'modus-operandi 'ef-day 'vscode-dark-plus))
     "A list of the themes I like and use.")
 
   (defvar ECFPAW/current-theme nil
@@ -606,8 +606,9 @@ I have a custom function for loading and cycling through my preferred themes.
     "Cycle through a list of themes, `ECFPAW/themes'."
     (interactive)
     (ECFPAW/load-theme (pop ECFPAW/themes)))
+  (ECFPAW/cycle-my-theme)
 #+end_src
-*** Day and night switching
+*** COMMENT Day and night switching
 This is used to make theme switch to the light theme at day and the
 dark theme at night.
 #+begin_src elisp
