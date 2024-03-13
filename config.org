@@ -570,7 +570,8 @@ I use Modus themes.
 #+end_src
 **** Ef-themes
 #+begin_src elisp
-  (use-package ef-themes)
+  (use-package ef-themes :ensure t
+    :config (ECFPAW/cycle-my-theme))
 #+end_src
 *** Easy cycling
 :TODO:
@@ -606,7 +607,6 @@ I have a custom function for loading and cycling through my preferred themes.
     "Cycle through a list of themes, `ECFPAW/themes'."
     (interactive)
     (ECFPAW/load-theme (pop ECFPAW/themes)))
-  (ECFPAW/cycle-my-theme)
 #+end_src
 *** COMMENT Day and night switching
 This is used to make theme switch to the light theme at day and the
