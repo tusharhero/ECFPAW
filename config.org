@@ -857,9 +857,9 @@ the remote backend, which uses the port ~11435~. You are supposed use
 ssh redirection to redirect your remote ollama server to the port ~11435~.
 
 To redirect any port from a remote machine, use the following command:
-```
+#+begin_src shell
 ssh -L local_port:remote_address:remote_port username@server.com
-```
+#+end_src
 #+begin_src elisp
   (use-package gptel
     :ensure (:host github :repo "karthink/gptel" :branch "copilot")
