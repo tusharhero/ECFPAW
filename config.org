@@ -1323,9 +1323,9 @@ size and rendering method.
 
   (add-hook 'org-mode-hook #'ECFPAW/org-latex-yas)
 #+end_src
-** Roam
+** COMMENT Roam
 I have disabled it for now.
-#+begin_src elisp :tangle nil
+#+begin_src elisp
   (use-package org-roam
     :ensure t
     :custom
