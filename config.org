@@ -1639,22 +1639,12 @@ file without such privileges.
 #+end_src
 * EDIT SERVER
 Edit server is an extensions which allows you edit text from your
-browser in a very integrated way. Here is a [[https://github.com/stsquad/emacs_chrome][link]] to their git server.
+browser in a very integrated way. I use this one right now,
 #+begin_src elisp
-  (use-package edit-server
-    :ensure t
-    :commands edit-server-start
-    :init (if after-init-time
-              (edit-server-start)
-            (add-hook 'after-init-hook
-                      #'(lambda() (edit-server-start))))
-    :config (setq edit-server-new-frame-alist
-                  '((name . "Edit with Emacs FRAME")
-                    (top . 200)
-                    (left . 200)
-                    (width . 80)
-                    (height . 25)
-                    (minibuffer . t)
-                    (menu-bar-lines . t)
-                    (window-system . x))))
+  (use-package atomic-chrome
+      :init (if after-init-time
+                (atomic-chrome-start-server)
+              (add-hook 'after-init-hook
+                        #'(lambda() (atomic-chrome-start-server))))
+      :config (setq atomic-chrome-buffer-open-style 'frame))
 #+end_src
