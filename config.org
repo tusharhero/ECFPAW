@@ -1350,6 +1350,10 @@ I have disabled it for now.
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 #+end_src
+** Capture
+#+begin_src elisp
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+#+end_src
 ** Prettify mode symbols
 I have had this part separated but decided to just put it in its right
 place now.
