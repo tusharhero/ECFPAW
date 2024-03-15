@@ -589,20 +589,14 @@ I have a custom function for loading and cycling through my preferred themes.
                          (list 'ef-night 'modus-vivendi 'modus-operandi 'ef-day 'vscode-dark-plus))
     "A list of the themes I like and use.")
 
-  (defun ECFPAW/load-theme (theme)
-    "Load THEME properly by disabling the previous theme first."
-    (interactive
-     (list
-      (intern (completing-read "Load custom theme: "
-                               (mapcar #'symbol-name
-                                       (custom-available-themes))))))
-    (disable-theme (car custom-enabled-themes))
-    (load-theme theme t))
+  (advice-add 'load-theme
+              :before (lambda (theme &optional no-confirm no-enable)
+                        (disable-theme (car custom-enabled-themes))))
 
   (defun ECFPAW/cycle-my-theme ()
     "Cycle through a list of themes, `ECFPAW/themes'."
     (interactive)
-    (ECFPAW/load-theme (pop ECFPAW/themes)))
+    (load-theme (pop ECFPAW/themes) t))
 #+end_src
 *** COMMENT Day and night switching
 This is used to make theme switch to the light theme at day and the
