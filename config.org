@@ -589,9 +589,6 @@ I have a custom function for loading and cycling through my preferred themes.
                          (list 'ef-night 'modus-vivendi 'modus-operandi 'ef-day 'vscode-dark-plus))
     "A list of the themes I like and use.")
 
-  (defvar ECFPAW/current-theme nil
-    "ECFPAW's current theme.")
-
   (defun ECFPAW/load-theme (theme)
     "Load THEME properly by disabling the previous theme first."
     (interactive
@@ -599,9 +596,8 @@ I have a custom function for loading and cycling through my preferred themes.
       (intern (completing-read "Load custom theme: "
                                (mapcar #'symbol-name
                                        (custom-available-themes))))))
-    (disable-theme ECFPAW/current-theme)
-    (setq ECFPAW/current-theme theme)
-    (load-theme ECFPAW/current-theme t))
+    (disable-theme (car custom-enabled-themes))
+    (load-theme theme t))
 
   (defun ECFPAW/cycle-my-theme ()
     "Cycle through a list of themes, `ECFPAW/themes'."
