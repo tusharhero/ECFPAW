@@ -14,16 +14,6 @@ Before writing this, I used to use Spacemacs, and I think spacemacs is
 great too, I am going to get configure some features from spacemacs
 here as well (The ones I liked obviously).
 
-* Things I am proud of:
-**  Custom Mode Line
-The mode-line is fully customized(see the [[* Screenshot]]), I didn't use
-any packages for it, because I didn't like the style of any of them
-mode-lines. My mode line is /simpler/ than those packages, but its
-honest work.
-** Day and night theme switching.
-I have it configured that it checks the time every hour and changes to
-a appropriate theme. If its required, details in [[config.org][config]].
-
 * Screenshot
 #+CAPTION: This was taken in early September 2023
 #+NAME:   ECFPAW dashboard
