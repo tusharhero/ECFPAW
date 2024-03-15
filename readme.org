@@ -66,18 +66,3 @@ branch.
     emacsclient -nc
   #+end_src
   You can use a GUI shortcut for Emacsclient as well.
-
-* Workarounds
-I want to document some workarounds.
-** KDE
-For some reason, just setting up a Emacs server =systemctl= service file doesn't
-let me use =emacsclient= in GUI mode.
-
-Looking through the [[https://wiki.archlinux.org/][Archwiki]], I found this [[https://www.emacswiki.org/emacs/EmacsAsDaemon#h5o-17][page]] on the EmacsWiki. The
-instructions on it fixed the issue for me.
-
-#+begin_center
-NOTE: I do not have this problem anymore, furthermore the instructions
-in the Wiki seemed to break my KDE theme. I have added a warning there
-as well 😇.
-#+end_center
