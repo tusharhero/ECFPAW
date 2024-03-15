@@ -113,17 +113,24 @@ the new installer version on their git repository.
   (set-selection-coding-system 'utf-8)
   (prefer-coding-system 'utf-8)
 #+end_src
-* CUSTOM
-Just a place for some custom functions I defined and don't really fit
-into their own category.
-** Functions
+* Generally useful helper functions
+There functions are generally useful.
 #+begin_src elisp
-  (defun ECFPAW/major-mode-keybinds ()
-    "Map major mode keybindings to `C-c'."
-    (interactive)
-    (setq unread-command-events (listify-key-sequence (kbd "C-c"))))
+  (defun ECFPAW/make-cyclic-list (list)
+    "Create a cyclic list."
+    (when list
+      (setf (cdr (last list)) list)))
 
-  ;; Toggle between split windows and a single window
+  (defun ECFPAW/is-it-day ()
+    "Return a boolean representation of whether its day or not.
+  Any time between 6 and 18 is defined as day."
+    (interactive)
+    (< 6 (decoded-time-hour (decode-time (current-time))) 18))
+#+end_src
+* Window Management
+I really liked this feature from Spacemacs, so here is how I emulate
+it 😄.
+#+begin_src elisp
   (defun ECFPAW/toggle-windows-split()
     "Switch back and forth between one window.
   And whatever split of windows we might have in the frame.  The idea is
@@ -138,17 +145,6 @@ into their own category.
                 (window-configuration-to-register ?u)
                 (delete-other-windows))
             (jump-to-register ?u)))))
-
-  (defun ECFPAW/make-cyclic-list (list)
-    "Create a cyclic list."
-    (when list
-      (setf (cdr (last list)) list)))
-
-  (defun ECFPAW/is-it-day ()
-    "Return a boolean representation of whether its day or not.
-  Any time between 6 and 18 is defined as day."
-    (interactive)
-    (< 6 (decoded-time-hour (decode-time (current-time))) 18))
 #+end_src
 * Load Evil Mode
 Getting evil mode installed because, I was Vim user and I am most
@@ -256,7 +252,8 @@ Imenu. But I also am inside a huge =use-package= call.
     (general-evil-setup)
 
     ;; set up ',' as major mode keybinds key
-    (evil-define-key 'normal global-map (kbd ",") 'ECFPAW/major-mode-keybinds)
+    (evil-define-key 'normal global-map (kbd ",")
+      '(lambda () (setq unread-command-events (listify-key-sequence (kbd "C-c")))))
 
     ;; set up 'SPC' as the global leader key
     (general-create-definer ECFPAW/leader-keys
