@@ -15,7 +15,7 @@ great too, I am going to get configure some features from spacemacs
 here as well (The ones I liked obviously).
 
 * Screenshot
-#+CAPTION: This was taken in early September 2023
+#+CAPTION: This was taken in mid March 2024
 #+NAME:   ECFPAW dashboard
 [[./images/ECFPAW_screenshot.png]]
 * Setup
