@@ -830,7 +830,7 @@ Things that have no practical utility but are fun anyway.
 This does fun things where you stop using Emacs for a while.
 #+begin_src elisp
   (require 'zone)
-  (zone-when-idle 10)
+  (zone-when-idle 120)
 #+end_src
 ** Jokes
 So here are some Emacs related jokes, which are strategically used
