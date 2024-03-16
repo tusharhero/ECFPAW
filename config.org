@@ -840,6 +840,17 @@ This does fun things where you stop using Emacs for a while.
 #+begin_src elisp
   (zone-when-idle 10)
 #+end_src
+** Jokes
+So here are some Emacs related jokes, which are strategically used
+wherever possible in Emacs.
+#+begin_src elisp
+  (defvar ECFPAW/jokes (list
+                     "What is like the org-mode? What can make war against it?"
+                     "I teach Quantum Mechanics to toddlers."
+                     "STOP HAVING FUN !!! 😠"
+                     "Why did the Emacs user switch to Vim? Because they wanted to be able to exit the editor."
+                     ) "List of Jokes.")
+#+end_src
 * LLM-SUPPORT
 I like to use Ollama on my local(and remote) computers 😄.
 ** Ollama management
@@ -979,13 +990,7 @@ banner image for now as I feel like the default is cooler.
                             (projects . 5)))
     :config
     (setq dashboard-footer-messages
-          (append dashboard-footer-messages
-                  (list
-                   "What is like the org-mode? What can make war against it?"
-                   "I teach Quantum Mechanics to toddlers."
-                   "STOP HAVING FUN !!! 😠"
-                   "Why did the Emacs user switch to Vim? Because they wanted to be able to exit the editor."
-                   )))
+          (append dashboard-footer-messages ECFPAW/jokes))
     (dashboard-setup-startup-hook))
 #+end_src
 ** Widgets
