@@ -833,6 +833,13 @@ default because they are super distracting.
       (interactive)
       (setq display-line-numbers (pop ECFPAW/line-number-list)))
 #+end_src
+* FUN
+Things that have no practical utility but are fun anyway.
+** Zone out
+This does fun things where you stop using Emacs for a while.
+#+begin_src elisp
+  (zone-when-idle 10)
+#+end_src
 * LLM-SUPPORT
 I like to use Ollama on my local(and remote) computers 😄.
 ** Ollama management
