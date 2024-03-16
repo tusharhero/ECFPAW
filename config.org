@@ -887,19 +887,25 @@ ssh -L local_port:remote_address:remote_port username@server.com
   (use-package gptel
     :ensure (:host github :repo "karthink/gptel" :branch "copilot")
     :config
-    (setq-default gptel-backend
-                  (gptel-make-ollama "Ollama"
-                    :host "localhost:11434"
-                    :stream t
-                    :models (condition-case nil
-                                (ECFPAW/ollama-get-model-names "localhost:11434")
-                              (plz-error nil))))
-  (gptel-make-ollama "Ollama(remote)"
-                      :host "localhost:11435"
-                      :stream t
-                      :models (condition-case nil
-                                  (ECFPAW/ollama-get-model-names "localhost:11435")
-                                (plz-error nil)))
+
+    (let* ((host "localhost:11434")
+              (models (condition-case nil
+                   (ECFPAW/ollama-get-model-names host)
+                 (plz-error nil))))
+    (setq-default gptel-model (car models)
+                  gptel-backend (gptel-make-ollama "Ollama"
+                                  :host host
+                                  :stream t
+                                  :models models)))
+
+    (let (host "localhost:11435")
+    (gptel-make-ollama "Ollama(remote)"
+      :host host
+      :stream t
+      :models (condition-case nil
+                  (ECFPAW/ollama-get-model-names host)
+                (plz-error nil))))
+
   (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
 #+end_src
 *** System Prompts
