@@ -412,15 +412,6 @@ Imenu. But I also am inside a huge =use-package= call.
   (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
   (which-key-add-key-based-replacements "SPC o b" "babel")
 #+end_src
-*** Org-roam
-#+begin_src elisp :tangle nil
-  (ECFPAW/leader-keys
-    "o r l" '(org-roam-buffer-toggle :wk "Buffer Toggle")
-    "o r f" '(org-roam-node-find  :wk "Node find")
-    "o r g" '(org-roam-graph  :wk "Graph")
-    "o r i" '(org-roam-node-insert :wk "Node insert")
-    "o r c" '(org-roam-capture :wk "Capture"))
-#+end_src
 ** Programming
 #+begin_src elisp
   (ECFPAW/leader-keys
@@ -1342,33 +1333,6 @@ size and rendering method.
     (yas-activate-extra-mode 'latex-mode))
 
   (add-hook 'org-mode-hook #'ECFPAW/org-latex-yas)
-#+end_src
-** COMMENT Roam
-I have disabled it for now.
-#+begin_src elisp
-  (use-package org-roam
-    :ensure t
-    :custom
-    (org-roam-directory (file-truename "~/Documents/roam"))
-    :config
-    ;; If you're using a vertical completion framework, you might want a more informative completion interface
-    (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-    (org-roam-db-autosync-mode)
-    (setq org-roam-completion-everywhere t)
-    ;; If using org-roam-protocol
-    (require 'org-roam-protocol))
-
-  (use-package org-roam-ui
-    :after org-roam
-    ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-    ;;         a hookable mode anymore, you're advised to pick something yourself
-    ;;         if you don't care about startup time, use
-    ;;  :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
 #+end_src
 ** Capture
 #+begin_src elisp
