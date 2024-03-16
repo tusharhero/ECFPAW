@@ -574,7 +574,7 @@ I use Modus themes.
 I have a custom function for loading and cycling through my preferred themes.
 #+begin_src elisp
   (defvar ECFPAW/themes (ECFPAW/make-cyclic-list
-                         (list 'ef-night 'modus-vivendi 'modus-operandi 'ef-day 'vscode-dark-plus))
+                         (list 'ef-maris-dark 'ef-rosa 'modus-vivendi))
     "A list of the themes I like and use.")
 
   (advice-add 'load-theme
