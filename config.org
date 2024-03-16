@@ -253,7 +253,7 @@ Imenu. But I also am inside a huge =use-package= call.
 
     ;; set up ',' as major mode keybinds key
     (evil-define-key 'normal global-map (kbd ",")
-      '(lambda () (setq unread-command-events (listify-key-sequence (kbd "C-c")))))
+      '(lambda () (interactive) (setq unread-command-events (listify-key-sequence (kbd "C-c")))))
 
     ;; set up 'SPC' as the global leader key
     (general-create-definer ECFPAW/leader-keys
