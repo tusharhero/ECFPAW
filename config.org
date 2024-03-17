@@ -841,6 +841,7 @@ wherever possible in Emacs.
                      "I teach Quantum Mechanics to toddlers."
                      "STOP HAVING FUN !!! 😠"
                      "Why did the Emacs user switch to Vim? Because they wanted to be able to exit the editor."
+                     "Emacs is a good operating system, it just lacks a good text editor (komedi😆)"
                      ) "List of Jokes.")
 #+end_src
 * LLM-SUPPORT
