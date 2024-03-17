@@ -864,6 +864,17 @@ I need a requests library because url is too much of a pain to use.
                            (format "http://%s/api/tags" ollama-host)
                            :as #'json-read))))
 #+end_src
+*** Add Ollama models
+#+begin_src elisp
+  (defun ECFPAW/ollama-pull-model (ollama-host model-name)
+    "Pull model named MODEL-NAME in OLLAMA-HOST."
+    (interactive "MOllama host: \nMModel name: ")
+    (require 'plz)
+    (plz 'post (format "http://%s/api/pull" ollama-host)
+      :headers '(("Content-Type" . "application/json"))
+      :body (json-encode '(("name" . model-name)))
+      :as #'json-read))
+#+end_src
 ** GPTEL
 *** Configuration
 I currently just use Ollama, I have 2 backends defined one of them is
