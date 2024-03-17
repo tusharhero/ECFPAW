@@ -865,6 +865,10 @@ I need a requests library because url is too much of a pain to use.
                            :as #'json-read))))
 #+end_src
 *** Add Ollama models
+:TODO:
++ [ ] Fix this function as currently, it just calls the API waits for
+  the first response and then immediately.
+:END:
 #+begin_src elisp
   (defun ECFPAW/ollama-pull-model (ollama-host model-name)
     "Pull model named MODEL-NAME in OLLAMA-HOST."
