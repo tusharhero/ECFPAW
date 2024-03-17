@@ -1395,7 +1395,6 @@ Cookies basically give you information about the list.
 #+begin_src elisp
   (use-package org-custom-cookies
     :ensure (:host github :repo "tusharhero/org-custom-cookies")
-    :ensure t
     :after org
     :config
     (advice-add 'org-update-statistics-cookies :after
