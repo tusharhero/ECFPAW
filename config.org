@@ -905,7 +905,7 @@ ssh -L local_port:remote_address:remote_port username@server.com
                                   :stream t
                                   :models models)))
 
-    (let (host "localhost:11435")
+    (let ((host "localhost:11435"))
     (gptel-make-ollama "Ollama(remote)"
       :host host
       :stream t
