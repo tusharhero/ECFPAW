@@ -577,6 +577,7 @@ I have a custom function for loading and cycling through my preferred themes.
                          (list 'ef-maris-dark 'ef-rosa 'modus-vivendi))
     "A list of the themes I like and use.")
 
+  (setq custom-safe-themes t)
   (advice-add 'load-theme
               :before (lambda (theme &optional no-confirm no-enable)
                         (disable-theme (car custom-enabled-themes))))
