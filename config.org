@@ -34,6 +34,7 @@
 *** TODO Add shortcut to bold, italicize, etc. in [[ORG-MODE]].
 ** TODO Correct the key bindings for annot-list mode.
 ** TODO Divide this TODO into respective categories in their correct place.
+** TODO Completely overhaul the way I do keybindings.
 * EARLY-INIT (SUPER EARLY)
 ** Disable inbuilt package manager
 #+begin_src emacs-lisp :tangle early-init.el
@@ -703,7 +704,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
    '(:eval
      (propertize
       (format "%i"
-              (days-between "Jan 25 2024" (current-time-string)))
+              (days-between "4 April 2024" (current-time-string)))
       'face 'mode-line-emphasis
       'help-echo "Number of days until JEE Mains"
       'mouse-face 'mode-line-highlight))
@@ -788,16 +789,14 @@ With Emacs version 29, true transparency has been added.
   (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
 #+end_src
 *** Function to change the transparency of the current frame.
-**** Xorg
+**** COMMENT Xorg
 I should be modifying =alpha-background= but that doesn't seem to be
 going well. So I will modify =alpha= instead. =alpha-background= just
 changes the background transparency, =alpha= on the other hand changes
 the transparency of the entire buffer. For now the only way to get
 background transparency is to modify the variable in the above
 function and make a frame unfortunately. 
-
-I use Wayland now. I will disable this.
-#+begin_src elisp :tangle nil
+#+begin_src elisp
   (defun ECFPAW/change-current-transparency-to (alpha-val)
     "Change the transparency to the given value"
     (interactive "nChange transparency: ")
