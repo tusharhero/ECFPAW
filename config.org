@@ -511,6 +511,12 @@ of this.
 #+begin_src elisp
   (custom-set-variables '(warning-suppress-types '((comp))))
 #+end_src
+** Spacious Padding
+Oh, man this single-handedly makes ECFPAW look so much better. Thanks Prot!
+#+begin_src elisp
+  (use-package spacious-padding
+     :config (spacious-padding-mode t))
+#+end_src
 ** Pulsar
 *** Introduction
 =Pulsar= provides the sweet *pulsing* of light you see when you switch
