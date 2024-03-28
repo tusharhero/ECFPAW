@@ -1056,6 +1056,10 @@ Add human readable directory sizes in the directory listing, because,
 #+begin_src emacs-lisp
   (setopt dired-listing-switches (concat dired-listing-switches "h"))
 #+end_src
+** Enable ~hl-line-mode~
+#+begin_src emacs-lisp
+(add-hook 'dired-mode-hook 'hl-line-mode)
+#+end_src
 * BE-FRAMED
 =BE-FRAME= divides all the buffers into different frames, basically
 different sets of buffers for different frames, it helps avoids making
