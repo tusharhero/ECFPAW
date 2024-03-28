@@ -1045,12 +1045,12 @@ management functionality of Emacs.
   (setq project-switch-commands 'project-find-dir)
 #+end_src
 * DIRED
-Dired is a file manager within Emacs. It comes builtin. I am disabling
-the display additional info by default because I get overwhelmed.
+Dired is a file manager within Emacs. It comes builtin.
+** Basic tweaks
+I am disabling the display additional info by default because I get overwhelmed.
 #+begin_src emacs-lisp
   (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 #+end_src
-
 Add human readable directory sizes in the directory listing, because,
 /well/, *I AM A HUMAN!*
 #+begin_src emacs-lisp
