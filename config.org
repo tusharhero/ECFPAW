@@ -587,7 +587,8 @@ I have a custom function for loading and cycling through my preferred themes.
   (setq custom-safe-themes t)
   (advice-add 'load-theme
               :before (lambda (theme &optional no-confirm no-enable)
-                        (disable-theme (car custom-enabled-themes))))
+                        (disable-theme (car custom-enabled-themes))
+                        (spacious-padding-mode t)))
 
   (defun ECFPAW/cycle-my-theme ()
     "Cycle through a list of themes, `ECFPAW/themes'."
