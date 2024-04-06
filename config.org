@@ -1,4 +1,4 @@
-# -*- after-save-hook: (org-babel-tangle); -*-
+# -*- after-save-hook: (org-babel-tangle); eval: (message "Welcome to ECFPAW's literate configuration."); -*-
 #+TITLE: Emacs Config For Programming And Writing (ECFPAW)
 #+AUTHOR: tusharhero
 #+EMAIL: tusharhero@sdf.org
