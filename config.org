@@ -4,7 +4,7 @@
 #+EMAIL: tusharhero@sdf.org
 #+DESCRIPTION: It actually does more than just programming and writing.
 #+STARTUP: content
-#+PROPERTY: header-args :tangle init.el
+#+PROPERTY: header-args :tangle init.el :noweb-ref no
 * LICENSE NOTICE
   :PROPERTIES:
   :VISIBILITY: folded
@@ -244,10 +244,11 @@ I will use general package to create all the keybindings for ECFPAW. I
 only make key binds for the stuff I really need(That goes for the
 configuration in general as well).
 
-I had to do add all these different headings to get support for
-Imenu. But I also am inside a huge =use-package= call.
+This is using noweb references to get all code blocks for individual
+keybindings under [[Keybindings]] inside the use-package call in
+[[Installation and basic config]].
 ** Installation and basic config
-#+begin_src elisp
+#+begin_src elisp :noweb yes
   (use-package general
     :config
     (general-evil-setup)
@@ -262,8 +263,13 @@ Imenu. But I also am inside a huge =use-package= call.
       :keymaps 'override
       :prefix "SPC" ;; set leader
       :global-prefix "M-SPC") ;; access leader in insert mode
+    <<individual_keybindings>>)
 #+end_src
-** Direct convenient keybindings
+** Keybindings
+:PROPERTIES:
+:header-args: :noweb-ref individual_keybindings :noweb no
+:END:
+*** Direct convenient keybindings
 #+begin_src elisp
   (ECFPAW/leader-keys
     "SPC" '(execute-extended-command :wk "Execute command")
@@ -276,7 +282,7 @@ Imenu. But I also am inside a huge =use-package= call.
     "g" '(magit :wk "Magit")
     "." '(pulsar-pulse-line :wk "Pulse the current line"))
 #+end_src
-** Help
+*** Help
 #+begin_src elisp
   (ECFPAW/leader-keys
     "h" '(:ignore t :wk "Help")
@@ -284,7 +290,7 @@ Imenu. But I also am inside a huge =use-package= call.
     "h f" '(describe-function :wk "Describe function")
     "h v" '(describe-variable :wk "Describe variable"))
 #+end_src
-** Buffer
+*** Buffer
 #+begin_src elisp
   (ECFPAW/leader-keys
     "b" '(:ignore t :wk "buffer")
@@ -299,7 +305,7 @@ Imenu. But I also am inside a huge =use-package= call.
     "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
     "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer"))
 #+end_src
-** Window management
+*** Window management
 #+begin_src elisp
   ;; window management keybindings
   (ECFPAW/leader-keys
@@ -323,7 +329,7 @@ Imenu. But I also am inside a huge =use-package= call.
   (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
   (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
  #+end_src
-** File 
+*** File 
 #+begin_src elisp
   (ECFPAW/leader-keys
     "f" '(:ignore t :wk "files")
@@ -333,7 +339,7 @@ Imenu. But I also am inside a huge =use-package= call.
     "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
               :wk "Reload emacs config"))
 #+end_src
-** Dired 
+*** Dired 
 #+begin_src elisp
   ;; dired related keybindings
   (ECFPAW/leader-keys
@@ -341,40 +347,40 @@ Imenu. But I also am inside a huge =use-package= call.
     "d d" '(dired :wk "Open dired")
     "d j" '(dired-jump :wk "Dired jump to current"))
 #+end_src
-** News-ticker
+*** News-ticker
 #+begin_src elisp
   (ECFPAW/leader-keys
     "N" '(:ignore t :wk "Newsticker")
     "N n" '(newsticker-treeview :wk "Treeview"))
 #+end_src
-** Spelling
+*** Spelling
 #+begin_src elisp
   (ECFPAW/leader-keys
     "S" '(:ignore t :wk "Spelling")
     "S s" '(flyspell-auto-correct-word :wk "correct the word")
     "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
 #+end_src
-** Frame 
+*** Frame 
 #+begin_src elisp
   (ECFPAW/leader-keys
     "F" '(:ignore t :wk "frame")
     "F t" '(ECFPAW/change-current-transparency-to :wk "change transparency"))
 #+end_src
-** Bookmarks
+*** Bookmarks
 #+begin_src elisp
   (ECFPAW/leader-keys
     "B" '(:ignore t :wk "bookmark")
     "B s" '(bookmark-set :wk "bookmark set")
     "B l" '(bookmark-bmenu-list :wk "bookmark list"))
 #+end_src
-** Insert
+*** Insert
 #+begin_src elisp
   (ECFPAW/leader-keys
     "i" '(:ignore t :wk "insert")
     "i e" '(emoji-insert :wk "insert emoji")
     "i s" '(yas-insert-snippet :wk "insert snippet"))
 #+end_src
-** Eval
+*** Eval
 #+begin_src elisp
   (ECFPAW/leader-keys
     "e" '(:ignore t :wk "Evaluate")
@@ -384,7 +390,7 @@ Imenu. But I also am inside a huge =use-package= call.
     "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
     "e r" '(eval-region :wk "Evaluate elisp in region"))
 #+end_src
-** Toggling/Cycling
+*** Toggling/Cycling
 #+begin_src elisp
   (ECFPAW/leader-keys
     "t" '(:ignore t :wk "Toggle/Cycle")
@@ -398,7 +404,7 @@ Imenu. But I also am inside a huge =use-package= call.
     "t m" '(ECFPAW/mode-line/cycle-formats :wk "cycle mode line")
     "t t" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes"))
 #+end_src
-** Org-mode
+*** Org-mode
 #+begin_src elisp
   (ECFPAW/leader-keys
     "o" '(:ignore t :wk "org-mode")
@@ -413,7 +419,7 @@ Imenu. But I also am inside a huge =use-package= call.
   (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
   (which-key-add-key-based-replacements "SPC o b" "babel")
 #+end_src
-** Programming
+*** Programming
 #+begin_src elisp
   (ECFPAW/leader-keys
     "p" '(:ignore t :wk "Programming")
@@ -433,14 +439,14 @@ Imenu. But I also am inside a huge =use-package= call.
     "p a" '(eldoc :wk "eglot code actions")
     "p F" '(outline-minor-mode :wk "enable code-folding"))
 #+end_src
-** Narrowing
+*** Narrowing
 #+begin_src elisp
   (ECFPAW/leader-keys
     "n" '(:ignore t :wk "Narrowing")
     "n n" '(narrow-to-region :wk "Narrow to region")
     "n w" '(widen :wk "Widen"))
 #+end_src
-** LLM
+*** LLM
 #+begin_src emacs-lisp
   (ECFPAW/leader-keys
     "," '(:ignore t :wk "LLM")
@@ -450,12 +456,6 @@ Imenu. But I also am inside a huge =use-package= call.
     ", m" '(gptel-menu :wk "GPTel Menu")
     ", A" '(gptel-abort :wk "GPTel abort"))
 #+end_src
-** Last parens
-Don't know of a way to get rid of this...
-#+begin_src elisp
-  )
-#+end_src
-
 * GRAPHICS
 ** ALL THE ICONS 
 This is an icon set that can be used with dashboard, dired, ibuffer
