@@ -1,5 +1,5 @@
 #!/usr/bin/emacs --script
-;; Run this script to get 'bootstrap' ECFPAW from `config.org', of
+;; Run this script to 'bootstrap' ECFPAW from `config.org', of
 ;; course the only requirement it has is Emacs is itself.
 (message "Loading Org...")
 (require 'org)
