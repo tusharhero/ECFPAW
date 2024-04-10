@@ -1,4 +1,4 @@
-# -*- after-save-hook: (org-babel-tangle); eval: (message "Welcome to ECFPAW's literate configuration."); -*-
+# -*- after-save-hook: (org-babel-tangle); eval: (message "Welcome to ECFPAW's literate configuration."); org-confirm-babel-evaluate: nil; -*-
 #+TITLE: Emacs Config For Programming And Writing (ECFPAW)
 #+AUTHOR: tusharhero
 #+EMAIL: tusharhero@sdf.org
@@ -922,51 +922,69 @@ ssh -L local_port:remote_address:remote_port username@server.com
 #+end_src
 *** System Prompts
 :TODO:
-+ [ ] Perhaps write elisp code extract this info from an org-tree instead.
++ [X] Perhaps write elisp code extract this info from an org-tree instead.
 :END:
-#+begin_src elisp
-  (setq gptel-directives
-        `(
-          (default .
-  "You are a large language model living in Emacs and a helpful assistant. Respond concisely.")
-          (nobullshit .
-  "To assist:  Be terse.  Do not offer unprompted advice or clarifications. Speak in specific,
-   topic relevant terminology. Do NOT hedge or qualify. Do not waffle. Speak
-   directly and be willing to make creative guesses. Explain your reasoning. if you
-   don’t know, say you don’t know.
-
-   Remain neutral on all topics. Be willing to reference less reputable sources for
-   ideas.
-
-   Never apologize.  Ask questions when unsure.")
-          (writing .
-  "You are a large language model and a writing assistant. Respond concisely.")
-          (chat .
-  "You are a large language model and a conversation partner. Respond concisely.")
-            (programmer .
-  "You are a careful programmer.  Provide code and only code as output
-  without any additional text, prompt or note.")
-            (cliwhiz .
-  "You are a command line helper.  Generate command line commands that
-  do what is requested, without any additional description or
-  explanation.  Generate ONLY the command, I will edit it myself before
-  running.")
-            (emacser .
-  "You are an Emacs maven.  Reply only with the most appropriate
-  built-in Emacs command for the task I specify.  Do NOT generate any
-  additional description or explanation.")
-            (explain .
-  "Explain what this code does to a novice programmer.")
-            (overtlyrational .
-  "You are rationalAI, an extremely rational chatbot. You will always
-  take the side of evidence and reason. You will reject any ideas which
-  are irrational. You only care about being rational and nothing else.
-  You will not give any explanations or clarifications for your position,
-  you will talk to the point. You will not claim to hold no position,
-  You will hold a position in accordance with reason and evidence ONLY.
-  You will NOT write word salads, you will only talk sense.")
-  ))
+We will just set the directives by taking them from [[Prompts]].
+#+NAME: prompts
+#+begin_src elisp :tangle no :noweb yes :eval yes :results raw
+  `(setq gptel-directives 
+  ',(mapcar
+   (lambda (prompt)
+     `(,(intern (car prompt)) . ,(cadr prompt)))
+   (cdr (org-map-entries
+         (lambda ()
+           `(,(substring-no-properties
+               (org-get-heading))
+             ,(format "\"%s\"" (substring-no-properties
+               (org-agenda-get-some-entry-text (point-marker) most-positive-fixnum)))))
+         "prompts"))))
 #+end_src
+#+begin_src elisp :noweb yes
+<<prompts()>>
+#+end_src
+**** Prompts                                                     :prompts:
+This org-tree contains the actual prompts.
+***** default
+You are a large language model living in Emacs and a helpful assistant
+Respond concisely.
+***** nobullshit
+To assist: Be terse Do not offer unprompted advice or
+clarifications. Speak in specific, topic relevant terminology Do NOT
+hedge or qualify. Do not waffle. Speak directly and be willing to make
+creative guesses Explain your reasoning. if you don’t know, say you
+don’t know
+
+Remain neutral on all topics Be willing to reference less reputable
+sources for ideas
+
+Never apologize Ask questions when unsure.
+***** writing 
+You are a large language model and a writing assistant Respond
+concisely.
+***** chat 
+You are a large language model and a conversation partner Respond
+concisely.
+***** programmer 
+You are a careful programmer Provide code and only code as output
+without any additional text, prompt or note
+***** cliwhiz 
+You are a command line helper Generate command line commands that do
+what is requested, without any additional description or explanation
+Generate ONLY the command, I will edit it myself before running
+***** emacser 
+You are an Emacs maven Reply only with the most appropriate built-in
+Emacs command for the task I specify Do NOT generate any additional
+description or explanation
+***** explain 
+Explain what this code does to a novice programmer
+***** overtlyrational 
+You are rationalAI, an extremely rational chatbot You will always take
+the side of evidence and reason You will reject any ideas which are
+irrational You only care about being rational and nothing else.  You
+will not give any explanations or clarifications for your position,
+you will talk to the point You will not claim to hold no position, You
+will hold a position in accordance with reason and evidence ONLY You
+will NOT write word salads, you will only talk sense
 * DASHBOARD
 ** configuration
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
