@@ -52,7 +52,7 @@
   (setq package-enable-at-startup nil)
 #+end_src
 ** Avoid initial eye eating light theme
-#+begin_src emacs-lisp :tangle nil
+#+begin_src emacs-lisp :tangle no
   (setq mode-line-format nil)
   (set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
   (set-face-attribute 'mode-line nil :background "#000000" :foreground "#ffffff" :box 'unspecified)
@@ -213,7 +213,7 @@ able to follow links.
 Its very convenient to use the =capslock= key as an additional =ESC=
 key.
 *** Xorg
-#+begin_src shell :tangle nil
+#+begin_src shell :tangle no
   setxkbmap -option caps:escape
 #+end_src
 * DISABLE BELL
@@ -535,7 +535,7 @@ you buffers, or go to a place in the buffer. It's super nice for
 knowing where you are.
 
 Evaluate this to get a pulse 😄.
-#+begin_src elisp :tangle nil :results nil
+#+begin_src elisp :tangle no :results nil
 (pulsar-pulse-line)
 #+end_src
 *** basic setup
@@ -584,7 +584,7 @@ I use Modus themes.
 + [ ] Figure out a way to automatically wait for the correct package to
   load before running ~ECFPAW/cycle-theme~, I tried doing it using
   this code, but that does not really work.
-  #+begin_src elisp :tangle nil
+  #+begin_src elisp :tangle no
   (with-eval-after-load (car ECFPAW/themes)
     (ECFPAW/cycle-my-theme))
   #+end_src
@@ -892,7 +892,7 @@ the remote backend, which uses the port ~11435~. You are supposed use
 ssh redirection to redirect your remote ollama server to the port ~11435~.
 
 To redirect any port from a remote machine, use the following command:
-#+begin_src shell :tangle nil
+#+begin_src shell :tangle no
 ssh -L local_port:remote_address:remote_port username@server.com
 #+end_src
 #+begin_src elisp
@@ -1349,7 +1349,7 @@ Cookies basically give you information about the list.
   + [X] Fix heading color bug.
   + [ ] A custom percentage =[%]= statistic cookie
     + Here is a regex for that,
-      #+begin_src elisp :tangle nil
+      #+begin_src elisp :tangle no
         "\\[?\\(?:[0-9]*\\)?\\!%]"
       #+end_src
       It will use the =[!%]= symbol to avoid conflicts with =[%]=.
@@ -1415,7 +1415,7 @@ To keep the feeds private, I have the feeds listed in a file called
 =feeds.el=.
 
 To remove this from your =git= tracking use this,
-#+begin_src shell :tangle nil
+#+begin_src shell :tangle no
 git update-index --assume-unchanged feed.el
 #+end_src
 
@@ -1456,7 +1456,7 @@ To use, add =allow-emacs-pinentry= to =~/.gnupg/gpg-agent.conf=,
 reload the configuration with =gpgconf --reload gpg-agent=.
 
 To enable =gpgsigning= for a repository, run this.
-#+begin_src shell :tangle nil
+#+begin_src shell :tangle no
   git config --local commit.gpgsign true
 #+end_src
 * FLYCHECK
@@ -1574,7 +1574,7 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
 *** install language grammar
 use this SRC block to install support for more languages (You can also
 just call it using M-x)
-#+begin_src elisp :tangle nil
+#+begin_src elisp :tangle no
   (treesit-install-language-grammar "python")
 #+end_src
 * SUDO EDIT
