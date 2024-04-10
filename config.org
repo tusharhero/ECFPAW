@@ -1600,6 +1600,17 @@ file without such privileges.
 I use Eshell most of the I need a shell inside Emacs. There is a
 problem though, the ~clear~ command doesn't work like you would expect
 it to. It turns out I need to alias it to ~clear-scrollback~!
+** Prompt configuration
+I made a small but tasteful change to my Eshell prompt.
+#+begin_src elisp
+(setq eshell-prompt-function
+  (lambda ()
+    (concat
+     (abbreviate-file-name (eshell/pwd))
+            (unless (eshell-exit-success-p)
+              (format " [%d]" eshell-last-command-status))
+	    (if (= (file-user-uid) 0) " # " " ☸ "))))
+#+end_src
 #+begin_src shell :tangle eshell/alias
   alias clear clear-scrollback
 #+end_src
