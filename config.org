@@ -1621,13 +1621,20 @@ I use Eshell most of the I need a shell inside Emacs.
 ** Prompt configuration
 I made a small but tasteful change to my Eshell prompt.
 #+begin_src elisp
-(setq eshell-prompt-function
-  (lambda ()
-    (concat
-     (abbreviate-file-name (eshell/pwd))
-            (unless (eshell-exit-success-p)
-              (format " [%d]" eshell-last-command-status))
-	    (if (= (file-user-uid) 0) " # " " ☸ "))))
+  (setq eshell-prompt-function
+        (lambda ()
+          (concat
+           (abbreviate-file-name (eshell/pwd))
+           " "
+           (let ((branch (magit-get-current-branch)))
+             (if branch
+                 (concat
+                  (propertize (format "ᛋ %s" branch)
+                              'face 'magit-branch)
+                  " ")))
+           (unless (eshell-exit-success-p)
+             (format " [%d]" eshell-last-command-status))
+           (if (= (file-user-uid) 0) "#" "☸") " ")))
 #+end_src
 ** Alias
 The ~clear~ command doesn't work like you would expect it to. It turns
