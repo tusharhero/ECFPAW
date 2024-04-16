@@ -1389,21 +1389,16 @@ Cookies basically give you information about the list.
 :END:
 #+begin_src elisp
   (use-package org-custom-cookies
-    :ensure (:host github :repo "tusharhero/org-custom-cookies")
     :after org
+    :custom (org-custom-cookies-enable-cookie-face t)
     :config
     (advice-add 'org-update-statistics-cookies :after
                 'org-custom-cookies--update-all-cookies-current-heading)
-
     (push '("\\[[.0-9]+\\]"
             . ECPFAW/org-custom-cookies--direct-descendant-subentries)
           org-custom-cookies-alist)
-
     (add-hook 'org-ctrl-c-ctrl-c-hook
-              'org-custom-cookies--update-cookie-ctrl-c-ctrl-c)
-
-    (add-hook 'org-font-lock-set-keywords-hook
-              'org-custom-cookies--cookie-face-for-all-custom-cookies))
+              'org-custom-cookies--update-cookie-ctrl-c-ctrl-c))
 #+end_src
 *** Subheading counting
 It will help me get the number of direct sub-entries in the
