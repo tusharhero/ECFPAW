@@ -4,7 +4,7 @@
 #+EMAIL: tusharhero@sdf.org
 #+DESCRIPTION: It actually does more than just programming and writing.
 #+STARTUP: content
-#+PROPERTY: header-args :tangle init.el :noweb-ref no
+#+PROPERTY: header-args :tangle init.el :noweb-ref no :mkdirp yes
 * GENERATION TIME NOTICE
 #+name: time-notice
 #+begin_src elisp :results raw :tangle no 
@@ -550,7 +550,7 @@ you buffers, or go to a place in the buffer. It's super nice for
 knowing where you are.
 
 Evaluate this to get a pulse 😄.
-#+begin_src elisp :tangle no :results no
+#+begin_src elisp :tangle no
 (pulsar-pulse-line)
 #+end_src
 *** basic setup
