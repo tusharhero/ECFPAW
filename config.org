@@ -1652,14 +1652,8 @@ out I need to alias it to ~clear-scrollback~!
   alias clear clear-scrollback
   alias ff 'find-file $1'
 #+end_src
-* EDIT SERVER
-Edit server is an extensions which allows you edit text from your
-browser in a very integrated way. I use this one right now,
+* Emacs Everywhere
+It allows you to use Emacs everywhere. [[https://aur.archlinux.org/packages/kdotool-git][Kdotools]] and [[https://archlinux.org/packages/extra/x86_64/ydotool/][Ydotool]] are needed for KDE.
 #+begin_src elisp
-  (use-package atomic-chrome
-      :init (if after-init-time
-                (atomic-chrome-start-server)
-              (add-hook 'after-init-hook
-                        #'(lambda() (atomic-chrome-start-server))))
-      :config (setq atomic-chrome-buffer-open-style 'frame))
+  (use-package emacs-everywhere)
 #+end_src
