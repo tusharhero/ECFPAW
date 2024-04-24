@@ -852,6 +852,24 @@ This does fun things where you stop using Emacs for a while.
   (require 'zone)
   (zone-when-idle 120)
 #+end_src
+*** functions
+#+begin_src elisp
+  (setq zone-programs [
+                       zone-pgm-putz-with-case
+                       zone-pgm-dissolve
+                       zone-pgm-explode
+                       zone-pgm-whack-chars
+                       zone-pgm-rotate
+                       zone-pgm-drip
+                       zone-pgm-five-oclock-swan-dive
+                       zone-pgm-martini-swan-dive
+                       zone-pgm-rat-race
+                       zone-pgm-paragraph-spaz
+                       zone-pgm-stress
+                       zone-pgm-stress-destress
+                       zone-pgm-random-life
+                       ])
+#+end_src
 ** Jokes
 So here are some Emacs related jokes, which are strategically used
 wherever possible in Emacs.
