@@ -1483,13 +1483,8 @@ versions for you.
 ** MAGIT
 Magit (Maggot , magic IDK) is a git client for Emacs.
 #+begin_src elisp
-  (use-package magit
-      :ensure t
-      :defer t
-      :config
-      (setq package-install-upgrade-built-in t)
-      (use-package transient :ensure nil)
-      (progn (unload-feature 'transient t) (require 'transient)))
+  (use-package transient)
+  (use-package magit :ensure t :defer t)
 #+end_src
 ** PINENTRY
 For getting support for GPG(GNU Privacy Guard).
