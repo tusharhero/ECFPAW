@@ -1511,6 +1511,26 @@ Flycheck can do a lot of stuff including,
     :init (global-flycheck-mode))
 #+end_src
 * PROGRAMMING
+** ENVRC/DIRENV
+I used to use Direnv and then I decided to switch to Guix shell, I was
+literally starting an Emacs instance per project by launching Emacs
+from inside a Guix shell. But after reading this [[https://rednosehacker.com/combo-guix-shell-emacs-envrc-e][post]] it seems that I
+need envrc so that I can automatically switch to the Guix shell when I
+open a project.
+#+begin_src elisp
+(use-package envrc
+  :hook (after-init . envrc-global-mode))
+#+end_src
+
+You of course need =direnv= and if you want to use Guix shell. You need
+to make file similar to this. You need this in your =.envrc= in project root.
+#+begin_src shell
+eval $(guix shell --search-paths)
+#+end_src
+And this at the end of your =.bashrc=.
+#+begin_src bash
+eval "$(direnv hook bash)"
+#+end_src
 ** Highlighting Indent Guides
 Its helpful to keep track indentation. Since I am trying to reduce the
 amount of indentation I do.
