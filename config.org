@@ -1519,16 +1519,16 @@ need envrc so that I can automatically switch to the Guix shell when I
 open a project.
 #+begin_src elisp
 (use-package envrc
-  :hook (after-init . envrc-global-mode))
+  :config (envrc-global-mode))
 #+end_src
 
 You of course need =direnv= and if you want to use Guix shell. You need
 to make file similar to this. You need this in your =.envrc= in project root.
-#+begin_src shell
+#+begin_src shell :tangle no
 eval $(guix shell --search-paths)
 #+end_src
 And this at the end of your =.bashrc=.
-#+begin_src bash
+#+begin_src bash :tangle no
 eval "$(direnv hook bash)"
 #+end_src
 ** Highlighting Indent Guides
