@@ -1536,7 +1536,7 @@ eval "$(direnv hook bash)"
 For Emacs to automatically setup a Guix shell environment for your
 project you need to have a =manifest.scm= in the project root. To
 generate this you may use the following command.
-#+begin_src shell
+#+begin_src shell :tangle no
   guix shell --export-manifest package1 package2 package3 ... > manifest.scm
 #+end_src
 
