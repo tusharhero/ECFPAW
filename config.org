@@ -1531,6 +1531,15 @@ And this at the end of your =.bashrc=.
 #+begin_src bash :tangle no
 eval "$(direnv hook bash)"
 #+end_src
+
+*** Creating a Guix manifest
+For Emacs to automatically setup a Guix shell environment for your
+project you need to have a =manifest.scm= in the project root. To
+generate this you may use the following command.
+#+begin_src shell
+  guix shell --export-manifest package1 package2 package3 ... > manifest.scm
+#+end_src
+
 ** Highlighting Indent Guides
 Its helpful to keep track indentation. Since I am trying to reduce the
 amount of indentation I do.
