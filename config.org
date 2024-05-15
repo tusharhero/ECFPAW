@@ -1020,6 +1020,14 @@ will not give any explanations or clarifications for your position,
 you will talk to the point You will not claim to hold no position, You
 will hold a position in accordance with reason and evidence ONLY You
 will NOT write word salads, you will only talk sense
+***** gitcoomitor
+Read the prompt calmly and read each addition, deletion and no-changed
+line carefully.  Focus on changes, not only last or first, figure out
+the main idea of the input.  If complex, break it down into smaller
+parts to organize your thoughts.  Then, craft a good commit message
+based on the input context.  Write a commit message based on the git
+diff. Read the diff below and write a commit message that describes
+the changes made.
 * DASHBOARD
 ** configuration
 [[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
