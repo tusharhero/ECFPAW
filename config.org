@@ -424,6 +424,7 @@ keybindings under [[Keybindings]] inside the use-package call in
     "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
     "t L" '(ECFPAW/cycle-line-number-type :wk "cycle line number types")
     "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
+    "t T" '(toggle-truncate-lines :wk "Toggle truncated lines")
     "t v" '(visual-line-mode :wk "Toggle visual lines")
     "t c" '(outline-minor-mode :wk "enable code-folding")
     "t o" '(org-mode :wk "toggle org-mode")
