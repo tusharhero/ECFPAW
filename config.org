@@ -1579,6 +1579,16 @@ This color codes =()= so that you never miss them.
   (use-package rainbow-delimiters
     :hook ((prog-mode . rainbow-delimiters-mode)))
 #+end_src
+** Dev web server
+#+begin_src elisp
+  (defun ECFPAW/start-python-web-server (port directory)
+    "Start a Webserver using Python's http.server module.
+  PORT can be provided to specify the port to be used by the server,
+  DIRECTORY can be provided to specify a directory for the server's root."
+    (interactive "Mport: \nMdirectory: ")
+    (async-shell-command
+     (format "python -m http.server -d %s" directory)))
+#+end_src
 ** Rainbow mode
 *Show the colors!*
 #+begin_src elisp
