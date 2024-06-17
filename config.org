@@ -681,8 +681,6 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
       " "
       mode-line-misc-info
       " "
-      ECFPAW/mode-line/jee-daily-countdown
-      " "
       mode-line-modes
       " "
       mode-line-format-right-align
@@ -711,8 +709,6 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
       " "
       mode-line-misc-info
       " "
-      ECFPAW/mode-line/jee-daily-countdown
-      " "
       mode-line-format-right-align
       ""
       ECFPAW/mode-line/time
@@ -733,17 +729,6 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
                  'help-echo
                  "Emacs Configuration For Programming And Writing."))
    "Mode line construct to display ECFPAW.")
-
-  (ECFPAW/def-mode-line-constr
-   ECFPAW/mode-line/jee-daily-countdown
-   '(:eval
-     (propertize
-      (format "%i"
-              (days-between "4 April 2024" (current-time-string)))
-      'face 'mode-line-emphasis
-      'help-echo "Number of days until JEE Mains"
-      'mouse-face 'mode-line-highlight))
-   "Mode line construct to display the JEE daily countdown 💀")
 
   (ECFPAW/def-mode-line-constr
    ECFPAW/mode-line/major-mode
