@@ -1658,6 +1658,10 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
                                 ECFPAW/prettify-symbols-pack/pointers
                                 'ECFPAW/prettify-symbols-pack/redirections))
 #+end_src
+**** Go
+#+begin_src elisp
+  (use-package go-mode)
+#+end_src
 ** Code Folding
 #+begin_src elisp
   (add-hook 'prog-mode-hook 'outline-minor-mode)
