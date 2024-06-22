@@ -1651,6 +1651,10 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
 #+begin_src elisp
   (use-package go-mode)
 #+end_src
+**** Zig
+#+begin_src elisp
+  (use-package zig-mode)
+#+end_src
 ** Code Folding
 #+begin_src elisp
   (add-hook 'prog-mode-hook 'outline-minor-mode)
