@@ -446,7 +446,9 @@ keybindings under [[Keybindings]] inside the use-package call in
     "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp")
     "o i i" '(org-download-clipboard :wk "image")
     "o e" '(:ignore :wk "export")
-    "o e p" '(org-latex-export-to-pdf :wk "PDF"))
+    "o e p" '(org-latex-export-to-pdf :wk "PDF")
+    "o c" '(org-capture :wk "capture")
+    "o a" '(org-agenda :wk "agenda"))
   (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
   (which-key-add-key-based-replacements "SPC o b" "babel")
 #+end_src
@@ -1360,9 +1362,17 @@ size and rendering method.
 
   (add-hook 'org-mode-hook #'ECFPAW/org-latex-yas)
 #+end_src
-** Capture
-#+begin_src elisp
-  (setq org-default-notes-file (concat org-directory "/notes.org"))
+** Journal and Task
+#+begin_src elisp :var goals-directory="~/Documents/goals/"
+  (setq org-capture-templates
+        `(("t" "Todo" entry (file+headline
+                             ,(concat goals-directory "tasks.org") "Tasks")
+           "* TODO %?\n  %i\n  %a")
+          ("j" "Journal" entry (file+datetree
+                                ,(concat goals-directory "journal.org"))
+           "* %?\nEntered on %U\n  %i\n  %a")))
+  (setq org-agenda-files `(,(concat goals-directory "tasks.org")
+                           ,(concat goals-directory "journal.org")))
 #+end_src
 ** Prettify mode symbols
 I have had this part separated but decided to just put it in its right
