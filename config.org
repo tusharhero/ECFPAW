@@ -842,6 +842,7 @@ default because they are super distracting.
 Things that have no practical utility but are fun anyway.
 ** Zone out
 This does fun things where you stop using Emacs for a while.
+*** COMMENT set timer
 #+begin_src elisp
   (require 'zone)
   (zone-when-idle 120)
