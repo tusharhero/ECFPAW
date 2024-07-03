@@ -301,6 +301,7 @@ keybindings under [[Keybindings]] inside the use-package call in
     "TAB" '(mode-line-other-buffer :wk "Last buffer")
     ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
     "c" '(comment-dwim :wk "Comment lines")
+    "u" '(universal-argument :wk "C-u")
     "'" '((lambda () (interactive) (if (project-current nil)
                                        (project-eshell) (eshell)))
           :wk "Toggle eshell")
