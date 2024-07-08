@@ -1218,7 +1218,6 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
    (("<="     .  "≤" )
     (">="     .  "≥" )
     ("=="     .  "≟" )
-    ("!="     .  "≠" )
     ("!="     .  "≠" )))
 
   (ECFPAW/def-pretty-sym-pack
@@ -1666,6 +1665,11 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
 **** Zig
 #+begin_src elisp
   (use-package zig-mode)
+#+end_src
+***** Prettify mode symbols
+#+begin_src elisp
+    (ECFPAW/add-pretty-sym-pack 'zig-mode-hook '(ECFPAW/prettify-symbols-pack/in-equalities
+                                                 ECFPAW/prettify-symbols-pack/pointers))
 #+end_src
 ** Code Folding
 #+begin_src elisp
