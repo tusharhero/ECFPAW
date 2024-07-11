@@ -490,6 +490,13 @@ keybindings under [[Keybindings]] inside the use-package call in
     ", m" '(gptel-menu :wk "GPTel Menu")
     ", A" '(gptel-abort :wk "GPTel abort"))
 #+end_src
+** Statistics
+I need to get some keybinding statistics to improve my keybindings situation.
+#+begin_src elisp
+  (use-package keyfreq
+    :config (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
+#+end_src
 * GRAPHICS
 ** ALL THE ICONS 
 This is an icon set that can be used with dashboard, dired, ibuffer
