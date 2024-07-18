@@ -1330,6 +1330,11 @@ It indents the org tree so its nice to look at.
 #+begin_src elisp
   (add-hook 'org-mode-hook 'org-indent-mode)
 #+end_src
+** Hide emphasis markers
+I /decided/ that I don't like to see *emphasis* markers in org-mode.
+#+begin_src elisp
+(setq org-hide-emphasis-markers t)
+#+end_src
 ** Enabling Org Superstar
 Org-Superstar look nice.
 #+begin_src elisp
