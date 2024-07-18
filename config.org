@@ -622,7 +622,7 @@ I use Modus themes.
 I have a custom function for loading and cycling through my preferred themes.
 #+begin_src elisp
   (defvar ECFPAW/themes (ECFPAW/make-cyclic-list
-                         (list 'ef-rosa 'ef-kassio))
+                         (list 'modus-vivendi 'modus-operandi))
     "A list of the themes I like and use.")
 
   (setq custom-safe-themes t)
