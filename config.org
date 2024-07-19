@@ -1677,6 +1677,22 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
 #+begin_src elisp
   (use-package zig-mode)
 #+end_src
+***** outline mode regexps
+#+begin_src elisp
+  (add-hook 'zig-mode-hook
+            (lambda nil
+  	    (setq-local outline-regexp
+  			(rx (and (* " ") (or
+  					  "pub" "const"
+  					  "var" "fn"
+  					  "if" "else"
+  					  "while" "for"
+  					  "inline" "switch"
+  					  )))
+  			outline-heading-end-regexp
+  			(rx  (or ";" "}" "\n"))
+  			)))
+#+end_src
 ***** Prettify mode symbols
 #+begin_src elisp
     (ECFPAW/add-pretty-sym-pack 'zig-mode-hook '(ECFPAW/prettify-symbols-pack/in-equalities
