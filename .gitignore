@@ -17,3 +17,5 @@
 /games/
 /init.el
 /early-init.el
+/multisession/
+/tree-sitter/
