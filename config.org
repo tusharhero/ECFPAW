@@ -606,8 +606,7 @@ I use Modus themes.
 #+end_src
 **** Ef-themes
 #+begin_src elisp
-  (use-package ef-themes :ensure t
-    :config (ECFPAW/cycle-my-theme))
+  (use-package ef-themes :ensure t)
 #+end_src
 *** Easy cycling
 :TODO:
@@ -636,20 +635,16 @@ I have a custom function for loading and cycling through my preferred themes.
     (interactive)
     (load-theme (pop ECFPAW/themes) t))
 #+end_src
-*** COMMENT Day and night switching
+*** Day and night switching
 This is used to make theme switch to the light theme at day and the
 dark theme at night.
 #+begin_src elisp
-  (defvar ECFPAW/day-theme 'modus-operandi
-    "Theme of choice for the day.")
-  (defvar ECFPAW/night-theme 'modus-vivendi
-    "Theme of choice for the night.")
-  (defun ECFPAW/switch-theme-day-night ()
-    (if (ECFPAW/is-it-day)
-        (ECFPAW/load-theme ECFPAW/day-theme)
-        (ECFPAW/load-theme ECFPAW/night-theme)))
-  (ECFPAW/switch-theme-day-night)
-  (run-at-time t 3600 'ECFPAW/switch-theme-day-night)
+(use-package circadian
+  :ensure t
+  :config
+  (setq circadian-themes '(("6:00" . modus-operandi)
+                           ("18:00" . modus-vivendi)))
+  (circadian-setup))
 #+end_src
 ** MODE-LINE
 I am going to make my own mode-line, I followed [[https://protesilaos.com/codelog/2023-07-29-emacs-custom-modeline-tutorial/][Prot's tutorial]].
