@@ -1518,6 +1518,23 @@ To enable =gpgsigning= for a repository, run this.
 #+begin_src shell :tangle no
   git config --local commit.gpgsign true
 #+end_src
+* DIFF
+** EDIFF
+I never realized how useful ediff was. And I think its because the
+defaults suck. I got this from Prot's config.
+#+begin_src elisp
+(use-package ediff
+  :ensure nil
+  :commands (ediff-buffers ediff-files ediff-buffers3 ediff-files3)
+  :init
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  :config
+  (setq ediff-keep-variants nil)
+  (setq ediff-make-buffers-readonly-at-startup t)
+  (setq ediff-merge-revisions-with-ancestor t)
+  (setq ediff-show-clashes-only t))
+#+end_src
 * FLYCHECK
 Flycheck can do a lot of stuff including,
 - Showing errors in programs,
