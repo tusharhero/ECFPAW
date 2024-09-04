@@ -1381,6 +1381,9 @@ size and rendering method.
            "* %?\nEntered on %U\n  %i\n  %a")))
   (setq org-agenda-files `(,(concat goals-directory "tasks.org")
                            ,(concat goals-directory "journal.org")))
+  (setq org-agenda-prefix-format
+        '((agenda . " %i %-12:b%?-12t% s") (todo . " %i %-12:c")
+  	(tags . " %i %-12:c") (search . " %i %-12:c")))
 #+end_src
 ** Prettify mode symbols
 I have had this part separated but decided to just put it in its right
