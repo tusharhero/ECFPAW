@@ -940,6 +940,7 @@ ssh -L local_port:remote_address:remote_port username@server.com
                                       :host host
                                       :stream t
                                       :models models)))
+      (add-hook 'gptel-mode-hook 'ECFPAW/load-models)
 
       (let ((host "localhost:11435"))
         (gptel-make-ollama "Ollama(remote)"
