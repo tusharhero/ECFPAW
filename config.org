@@ -1699,11 +1699,12 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
       outline-regexp
       (rx
        (and (* " ")
-            (or "pub" "const"
-                "var" "fn"
-                "if" "else"
-                "while" "for"
-                "inline" "switch")))
+            (or "_"
+  	   "pub" "const"
+             "var" "fn"
+             "if" "else"
+             "while" "for"
+             "inline" "switch")))
 
       outline-heading-end-regexp
       (rx  (or ";" "}" "\n")))))
