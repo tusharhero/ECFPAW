@@ -1371,6 +1371,7 @@ size and rendering method.
   (add-hook 'org-mode-hook #'ECFPAW/org-latex-yas)
 #+end_src
 ** Journal and Task
+*** Agenda and capturing
 #+begin_src elisp :var goals-directory="~/Documents/goals/"
   (setq org-capture-templates
         `(("t" "Todo" entry (file+headline
@@ -1381,9 +1382,18 @@ size and rendering method.
            "* %?\nEntered on %U\n  %i\n  %a")))
   (setq org-agenda-files `(,(concat goals-directory "tasks.org")
                            ,(concat goals-directory "journal.org")))
+#+end_src
+
+Add breadcrumbs because I get confused about which task I am looking at.
+#+begin_src elisp
   (setq org-agenda-prefix-format
         '((agenda . " %i %-12:b%?-12t% s") (todo . " %i %-12:c")
-  	(tags . " %i %-12:c") (search . " %i %-12:c")))
+    	(tags . " %i %-12:c") (search . " %i %-12:c")))
+#+end_src
+
+And enable habit module!
+#+begin_src elisp
+  (add-to-list 'org-modules 'habit t)
 #+end_src
 ** Prettify mode symbols
 I have had this part separated but decided to just put it in its right
