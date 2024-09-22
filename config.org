@@ -74,6 +74,18 @@
                                                ((theme (car custom-enabled-themes)))
                                              (enable-theme theme))))
 #+end_src
+** Startup optimization
+It took 2.7-3 seconds before these optimizations, and now it is 1
+seconds.
+*** Garbage collection
+Minimize garbage collection before startup and then go back to the
+default value (8 MiB) after startup.
+#+begin_src elisp :tangle early-init.el
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (expt 2 23))))
+#+end_src
 * IMPORTANT PROGRAMS TO LOAD FIRST
 ** Package Manager
 I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manager. You might want to check for
