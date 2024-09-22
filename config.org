@@ -607,15 +607,6 @@ Evaluate this to get a pulse 😄.
 ** THEME
 I use Modus themes.
 *** Extra Themes
-**** VSCode theme
-#+begin_src elisp
-  (use-package vscode-dark-plus-theme
-    :ensure t)
-#+end_src
-**** Catpuccin theme
-#+begin_src elisp
-(use-package catppuccin-theme :ensure t)
-#+end_src
 **** Ef-themes
 #+begin_src elisp
   (use-package ef-themes :ensure t)
