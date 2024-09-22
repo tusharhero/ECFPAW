@@ -1391,6 +1391,11 @@ Add breadcrumbs because I get confused about which task I am looking at.
     	(tags . " %i %-12:c") (search . " %i %-12:c")))
 #+end_src
 
+
+#+begin_src elisp
+(setq org-agenda-clockreport-parameter-plist '(:link t :maxlevel 5))
+#+end_src
+
 And enable habit module!
 #+begin_src elisp
   (add-to-list 'org-modules 'habit t)
