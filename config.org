@@ -1399,6 +1399,11 @@ Add breadcrumbs because I get confused about which task I am looking at.
 (setq org-agenda-clockreport-parameter-plist '(:link t :maxlevel 5))
 #+end_src
 
+Its just annoying to look at this point.
+#+begin_src elisp
+(setq org-agenda-show-future-repeats nil)
+#+end_src
+
 And enable habit module!
 #+begin_src elisp
   (add-to-list 'org-modules 'habit t)
