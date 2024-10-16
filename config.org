@@ -41,13 +41,13 @@
   ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+end_src
 
-* TODO CHORES [0/6]
+* TODO CHORES [1/5]
 ** TODO Use =use-package= properly to reduce startup time.
 ** TODO Add more key bindings.
 *** TODO Add shortcut to bold, italicize, etc. in [[ORG-MODE]].
 ** TODO Correct the key bindings for annot-list mode.
 ** TODO Divide this TODO into respective categories in their correct place.
-** TODO Completely overhaul the way I do keybindings.
+** DONE Completely overhaul the way I do keybindings.
 * BOOTSTRAPPING
 #+begin_src elisp :tangle bootstrap-config.el
 #!/usr/bin/emacs --script
@@ -183,65 +183,6 @@ it 😄.
                 (delete-other-windows))
             (jump-to-register ?u)))))
 #+end_src
-* Load Evil Mode
-Getting evil mode installed because, I was Vim user and I am most
-comfortable in those keybindings.
-** Some annoyances with evil
-#+begin_src elisp
-  (setq evil-want-C-u-scroll t) ;; fix C-u scrolling
-  (setq evil-undo-system 'undo-redo) ;; fix undo redo system
-#+end_src
-** Actually load Evil
-#+begin_src elisp
-  (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-vsplit-window-right t)
-    (setq evil-split-window-below t)
-    (setq evil-respect-visual-line-mode t)
-    (evil-mode))
-#+end_src
-** Additional evil packages
-*** Evil collection
-#+begin_src elisp
-  (use-package evil-collection
-    :after evil
-    :config
-    (evil-collection-init))
-#+end_src
-*** Evil-tutor
-#+begin_src elisp
-  (use-package evil-tutor)
-#+end_src
-*** Evil-numbers
-#+begin_src elisp
-  (use-package evil-numbers :after evil)
-#+end_src
-** Fixing links follow
-Evil binds these stuff to other stuff, so you need to disable it to be
-able to follow links.
-#+begin_src elisp
-  (with-eval-after-load 'evil-maps
-    (define-key evil-motion-state-map (kbd "SPC") nil)
-    (define-key evil-motion-state-map (kbd "RET") nil)
-    (define-key evil-motion-state-map (kbd "TAB") nil))
-
-  (setq org-return-follows-link  t)
-#+end_src
-** Tweak default Evil bindings
-#+begin_src elisp
-  (with-eval-after-load 'evil-maps
-    (define-key evil-normal-state-map (kbd "{") 'forward-paragraph)
-    (define-key evil-normal-state-map (kbd "}") 'backward-paragraph))
-#+end_src
-** Converting the caps key to an ESC key
-Its very convenient to use the =capslock= key as an additional =ESC=
-key.
-*** Xorg
-#+begin_src shell :tangle no
-  setxkbmap -option caps:escape
-#+end_src
 * DISABLE BELL
 It's very annoying to have that bell ringing all the time.
 #+begin_src elisp
@@ -276,233 +217,7 @@ useful, because you may not which key you bonded to what.
      which-key-separator " → " )
     )
 #+end_src
-* GENERAL KEYBINDINGS
-I will use general package to create all the keybindings for ECFPAW. I
-only make key binds for the stuff I really need(That goes for the
-configuration in general as well).
-
-This is using noweb references to get all code blocks for individual
-keybindings under [[Keybindings]] inside the use-package call in
-[[Installation and basic config]].
-** Installation and basic config
-#+begin_src elisp :noweb yes
-  (use-package general
-    :config
-    (general-evil-setup)
-
-    ;; set up ',' as major mode keybinds key
-    (evil-define-key 'normal global-map (kbd ",")
-      '(lambda () (interactive) (setq unread-command-events (listify-key-sequence (kbd "C-c")))))
-
-    ;; set up 'SPC' as the global leader key
-    (general-create-definer ECFPAW/leader-keys
-      :states '(normal insert visual emacs)
-      :keymaps 'override
-      :prefix "SPC" ;; set leader
-      :global-prefix "M-SPC") ;; access leader in insert mode
-    <<individual_keybindings>>)
-#+end_src
-** Keybindings
-:PROPERTIES:
-:header-args: :noweb-ref individual_keybindings :noweb no
-:END:
-*** Direct convenient keybindings
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "SPC" '(execute-extended-command :wk "Execute command")
-    "TAB" '(mode-line-other-buffer :wk "Last buffer")
-    ;; "c" '(comment-or-uncomment-region :wk "Comment lines")
-    "c" '(comment-dwim :wk "Comment lines")
-    "u" '(universal-argument :wk "C-u")
-    "'" '((lambda () (interactive) (if (project-current nil)
-                                       (project-eshell) (eshell)))
-          :wk "Toggle eshell")
-    "\"" '((lambda () (interactive) (if (project-current nil)
-                                       (project-shell) (shell)))
-          :wk "Toggle eshell")
-    "a" '(evil-numbers/inc-at-pt :wk "Increment number")
-    "A" '(evil-numbers/dec-at-pt :wk "Decrement number")
-    "g" '(magit :wk "Magit")
-    "." '(pulsar-pulse-line :wk "Pulse the current line"))
-#+end_src
-*** Help
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "h" '(:ignore t :wk "Help")
-    "h h" '(help :wk "Help Help!")
-    "h f" '(describe-function :wk "Describe function")
-    "h v" '(describe-variable :wk "Describe variable"))
-#+end_src
-*** Buffer
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "b" '(:ignore t :wk "buffer")
-    "b b" '(beframe-switch-buffer :wk "Switch buffer")
-    "b i" '(ibuffer :wk "Ibuffer")
-    "b d" '(kill-current-buffer :wk "Kill this buffer")
-    "b x" '(kill-current-buffer :wk "Kill this buffer")
-    "b n" '(next-buffer :wk "Next buffer")
-    "b p" '(previous-buffer :wk "Previous buffer")
-    "b r" '(revert-buffer :wk "Revert buffer")
-    "b f" '(olivetti-mode :wk "center text and write")
-    "b h" '((lambda () (interactive) (switch-to-buffer "*dashboard*")) :wk "dashboard buffer")
-    "b s" '((lambda () (interactive) (switch-to-buffer "*scratch*")) :wk "scratch buffer"))
-#+end_src
-*** Window management
-#+begin_src elisp
-  ;; window management keybindings
-  (ECFPAW/leader-keys
-    "w" '(:ignore t :wk "Windows")
-    ;; Window splits
-    "w d" '(evil-window-delete :wk "Close window")
-    "w x" '(evil-window-delete :wk "Close window")
-    "w s" '(evil-window-split :wk "Horizontal split window")
-    "w v" '(evil-window-vsplit :wk "Vertical split window") 
-    "w /" '(evil-window-vsplit :wk "Vertical split window")
-    "w m" '(ECFPAW/toggle-windows-split :wk "Maximize window")
-    ;; Window motions
-    "w h" '(windmove-left :wk "Window left")
-    "w j" '(windmove-down :wk "Window down")
-    "w k" '(windmove-up :wk "Window up")
-    "w l" '(windmove-right :wk "Window right")
-    "w w" '(other-window :wk "Goto next window"))
-  ;; different keybindgings to resize windows.
-  (global-set-key (kbd "<C-down>") 'shrink-window)  
-  (global-set-key (kbd "<C-up>") 'enlarge-window)  
-  (global-set-key (kbd "<C-right>") 'shrink-window-horizontally)  
-  (global-set-key (kbd "<C-left>") 'enlarge-window-horizontally)  
- #+end_src
-*** File 
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "f" '(:ignore t :wk "files")
-    "f f" '(find-file :wk "Find file")
-    "f c" '((lambda () (interactive) (find-file (locate-user-emacs-file "config.org"))) :wk "Edit emacs config")
-    "f r" '(recentf :wk "Find recent files")
-    "f e r" '((lambda () (interactive) (load-file (locate-user-emacs-file "init.el")) (ignore (elpaca-process-queues)))
-              :wk "Reload emacs config"))
-#+end_src
-*** Dired 
-#+begin_src elisp
-  ;; dired related keybindings
-  (ECFPAW/leader-keys
-    "d" '(:ignore t :wk "Dired")
-    "d d" '(dired :wk "Open dired")
-    "d j" '(dired-jump :wk "Dired jump to current"))
-#+end_src
-*** News-ticker
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "N" '(:ignore t :wk "Newsticker")
-    "N n" '(newsticker-treeview :wk "Treeview"))
-#+end_src
-*** Spelling
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "S" '(:ignore t :wk "Spelling")
-    "S s" '(flyspell-auto-correct-word :wk "correct the word")
-    "S t" '(flyspell-mode :wk "Toggle flyspell(spellchecking)"))
-#+end_src
-*** Frame 
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "F" '(:ignore t :wk "frame")
-    "F t" '(ECFPAW/change-current-transparency-to :wk "change transparency"))
-#+end_src
-*** Bookmarks
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "B" '(:ignore t :wk "bookmark")
-    "B s" '(bookmark-set :wk "bookmark set")
-    "B l" '(bookmark-bmenu-list :wk "bookmark list"))
-#+end_src
-*** Insert
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "i" '(:ignore t :wk "insert")
-    "i e" '(emoji-insert :wk "insert emoji")
-    "i s" '(yas-insert-snippet :wk "insert snippet"))
-#+end_src
-*** Eval
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "e" '(:ignore t :wk "Evaluate")
-    "e b" '(eval-buffer :wk "Evaluate elisp in buffer")
-    "e d" '(eval-defun :wk "Evaluate defun containing or after point")
-    "e e" '(eval-expression :wk "Evaluate and elisp expression")
-    "e l" '(eval-last-sexp :wk "Evaluate elisp expression before point")
-    "e r" '(eval-region :wk "Evaluate elisp in region"))
-#+end_src
-*** Toggling/Cycling
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "t" '(:ignore t :wk "Toggle/Cycle")
-    "t l" '(display-line-numbers-mode :wk "Toggle line numbers")
-    "t L" '(ECFPAW/cycle-line-number-type :wk "cycle line number types")
-    "t s" '(flyspell-mode :wk "Toggle flyspell(spellchecking)")
-    "t T" '(toggle-truncate-lines :wk "Toggle truncated lines")
-    "t v" '(visual-line-mode :wk "Toggle visual lines")
-    "t c" '(outline-minor-mode :wk "enable code-folding")
-    "t o" '(org-mode :wk "toggle org-mode")
-    "t O" '(olivetti-mode :wk "center text and write")
-    "t m" '(ECFPAW/mode-line/cycle-formats :wk "cycle mode line")
-    "t t" '(ECFPAW/cycle-my-theme :wk "Cycle through my themes"))
-#+end_src
-*** Org-mode
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "o" '(:ignore t :wk "org-mode")
-    "o o" '(org-mode :wk "toggle org-mode")
-    "o r" '(:ignore t :wk "org-roam")
-    "o p" '(org-toggle-latex-fragment :wk "toggle latex preview")
-    "o i" '(:ignore :wk "insert")
-    "o i d" '(ECFPAW/insert-now-timestamp :wk "time stamp")
-    "o i i" '(org-download-clipboard :wk "image")
-    "o e" '(:ignore :wk "export")
-    "o e p" '(org-latex-export-to-pdf :wk "PDF")
-    "o c" '(org-capture :wk "capture")
-    "o a" '(org-agenda :wk "agenda"))
-  (evil-define-key 'normal org-mode-map (kbd "SPC o b") org-babel-map)
-  (which-key-add-key-based-replacements "SPC o b" "babel")
-#+end_src
-*** Programming
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "p" '(:ignore t :wk "Programming")
-    "p e" '(eglot :wk "Turn on eglot")
-    "p d" '(eglot-shutdown :wk "shutdown a eglot workspace")
-    "p r" '(eglot-rename :wk "eglot-rename")
-    "p f" '(eglot-format-buffer :wk "format buffer")
-
-
-    "p R" '(xref-find-references :wk "Find references")
-    "p g" '(xref-find-definitions :wk "go to definitions")
-    "p b" '(xref-go-back :wk "Go back to where you were")
-
-    "p c" '(project-compile :wk "compile")
-    "p d" '(eldoc :wk "get docs")
-    "p i" '(imenu :wk "imenu")
-    "p a" '(eldoc :wk "eglot code actions")
-    "p F" '(outline-minor-mode :wk "enable code-folding"))
-#+end_src
-*** Narrowing
-#+begin_src elisp
-  (ECFPAW/leader-keys
-    "n" '(:ignore t :wk "Narrowing")
-    "n n" '(narrow-to-region :wk "Narrow to region")
-    "n w" '(widen :wk "Widen"))
-#+end_src
-*** LLM
-#+begin_src emacs-lisp
-  (ECFPAW/leader-keys
-    "," '(:ignore t :wk "LLM")
-    ", a" '(gptel :wk "gptel buffer")
-    ;; I need to call gptel with a prefix argument to create a new GPTel buffer.
-    ", c" '((lambda () (interactive) (setq current-prefix-arg '(4)) (call-interactively 'gptel)) :wk "create gptel buffer")
-    ", m" '(gptel-menu :wk "GPTel Menu")
-    ", A" '(gptel-abort :wk "GPTel abort"))
-#+end_src
-** Statistics
+* Key Statistics
 I need to get some keybinding statistics to improve my keybindings situation.
 #+begin_src elisp
   (use-package keyfreq
@@ -589,20 +304,12 @@ Evaluate this to get a pulse 😄.
     (setq pulsar-face 'pulsar-magenta)
     (setq pulsar-highlight-face 'pulsar-yellow)
     (add-hook 'next-error-hook #'pulsar-pulse-line)
-    (add-hook 'evil-scroll-up #'pulsar-pulse-line)
     (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
 
     ;; integration with the built-in `imenu':
     (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
     (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
     (pulsar-global-mode 1))
-#+end_src
-*** Adding support for some more functions
-#+begin_src elisp
-  (with-eval-after-load 'pulsar
-    (add-to-list 'pulsar-pulse-functions 'evil-scroll-down)
-    (add-to-list 'pulsar-pulse-functions 'evil-scroll-up)
-    (add-to-list 'pulsar-pulse-functions 'evil-scroll-line-to-center))
 #+end_src
 ** THEME
 I use Modus themes.
@@ -792,7 +499,6 @@ Hide some minor modes, and replace some with emojis™.
     (diminish 'company-box-mode)
     (diminish 'projectile-mode " 🗂️")
     (diminish 'org-indent-mode)
-    (diminish 'evil-collection-unimpaired-mode)
     (diminish 'auto-fill-function " ✂")
     (diminish 'visual-line-mode " ✂")
     (diminish 'blacken-mode " ⚫")
@@ -1094,15 +800,17 @@ typed use ~M-j~ keybinding.
 #+end_src
 ** Corfu
 :TODO:
-+ [ ] Fix this corfu error
++ [X] Fix this corfu error
 #+begin_example
 Error running timer ‘corfu--auto-complete-deferred’: (wrong-number-of-arguments #<subr evil-normalize-keymaps> 4)
 #+end_example
+Fixed by removing evil!
 + [ ] Setup the cape extensions properly
 + [X] Foreshadowing completion support for most cases... Basically I
   need this package , https://code.bsdgeek.org/adam/corfu-candidate-overlay
   I need to do a bit more research though because a lot of stuff uses
   my =TAB= key.
++ [ ] Fix it for use without evil.
 :END:
 I used to use Company but that had some issue like, dictionary
 disabling all the other symbols.
@@ -1130,13 +838,7 @@ helped me with this setup :) )
     (corfu-separator ?\s)
     (corfu-on-exact-match nil)
     (corfu-preview-current 'insert)
-    (corfu-quit-no-match 'separator)
-    :config
-    (with-eval-after-load 'evil
-      (evil-define-key 'insert corfu-mode-map
-        (kbd "C-n")       #'corfu-next
-        (kbd "C-p")     #'corfu-previous
-        (kbd "C-<tab>") #'completion-at-point)))
+    (corfu-quit-no-match 'separator))
 
   (use-package corfu-terminal
     :unless window-system
@@ -1751,11 +1453,7 @@ switch over to editing with sudo privileges if we initially opened the
 file without such privileges.
 
 #+begin_src emacs-lisp
-  (use-package sudo-edit
-    :config
-    (ECFPAW/leader-keys
-     "f u" '(sudo-edit-find-file :wk "Sudo find file")
-     "f U" '(sudo-edit :wk "Sudo edit file")))
+(use-package sudo-edit)
 #+end_src
 * TRAMP
 =Tramp= allows you to remote into other machines from within Emacs.
