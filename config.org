@@ -1078,13 +1078,6 @@ Add human readable directory sizes in the directory listing, because,
 #+begin_src emacs-lisp
 (add-hook 'dired-mode-hook 'hl-line-mode)
 #+end_src
-* BE-FRAMED
-=BE-FRAME= divides all the buffers into different frames, basically
-different sets of buffers for different frames, it helps avoids making
-a big clutter (at least on surface).
-#+begin_src elisp
-  (use-package beframe :config (beframe-mode 1))
-#+end_src
 * COMPLETION
 ** Fido
 :TODO:
