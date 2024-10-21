@@ -697,31 +697,6 @@ parts to organize your thoughts.  Then, craft a good commit message
 based on the input context.  Write a commit message based on the git
 diff. Read the diff below and write a commit message that describes
 the changes made.
-* DASHBOARD
-** configuration
-[[https://github.com/emacs-dashboard/emacs-dashboard][emacs-dashboard]] is an package which allows you to make a nice little
-dashboard which comes up when you start Emacs. I also disable the
-number lines for this one because it looked ugly. I have disabled the custom
-banner image for now as I feel like the default is cooler.
-#+begin_src elisp
-  (use-package dashboard
-    :ensure t 
-    :init
-    (setq initial-buffer-choice 'dashboard-open)
-    (setq dashboard-set-heading-icons t)
-    (setq dashboard-set-file-icons t)
-    ;; (setq dashboard-startup-banner (locate-user-emacs-file "images/trancendent-gnu.png"))
-    (setq dashboard-banner-logo-title
-          "ECFPAW: Emacs Configuration For Programming and Writing")
-    (setq dashboard-center-content t)
-    (setq dashboard-projects-switch-function 'dired)
-    (setq dashboard-projects-backend 'project-el)
-    (setq dashboard-items '((recents  . 5)
-                            (projects . 5)))
-    :config
-    (setq dashboard-footer-messages
-          (append dashboard-footer-messages ECFPAW/jokes))
-    (dashboard-setup-startup-hook))
 #+end_src
 * PROJECT
 I was using projectile before but then I realized that I don't use
