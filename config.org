@@ -727,6 +727,51 @@ Just some helper functions to use them easily.
       (forward-line (1- line))
       (ECFPAW/make-put-overlay (pos-bol) (pos-eol) face)))
 #+end_src
+* SCRATCH
+** Make Scratch buffer the initial buffer
+I am using the scratch buffer to emulate what I used the dashboard
+mostly for anyway (/think cool startup screen/).
+#+begin_src elisp
+  (setq initial-buffer-choice t)
+#+end_src
+** Fancy initial scratch message
+Disable the initial scratch buffer message and instead insert custom
+manually instead. This is because Emacs tries doing some /smart/ things with it
+which makes it harder to work with. Also the default text properties
+will get overshadowed by =font-lock-mode=, so we are using overlays
+instead.
+
+#+begin_src elisp
+  (setq initial-scratch-message nil)
+
+  (defun ECFPAW/scratch-message ()
+    "Setup initial scratch message, with fancy formatting."
+    (insert
+     (string-join
+      `(
+        ";; ECFPAW: Emacs Configuration For Programming And Writing."
+        ,(emacs-init-time ";; Initialized in %f seconds.")
+        ,(format ";; jokes: \"%s\"" (seq-random-elt ECFPAW/jokes))
+        "\n;; This is the Scratch buffer."
+        "\n"
+        )
+      "\n"))
+    (save-excursion
+      (goto-char (point-min))
+      (ECFPAW/overlay-on-next-string "ECFPAW" 'ECPFAW/scratch-buffer-title)
+      (ECFPAW/overlay-on-line 2 'ECPFAW/scratch-buffer-subtitle)
+      (ECFPAW/overlay-on-line 3 'ECPFAW/scratch-buffer-subtitle)
+      ))
+
+  (add-hook 'lisp-interaction-mode-hook 'ECFPAW/scratch-message)
+#+end_src
+
+Just for a /little fanciness/.
+#+begin_src elisp
+  (defface ECPFAW/scratch-buffer-title '((t :height 2.0 :slant italic :weight heavy))
+    "Face used for fancy title in scratch buffer.")
+  (defface ECPFAW/scratch-buffer-subtitle '((t :weight extra-light))
+    "Face used for fancy subtitle in scratch buffer.")
 #+end_src
 * PROJECT
 I was using projectile before but then I realized that I don't use
