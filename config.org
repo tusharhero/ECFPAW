@@ -164,25 +164,6 @@ There functions are generally useful.
     (interactive)
     (< 6 (decoded-time-hour (decode-time (current-time))) 18))
 #+end_src
-* Window Management
-I really liked this feature from Spacemacs, so here is how I emulate
-it 😄.
-#+begin_src elisp
-  (defun ECFPAW/toggle-windows-split()
-    "Switch back and forth between one window.
-  And whatever split of windows we might have in the frame.  The idea is
-  to maximize the current buffer, while being able to go back to the
-  previous split of windows in the frame simply by calling this command
-  again."
-    (interactive)
-    (if (not(window-minibuffer-p (selected-window)))
-        (progn
-          (if (< 1 (count-windows))
-              (progn
-                (window-configuration-to-register ?u)
-                (delete-other-windows))
-            (jump-to-register ?u)))))
-#+end_src
 * DISABLE BELL
 It's very annoying to have that bell ringing all the time.
 #+begin_src elisp
