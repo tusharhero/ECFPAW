@@ -697,6 +697,36 @@ parts to organize your thoughts.  Then, craft a good commit message
 based on the input context.  Write a commit message based on the git
 diff. Read the diff below and write a commit message that describes
 the changes made.
+* Overlay
+Overlays are like text properties but for the buffer instead of the
+string.
+
+Just some helper functions to use them easily.
+#+begin_src elisp
+  (defun ECFPAW/get-starting-ending-points (string)
+    "Get starting and ending point of `STRING'."
+    (save-excursion
+    (search-forward string)
+    `(,(match-beginning 0) ,(match-end 0))))
+
+  (defun ECFPAW/make-put-overlay (beg end face)
+    "Create overlay with range `BEG' to `END', and put `FACE' property on it."
+    (overlay-put (make-overlay beg end) 'face face))
+
+  (defun ECFPAW/overlay-on-next-string (string face)
+    "Add overlay with property `FACE' on next occurence of `STRING' in buffer."
+    (let* ((beg-end (ECFPAW/get-starting-ending-points string))
+  	 (beg (car beg-end))
+  	 (end (cadr beg-end)))
+      (ECFPAW/make-put-overlay beg end face)))
+
+  (defun ECFPAW/overlay-on-line (line face)
+    "Add overlay with property `FACE' on `LINE'."
+    (save-excursion
+      (goto-char (point-min))
+      (forward-line (1- line))
+      (ECFPAW/make-put-overlay (pos-bol) (pos-eol) face)))
+#+end_src
 #+end_src
 * PROJECT
 I was using projectile before but then I realized that I don't use
