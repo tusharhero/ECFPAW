@@ -209,14 +209,6 @@ Defining the various fonts Emacs will use.
   (add-to-list 'default-frame-alist
                '(font . "Iosevka NF 14"))
 #+end_src
-*** Zooming In/Out
-For =CTRL=/-= zooming shortcuts.
-#+begin_src elisp
-  (global-set-key (kbd "C-=") 'text-scale-increase)
-  (global-set-key (kbd "C--") 'text-scale-decrease)
-  (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-  (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
-#+end_src
 ** GRAPHICAL USER INTERFACE TWEAKS
 Let's make GNU Emacs look a little better.
 
