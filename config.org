@@ -749,7 +749,10 @@ instead.
     (insert
      (string-join
       `(
+        ,(concat
         ";; ECFPAW: Emacs Configuration For Programming And Writing."
+        " -*- lexical-binding: t; -*-"
+        )
         ,(emacs-init-time ";; Initialized in %f seconds.")
         ,(format ";; jokes: \"%s\"" (seq-random-elt ECFPAW/jokes))
         "\n;; This is the Scratch buffer."
