@@ -1010,6 +1010,13 @@ I use Doc-View to view documents within Emacs.
       km))
     )
 #+end_src
+* CASUAL
+Excellent for discoverability, the only reason I am able to use =calc= now.
+#+begin_src elisp
+  (use-package casual-calc
+    :config
+    (keymap-set calc-mode-map "C-c l" #'casual-calc-tmenu))
+#+end_src
 * SNIPPETS
 Snippets are very useful to quickly insert boilerplate.
 #+begin_src elisp
