@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: TikZ Environment
-# key: tikz
-# --
-\begin{tikzpicture}
-$0
-\end{tikzpicture}
