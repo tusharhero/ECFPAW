@@ -319,9 +319,37 @@ dark theme at night.
                            ("18:00" . modus-vivendi)))
   (circadian-setup))
 #+end_src
-** MODE-LINE
+** TRANSPARENCY
+With Emacs version 29, true transparency has been added.
+*** Setting initial transparency
+#+begin_src elisp
+  (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
+#+end_src
+*** Function to change the transparency of the current frame.
+**** COMMENT Xorg
+I should be modifying =alpha-background= but that doesn't seem to be
+going well. So I will modify =alpha= instead. =alpha-background= just
+changes the background transparency, =alpha= on the other hand changes
+the transparency of the entire buffer. For now the only way to get
+background transparency is to modify the variable in the above
+function and make a frame unfortunately.
+#+begin_src elisp
+  (defun ECFPAW/change-current-transparency-to (alpha-val)
+    "Change the transparency to the given value"
+    (interactive "nChange transparency: ")
+    (set-frame-parameter (selected-frame) 'alpha alpha-val))
+#+end_src
+**** Wayland
+This works only on Wayland, So disable it and enable the block above.
+#+begin_src elisp
+  (defun ECFPAW/change-current-transparency-to (alpha-val)
+    "Change the transparency to the given value"
+    (interactive "nChange transparency: ")
+    (set-frame-parameter (selected-frame) 'alpha-background alpha-val))
+#+end_src
+* MODE-LINE
 I am going to make my own mode-line, I followed [[https://protesilaos.com/codelog/2023-07-29-emacs-custom-modeline-tutorial/][Prot's tutorial]].
-*** Mode-line-helpers
+** Mode-line-helpers
 #+begin_src elisp
   (defmacro ECFPAW/def-mode-line-constr (constr-name val docstring)
     "Define CONSTR-NAME as a mode-line construct with value VAL.
@@ -329,7 +357,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
     `(progn (defvar-local ,constr-name ,val ,docstring)
            (put ',constr-name 'risky-local-variable t)))
 #+end_src
-*** Mode-line formats
+** Mode-line formats
 #+begin_src elisp
   (defvar ECFPAW/mode-line/default-format
     '("%e"
@@ -400,7 +428,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
     "Mini mode line format, for when the mode-line doesn't have enough space."
     )
   #+end_src
-*** Mode-line constructs
+** Mode-line constructs
 #+begin_src elisp
   (ECFPAW/def-mode-line-constr
    ECFPAW/mode-line/title
@@ -429,10 +457,14 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
       'mouse-face 'mode-line-highlight))
    "Mode line construct to display the time")
 #+end_src
-*** Default mode-line, and cycling.
-#+begin_src elisp
-  (setq-default mode-line-format ECFPAW/mode-line/mini-format)
+** Default mode-line, and cycling.
 
+Have reverted back to the default for now.
+#+begin_src elisp :tangle no
+  (setq-default mode-line-format ECFPAW/mode-line/full-format)
+#+end_src
+
+#+begin_src elisp
   (defvar ECFPAW/mode-line/formats
     (ECFPAW/make-cyclic-list
      (list  ECFPAW/mode-line/full-format ECFPAW/mode-line/mini-format ECFPAW/mode-line/default-format))
@@ -446,57 +478,16 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
     (setq-default mode-line-format ECFPAW/current-mode-line-format)
     (setq-local mode-line-format ECFPAW/current-mode-line-format)
     (force-mode-line-update))
-  #+end_src
-*** Diminish modes
-Hide some minor modes, and replace some with emojis™. 
+#+end_src
+** Diminish modes
+Hide some minor modes.
 #+begin_src elisp
   (use-package diminish
     :defer 3
     :config
-    (diminish 'flycheck-mode "c✔ ")
-    (diminish 'flyspell-mode "s✔ ")
-    (diminish 'flymake-mode  "m✔ ")
-    (diminish 'helm-mode)
-    (diminish 'company-mode " 🗒️️")
-    (diminish 'which-key-mode)
-    (diminish 'company-box-mode)
-    (diminish 'projectile-mode " 🗂️")
-    (diminish 'org-indent-mode)
-    (diminish 'auto-fill-function " ✂")
-    (diminish 'visual-line-mode " ✂")
-    (diminish 'blacken-mode " ⚫")
-    (diminish 'outline-minor-mode " 📍")
-    (diminish 'eldoc-mode " 📜"))
+    (diminish 'which-key-mode))
 #+end_src
 
-** TRANSPARENCY
-With Emacs version 29, true transparency has been added.
-*** Setting initial transparency
-#+begin_src elisp
-  (add-to-list 'default-frame-alist '(alpha-background . 100)) ; For all new frames henceforth
-#+end_src
-*** Function to change the transparency of the current frame.
-**** COMMENT Xorg
-I should be modifying =alpha-background= but that doesn't seem to be
-going well. So I will modify =alpha= instead. =alpha-background= just
-changes the background transparency, =alpha= on the other hand changes
-the transparency of the entire buffer. For now the only way to get
-background transparency is to modify the variable in the above
-function and make a frame unfortunately. 
-#+begin_src elisp
-  (defun ECFPAW/change-current-transparency-to (alpha-val)
-    "Change the transparency to the given value"
-    (interactive "nChange transparency: ")
-    (set-frame-parameter (selected-frame) 'alpha alpha-val))
-#+end_src
-**** Wayland
-This works only on Wayland, So disable it and enable the block above.
-#+begin_src elisp
-  (defun ECFPAW/change-current-transparency-to (alpha-val)
-    "Change the transparency to the given value"
-    (interactive "nChange transparency: ")
-    (set-frame-parameter (selected-frame) 'alpha-background alpha-val))
-#+end_src
 * LINE NUMBERS
 I am using this function because sometimes =absolute= line number is
 better than =relative=. And I have decided to *NOT* enable these by
