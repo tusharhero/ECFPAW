@@ -864,6 +864,13 @@ helped me with this setup :) )
 #+end_src
 * TEXT
 Some stuff which are for text editing in general.
+** Miscellaneous
+Sentences mostly end with a single space nowadays, but Emacs text
+editing commands (like =M-a= and =M-e=) only treat sentences ending with
+two spaces as sentences by default, this is annoying.
+#+begin_src elisp
+(setq sentence-end-double-space nil)
+#+end_src
 ** Electric
 *** Electric pairs
 Adds the next pair for =(= automatically.
