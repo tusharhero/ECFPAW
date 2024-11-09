@@ -64,16 +64,6 @@
 #+begin_src emacs-lisp :tangle early-init.el
   (setq package-enable-at-startup nil)
 #+end_src
-** Avoid initial eye eating light theme
-#+begin_src emacs-lisp :tangle no
-  (setq mode-line-format nil)
-  (set-face-attribute 'default nil :background "#000000" :foreground "#ffffff")
-  (set-face-attribute 'mode-line nil :background "#000000" :foreground "#ffffff" :box 'unspecified)
-  (add-hook 'after-make-frame-functions (lambda ()
-                                           (when-let
-                                               ((theme (car custom-enabled-themes)))
-                                             (enable-theme theme))))
-#+end_src
 ** Startup optimization
 It took 2.7-3 seconds before these optimizations, and now it is 1
 seconds.
