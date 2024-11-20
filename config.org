@@ -340,92 +340,40 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
            (put ',constr-name 'risky-local-variable t)))
 #+end_src
 ** Mode-line formats
+I used to copy this format manually.
 #+begin_src elisp
   (defvar ECFPAW/mode-line/default-format
-    '("%e"
+    (default-value 'mode-line-format)
+    "The vanilla default Emacs mode line format.")
+#+end_src
+
+The format works with PDF view mode too now (it displays the page
+number properly). Also removed some cosmetic noise from here.
+#+begin_src elisp
+  (defvar ECFPAW/mode-line/format
+    '(""
       mode-line-front-space
-      (:propertize
-       ("" mode-line-mule-info mode-line-client mode-line-modified mode-line-remote)
-       display (min-width (5.0)))
-      mode-line-frame-identification mode-line-buffer-identification
-      "   "
+      ECFPAW/mode-line/major-mode
+      " "
+      mode-line-buffer-identification
+      " "
       mode-line-position
-      (vc-mode vc-mode)
-      "  "
-      mode-line-modes
-      mode-line-misc-info mode-line-end-spaces)
-    "The vanilla default Emacs mode line format."
-    )
-
-  (defvar ECFPAW/mode-line/full-format
-    '(
-      " "
-      ECFPAW/mode-line/major-mode
-      " "
-      mode-line-buffer-identification
-      " "
-      "L%l"
-      " "
-      "%I"
-      " "
-      "%n"
-      " "
-      mode-line-misc-info
-      " "
-      mode-line-modes
-      " "
-      mode-line-format-right-align
-      ""
-      ECFPAW/mode-line/time
-      " "
-      "@"
-      ECFPAW/mode-line/title
-      )
-    "Full mode line format, for when the mode-line has enough space."
-    )
-
-
-  (defvar ECFPAW/mode-line/mini-format
-    '(
-      " "
-      ECFPAW/mode-line/major-mode
-      " "
-      mode-line-buffer-identification
-      " "
-      "L%l"
-      " "
-      "%I"
-      " "
-      "%n"
       " "
       mode-line-misc-info
       " "
       mode-line-format-right-align
-      ""
       ECFPAW/mode-line/time
-      " "
-      "@@"
-      ECFPAW/mode-line/title
+      mode-line-end-spaces
       )
-    "Mini mode line format, for when the mode-line doesn't have enough space."
+    "ECFPAW's mode line format."
     )
-  #+end_src
+#+end_src
 ** Mode-line constructs
 #+begin_src elisp
   (ECFPAW/def-mode-line-constr
-   ECFPAW/mode-line/title
-   '(:eval
-     (propertize "ECFPAW"
-                 'face 'modus-line
-                 'help-echo
-                 "Emacs Configuration For Programming And Writing."))
-   "Mode line construct to display ECFPAW.")
-
-  (ECFPAW/def-mode-line-constr
    ECFPAW/mode-line/major-mode
-   '(:eval 
-     (propertize
-      (capitalize (symbol-name major-mode)) 'face 'modus-line))
+   '(:eval
+     (propertize (symbol-name major-mode) 'face 'modus-line))
    "Mode line construct to display the major mode.")
 
   (ECFPAW/def-mode-line-constr
@@ -433,7 +381,7 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
    '(:eval
      (propertize
       (format-time-string "%R %a %d-%b-%y")
-      'face 'mode-line-emphasis
+      'face 'mode-line
       'help-echo
       (current-time-string)
       'mouse-face 'mode-line-highlight))
@@ -441,24 +389,24 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
 #+end_src
 ** Default mode-line, and cycling.
 
-Have reverted back to the default for now.
-#+begin_src elisp :tangle no
-  (setq-default mode-line-format ECFPAW/mode-line/full-format)
+#+begin_src elisp
+  (setq-default mode-line-format ECFPAW/mode-line/format)
 #+end_src
 
 #+begin_src elisp
   (defvar ECFPAW/mode-line/formats
-    (ECFPAW/make-cyclic-list
-     (list  ECFPAW/mode-line/full-format ECFPAW/mode-line/mini-format ECFPAW/mode-line/default-format))
+    '(ECFPAW/mode-line/format
+      ECFPAW/mode-line/default-format)
     "A list of all the modelines available.")
 
-  (defun ECFPAW/mode-line/cycle-formats ()
-    "Cycle through line number types."
-    (interactive)
-    (setq ECFPAW/current-mode-line-format (pop ECFPAW/mode-line/formats))
-    (setq mode-line-format ECFPAW/current-mode-line-format)
-    (setq-default mode-line-format ECFPAW/current-mode-line-format)
-    (setq-local mode-line-format ECFPAW/current-mode-line-format)
+  (defun ECFPAW/mode-line/switch-to-format (format)
+    "Switch to mode-line `FORMAT'."
+    (interactive
+     (list (eval
+  	  (intern (completing-read
+  		   "Switch to mode-line format: "
+      		   ECFPAW/mode-line/formats)))))
+    (setq mode-line-format  format)
     (force-mode-line-update))
 #+end_src
 ** Diminish modes
