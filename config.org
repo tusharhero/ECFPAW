@@ -132,6 +132,12 @@ the new installer version on their git repository.
   ;; Block until current queue processed.
   (elpaca-wait)
 #+end_src
+* Emacs lisp vulnerability mitigation.
+This is for [[https://nvd.nist.gov/vuln/detail/CVE-2024-53920][CVE-2024-53920]].
+#+begin_src elisp
+  (setq auto-mode-alist (rassq-delete-all 'emacs-lisp-mode auto-mode-alist))
+  (setq auto-mode-alist (rassq-delete-all 'elisp-byte-code-mode auto-mode-alist))
+#+end_src
 * Generally useful helper functions
 There functions are generally useful.
 #+begin_src elisp
