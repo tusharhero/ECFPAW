@@ -1,4 +1,4 @@
-#!/usr/bin/emacs --script
+#!/usr/bin/env -S emacs --script
 ;; Run this script to 'bootstrap' ECFPAW from `config.org', of
 ;; course the only requirement it has is Emacs is itself.
 (message "Loading Org...")

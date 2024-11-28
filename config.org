@@ -49,8 +49,7 @@
 ** TODO Divide this TODO into respective categories in their correct place.
 ** DONE Completely overhaul the way I do keybindings.
 * BOOTSTRAPPING
-#+begin_src elisp :tangle bootstrap-config.el
-#!/usr/bin/emacs --script
+#+begin_src elisp :tangle bootstrap-config.el :shebang #!/usr/bin/env -S emacs --script
 ;; Run this script to 'bootstrap' ECFPAW from `config.org', of
 ;; course the only requirement it has is Emacs is itself.
 (message "Loading Org...")
