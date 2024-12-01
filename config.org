@@ -172,8 +172,8 @@ I will try to keep these to a minimum. Setting up custom keybindings
 and maintaining them is a headache.
 ** Org
 #+begin_src elisp
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c c") 'org-capture)
+  (keymap-global-set "C-c a" 'org-agenda)
+  (keymap-global-set "C-c c" 'org-capture)
 #+end_src
 * Key Statistics
 I need to get some keybinding statistics to improve my keybindings situation.
