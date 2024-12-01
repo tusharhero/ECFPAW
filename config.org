@@ -944,12 +944,20 @@ I use Doc-View to view documents within Emacs.
     )
 #+end_src
 * CASUAL
-Excellent for discoverability, the only reason I am able to use =calc= now.
+Casual is like [[*MAGIT][magit]] but for other things as well.
+
+It excellent for discoverability, the only reason I am able to use:
+- =calc=
+- =calendar=
+
+I am sure I will slowly discover more Emacs functionality, and casual
+interfaces from them.
 #+begin_src elisp
   (use-package casual
     :after calc
     :config
-    (keymap-set calc-mode-map "C-c l" #'casual-calc-tmenu))
+    (keymap-set calc-mode-map "C-c l" #'casual-calc-tmenu)
+    (keymap-set calendar-mode-map "C-c l" #'casual-calendar))
 #+end_src
 * ORG-MODE
 #+begin_quote
