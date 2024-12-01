@@ -524,9 +524,7 @@ ssh -L local_port:remote_address:remote_port username@server.com
 #+end_src
 #+begin_src elisp
   (use-package gptel
-    :ensure (:host github :repo "karthink/gptel" :branch "copilot")
     :config
-
     (defun ECFPAW/load-models ()
       (interactive)
       (let* ((host "localhost:11434")
