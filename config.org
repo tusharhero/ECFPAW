@@ -910,16 +910,30 @@ I use Doc-View to view documents within Emacs.
 *WARNING*: I have /hack/ here, which just changes the definition of
  the key map directly. I should do it more *properly*. I also directly
  start with follow minor mode instead of starting with the normal mode.
-#+begin_src elisp
+#+begin_src elisp :noweb yes
   (use-package pdf-tools :init (pdf-loader-install)
+    :bind (:map pdf-view-mode-map ("C-c p" . ECFPAW/pdf-page-number-to-scratch))
     :config
     (add-hook 'pdf-annot-list-mode-hook 'pdf-annot-list-follow-minor-mode)
     (setq pdf-annot-list-mode-map
-    (let ((km (make-sparse-keymap)))
-      (define-key km (kbd "C-c C-f") #'pdf-annot-list-follow-minor-mode)
-      (define-key km (kbd "C-<return>") #'pdf-annot-list-display-annotation-from-id)
-      km))
-    )
+  	(let ((km (make-sparse-keymap)))
+  	  (define-key km (kbd "C-c C-f") #'pdf-annot-list-follow-minor-mode)
+  	  (define-key km (kbd "C-<return>") #'pdf-annot-list-display-annotation-from-id)
+  	  km))
+    <<page-scratch>>)
+#+end_src
+
+I use this to quickly create virtual PDFs. I might refine it further
+in the future. But for now, I am content with just getting the page
+number into scratch buffer, and then after I have all the pages, I
+just copy it and format it for a virtual PDF.
+#+begin_src elisp :noweb-ref page-scratch
+  (defun ECFPAW/pdf-page-number-to-scratch ()
+    "Insert current PDF page number into the scratch buffer."
+    (interactive)
+    (let ((page (number-to-string (pdf-view-current-page))))
+      (scratch-buffer)
+      (insert page)))
 #+end_src
 * CASUAL
 Casual is like [[*MAGIT][magit]] but for other things as well.
