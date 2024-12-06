@@ -1306,9 +1306,6 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
                                        :black (:enabled t
                                                :line_length 80
                                                :cache_config t))))))
-
-  ;; Open python files in tree-sitter mode.
-  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode))
 #+end_src
 ***** Prettify mode symbols
 #+begin_src elisp
