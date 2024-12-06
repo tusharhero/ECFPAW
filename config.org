@@ -58,78 +58,55 @@
 (org-babel-tangle-file "config.org")
 (message "ECFPAW has been bootstrapped!")
 #+end_src
-* EARLY-INIT (SUPER EARLY)
-** Disable inbuilt package manager
-#+begin_src emacs-lisp :tangle early-init.el
-  (setq package-enable-at-startup nil)
-#+end_src
-** Startup optimization
+* Startup Optimization
 It took 2.7-3 seconds before these optimizations, and now it is 1
 seconds.
-*** Garbage collection
+** Garbage collection
 Minimize garbage collection before startup and then go back to the
 default value (8 MiB) after startup.
 #+begin_src elisp :tangle early-init.el
-(setq gc-cons-threshold most-positive-fixnum)
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold (expt 2 23))))
+  (setq gc-cons-threshold-default gc-cons-threshold)
+  (setq gc-cons-threshold most-positive-fixnum)
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (setq gc-cons-threshold gc-cons-threshold-default)))
 #+end_src
-* IMPORTANT PROGRAMS TO LOAD FIRST
-** Package Manager
-I am going to use [[https://github.com/progfolio/elpaca][Elapaca]] package manager. You might want to check for
-the new installer version on their git repository.
-#+BEGIN_SRC elisp
-  (defvar elpaca-installer-version 0.8)
-  (defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
-  (defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
-  (defvar elpaca-repos-directory (expand-file-name "repos/" elpaca-directory))
-  (defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
-                                :ref nil :depth 1
-                                :files (:defaults "elpaca-test.el" (:exclude "extensions"))
-                                :build (:not elpaca--activate-package)))
-  (let* ((repo  (expand-file-name "elpaca/" elpaca-repos-directory))
-         (build (expand-file-name "elpaca/" elpaca-builds-directory))
-         (order (cdr elpaca-order))
-         (default-directory repo))
-    (add-to-list 'load-path (if (file-exists-p build) build repo))
-    (unless (file-exists-p repo)
-      (make-directory repo t)
-      (when (< emacs-major-version 28) (require 'subr-x))
-      (condition-case-unless-debug err
-          (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
-                    ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
-                                                    ,@(when-let* ((depth (plist-get order :depth)))
-                                                        (list (format "--depth=%d" depth) "--no-single-branch"))
-                                                    ,(plist-get order :repo) ,repo))))
-                    ((zerop (call-process "git" nil buffer t "checkout"
-                                          (or (plist-get order :ref) "--"))))
-                    (emacs (concat invocation-directory invocation-name))
-                    ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
-                                          "--eval" "(byte-recompile-directory \".\" 0 'force)")))
-                    ((require 'elpaca))
-                    ((elpaca-generate-autoloads "elpaca" repo)))
-              (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-            (error "%s" (with-current-buffer buffer (buffer-string))))
-        ((error) (warn "%s" err) (delete-directory repo 'recursive))))
-    (unless (require 'elpaca-autoloads nil t)
-      (require 'elpaca)
-      (elpaca-generate-autoloads "elpaca" repo)
-      (load "./elpaca-autoloads")))
-  (add-hook 'after-init-hook #'elpaca-process-queues)
-  (elpaca `(,@elpaca-order))
-#+END_SRC
-** use-package support.
-[[https://jwiegley.github.io/use-package/][use-package]] is useful for configuring and installing packages.
+* Package manager settings
+I used to use =Elpaca= package manager. Although, it give excellent
+startup times, it didn't install the info manuals when available. And
+I didn't really use any of its advanced features other than what was
+already available built in.
 #+begin_src elisp
-  ;; Install use-package support
-  (elpaca elpaca-use-package
-    ;; Enable :ensure use-package keyword.
-    (elpaca-use-package-mode)
-    ;; Assume :ensure t unless otherwise specified.
-    (setq elpaca-use-package-by-default t))
-  ;; Block until current queue processed.
-  (elpaca-wait)
+  (require 'package)
+  (package-initialize)
+#+end_src
+
+Make sure =use-package= is installed. Got this snippet from [[https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/#h:c12c3baa-49bc-4fc8-8eb5-cf3fb53903ef][Prot's basic emacs configuration]].
+#+begin_src elisp
+  (when (< emacs-major-version 29)
+    (unless (package-installed-p 'use-package)
+      (unless package-archive-contents
+        (package-refresh-contents))
+      (package-install 'use-package)))
+#+end_src
+
+This makes sure that Emacs install any package that is not available.
+#+begin_src elisp
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t)
+#+end_src
+
+This informs you if any use-package declaration took longer than 0.1 seconds.
+#+begin_src elisp
+  (setq use-package-verbose t)
+#+end_src
+
+Of course, =melpha= is a community driven package archive. It has more
+packages than =elpa=.
+#+begin_src elisp
+  (add-to-list 'package-archives
+  	     '("melpa" . "https://melpa.org/packages/"))
+#+end_src
 #+end_src
 * Emacs lisp vulnerability mitigation.
 This is for [[https://nvd.nist.gov/vuln/detail/CVE-2024-53920][CVE-2024-53920]].
@@ -261,7 +238,7 @@ I use Modus themes.
 *** Extra Themes
 **** Ef-themes
 #+begin_src elisp
-  (use-package ef-themes :ensure t)
+  (use-package ef-themes)
 #+end_src
 *** Easy cycling
 :TODO:
@@ -295,7 +272,6 @@ This is used to make theme switch to the light theme at day and the
 dark theme at night.
 #+begin_src elisp
 (use-package circadian
-  :ensure t
   :config
   (setq circadian-themes '(("6:00" . modus-operandi)
                            ("18:00" . modus-vivendi)))
@@ -1151,7 +1127,7 @@ versions for you.
 Magit (Maggot , magic IDK) is a git client for Emacs.
 #+begin_src elisp
   (use-package transient)
-  (use-package magit :ensure t :defer t)
+  (use-package magit :defer t)
 #+end_src
 ** PINENTRY
 For getting support for GPG(GNU Privacy Guard).
@@ -1172,17 +1148,17 @@ To enable =gpgsigning= for a repository, run this.
 I never realized how useful ediff was. And I think its because the
 defaults suck. I got this from Prot's config.
 #+begin_src elisp
-(use-package ediff
-  :ensure nil
-  :commands (ediff-buffers ediff-files ediff-buffers3 ediff-files3)
-  :init
-  (setq ediff-split-window-function 'split-window-horizontally)
-  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-  :config
-  (setq ediff-keep-variants nil)
-  (setq ediff-make-buffers-readonly-at-startup t)
-  (setq ediff-merge-revisions-with-ancestor t)
-  (setq ediff-show-clashes-only t))
+  (use-package ediff
+    :ensure nil
+    :commands (ediff-buffers ediff-files ediff-buffers3 ediff-files3)
+    :init
+    (setq ediff-split-window-function 'split-window-horizontally)
+    (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+    :config
+    (setq ediff-keep-variants nil)
+    (setq ediff-make-buffers-readonly-at-startup t)
+    (setq ediff-merge-revisions-with-ancestor t)
+    (setq ediff-show-clashes-only t))
 #+end_src
 * FLYCHECK
 Flycheck can do a lot of stuff including,
@@ -1190,7 +1166,6 @@ Flycheck can do a lot of stuff including,
 - Showing spelling errors.
 #+begin_src elisp
   (use-package flycheck
-    :ensure t
     :defer t
     :init (global-flycheck-mode))
 #+end_src
@@ -1237,7 +1212,7 @@ Breadcrumbs are the little thingies at the top which show in which
 part of the document you are in and in which directory.
 #+begin_src elisp
   (use-package breadcrumb
-    :ensure (:host github :repo "joaotavora/breadcrumb")
+    :vc (:url "https://github.com/joaotavora/breadcrumb.git")
     :config (breadcrumb-mode t))
 #+end_src
 ** Compilation mode
@@ -1270,15 +1245,13 @@ This color codes =()= so that you never miss them.
 **** Markdown mode
 I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
 #+begin_src elisp
-  (use-package markdown-mode
-    :config
-    (markdown-mode))
+  (use-package markdown-mode)
 #+end_src
 **** Python
-***** PET
+***** COMMENT PET
 #+begin_src elisp
   (use-package pet
-    :ensure (:host github :repo "tusharhero/emacs-pet" :branch "emacs-30-fix")
+    :vc (:url "https://github.com/tusharhero/emacs-pet.git" :branch "emacs-30-fix")
     :config
     (add-hook 'python-base-mode-hook 'pet-mode -10)
     (add-hook 'python-base-mode-hook
