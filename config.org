@@ -752,38 +752,14 @@ disabling all the other symbols.
 
 To complete, please use ~C-<tab>~
 
-The following configuration has been copied from this [[https://github.com/Icy-Thought/emacs.d/blob/main/irkalla/site-lisp/editor/coding/init-corfu.el][config]]. (They
-helped me with this setup :) )
+The following configuration was copied from this [[https://github.com/Icy-Thought/emacs.d/blob/main/irkalla/site-lisp/editor/coding/init-corfu.el][config]], although now
+I have removed most of what I had copied. (They helped me with this setup :) )
 #+begin_src emacs-lisp
-  (use-package corfu
-    :preface
-    (defun corfu-enable-in-minibuffer ()
-      "Enable Corfu in the minibuffer if `completion-at-point' is bound."
-      (when (where-is-internal #'completion-at-point (list (current-local-map)))
-        (setq-local corfu-echo-delay nil
-                    corfu-popupinfo-delay nil)
-        (corfu-mode 1)))
-    :hook ((elpaca-after-init . global-corfu-mode)
-           (minibuffer-setup . corfu-enable-in-minibuffer))
-    :custom
-    (corfu-cycle t)
-    (corfu-preselect t)
-    (corfu-count 5)
-    (corfu-scroll-margin 5)
-    (corfu-separator ?\s)
-    (corfu-on-exact-match nil)
-    (corfu-preview-current 'insert)
-    (corfu-quit-no-match 'separator))
+  (use-package corfu)
 
   (use-package corfu-terminal
     :unless window-system
     :hook (corfu-mode . corfu-terminal-mode))
-
-  ;; :NOTE| Posframe like completion menu
-  (use-package corfu-popupinfo
-    :ensure nil
-    :hook (corfu-mode . corfu-popupinfo-mode)
-    :custom (corfu-popupinfo-delay '(0.5 . 0.2)))
 
   ;; :NOTE| Completion at point through Cape
   (use-package cape
