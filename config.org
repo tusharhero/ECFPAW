@@ -182,6 +182,15 @@ icons because it behaved weirdly inside the terminal.
     (dired-mode . nerd-icons-dired-mode))
 #+end_src
 
+This package needs to load after =marginalia-mode=, otherwise the icons
+won't show up in =fido= completion menu.
+#+begin_src emacs-lisp
+  (use-package nerd-icons-completion
+    :after marginalia
+    :hook (marginalia-mode . nerd-icons-completion-marginalia-setup)
+    :config
+    (nerd-icons-completion-mode))
+#+end_src
 ** FONTS
 *** setting the fonts face
 Defining the various fonts Emacs will use.
@@ -721,6 +730,17 @@ typed use ~M-j~ keybinding.
 #+begin_src emacs-lisp
   (fido-mode)
   (fido-vertical-mode)
+#+end_src
+** Marginalia
+This package provides useful annotations(information on the side) for
+Fido completions.
+
+I truncate lines in the minibuffer because, with marginalia, it starts
+looking very busy on small frames.
+#+begin_src elisp
+  (use-package marginalia
+    :hook (minibuffer-setup . (lambda () (setq truncate-lines t)))
+    :init (marginalia-mode))
 #+end_src
 ** Corfu
 :TODO:
