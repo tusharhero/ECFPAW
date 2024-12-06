@@ -162,18 +162,24 @@ I need to get some keybinding statistics to improve my keybindings situation.
     (keyfreq-autosave-mode 1))
 #+end_src
 * GRAPHICS
-** ALL THE ICONS 
-This is an icon set that can be used with dashboard, dired, ibuffer
-and other Emacs programs.
-  
-BTW, you need to run =all-the-icons-install-fonts=.
-#+begin_src emacs-lisp
-  (use-package all-the-icons
-    :ensure t
-    :if (display-graphic-p))
+** Nerd Icons
+This uses nerd icons for various things inside Emacs. Since I already
+use ~Iosevka nerd font~ for this configuration it makes sense to use this.
 
-  (use-package all-the-icons-dired
-    :hook (dired-mode . (lambda () (all-the-icons-dired-mode t))))
+This also has the advantage of working flawlessly in the terminal!
+
+Although it shouldn't be needed, if you see that the icons do not
+display, it you might have to install these icons using =M-x
+nerd-icons-install-fonts yes RET=.
+
+I used to use =all-the-icons= before this, but that was inferior to nerd
+icons because it behaved weirdly inside the terminal.
+#+begin_src emacs-lisp
+  (use-package nerd-icons)
+
+  (use-package nerd-icons-dired
+    :hook
+    (dired-mode . nerd-icons-dired-mode))
 #+end_src
 
 ** FONTS
