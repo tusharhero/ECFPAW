@@ -469,6 +469,23 @@ wherever possible in Emacs.
                      "Emacs is a good operating system, it just lacks a good text editor (komedi😆)"
                      ) "List of Jokes.")
 #+end_src
+** Random commands
+Adapted from [[https://sachachua.com/dotemacs/index.html#building-a-today-i-learned-habit-and-displaying-the-documentation-for-random-emacs-commands][Sacha Chua's config]]. I just get the symbol, don't open
+the documentation.
+#+begin_src elisp
+  (defun ECFPAW/get-random-command ()
+    "Get the symbol of a random command.
+       Consider only documented, non-obsolete commands."
+    (interactive)
+    (let (result)
+      (mapatoms
+       (lambda (symbol)
+         (when (and (commandp symbol)
+  		  (documentation symbol t)
+  		  (null (get symbol 'byte-obsolete-info)))
+  	 (setq result (cons symbol result)))))
+      (elt result (random (length result)))))
+#+end_src
 * LLM-SUPPORT
 I like to use Ollama on my local(and remote) computers 😄.
 ** Ollama management
@@ -672,6 +689,7 @@ instead.
         )
         ,(emacs-init-time ";; Initialized in %f seconds.")
         ,(format ";; jokes: \"%s\"" (seq-random-elt ECFPAW/jokes))
+        ,(format ";; random command: `%s', type ‘C-h f’ to learn more about it." (ECFPAW/get-random-command))
         "\n;; This is the Scratch buffer."
         "\n"
         )
@@ -681,6 +699,7 @@ instead.
       (ECFPAW/overlay-on-next-string "ECFPAW" 'ECFPAW/scratch-buffer-title)
       (ECFPAW/overlay-on-line 2 'ECFPAW/scratch-buffer-subtitle)
       (ECFPAW/overlay-on-line 3 'ECFPAW/scratch-buffer-subtitle)
+      (ECFPAW/overlay-on-line 4 'ECFPAW/scratch-buffer-subtitle)
       ))
 
   (add-hook 'lisp-interaction-mode-hook 'ECFPAW/scratch-message)
