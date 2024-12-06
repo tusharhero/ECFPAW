@@ -107,6 +107,13 @@ packages than =elpa=.
   (add-to-list 'package-archives
   	     '("melpa" . "https://melpa.org/packages/"))
 #+end_src
+* Custom interface
+Else it will put everything in init.el which gets removed every time
+we tangle.
+#+begin_src elisp
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (if (file-exists-p custom-file)
+      (load custom-file))
 #+end_src
 * Emacs lisp vulnerability mitigation.
 This is for [[https://nvd.nist.gov/vuln/detail/CVE-2024-53920][CVE-2024-53920]].
