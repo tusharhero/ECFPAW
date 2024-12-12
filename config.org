@@ -909,13 +909,6 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
     (">>"     . "≫")
     ("<<"     . "≪")
     (">>"     . "≫")))
-
-  (ECFPAW/def-pretty-sym-pack
-   ECFPAW/prettify-symbols-pack/org-checkboxes
-   (
-    ("[ ]" . "☐  ")
-    ("[-]" . #("□–" 0 2 (composition ((2)))))
-    ("[X]" . "☑  ")))
 #+end_src
 ** Enable narrow to region
 #+begin_src elisp
@@ -1011,22 +1004,21 @@ Here I will make a custom function which will help me insert time and date.
     (interactive)
     (org-insert-time-stamp (current-time) t))
 #+end_src
-** Org-indent
-It indents the org tree so its nice to look at.
-#+begin_src elisp
-  (add-hook 'org-mode-hook 'org-indent-mode)
-#+end_src
 ** Hide emphasis markers
 I /decided/ that I don't like to see *emphasis* markers in org-mode.
 #+begin_src elisp
-(setq org-hide-emphasis-markers t)
+  (setq org-hide-emphasis-markers t)
 #+end_src
-** Enabling Org Superstar
-Org-Superstar look nice.
+** Enabling modern
+I used to use org superstar, but apparently org modern is better. 
 #+begin_src elisp
-  (use-package org-superstar
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1))))
+  (use-package org-modern
+    :hook (org-mode . org-modern-mode)
+    :hook (org-mode . org-indent-mode)
+    :hook (org-agenda-finalize . org-modern-agenda)
+    :custom
+    (org-modern-star 'replace)
+    (org-modern-block-fringe nil))
 #+end_src
 ** Enabling org-tempo
 This packages allows shortcuts for source blocks etc.
@@ -1075,13 +1067,6 @@ Its just annoying to look at this point.
 And enable habit module!
 #+begin_src elisp
   (add-to-list 'org-modules 'habit t)
-#+end_src
-** Prettify mode symbols
-I have had this part separated but decided to just put it in its right
-place now.
-#+begin_src elisp
-  (add-hook 'org-mode-hook
-            'ECFPAW/prettify-symbols-pack/org-checkboxes)
 #+end_src
 ** Babel
 =Babel= allows you execute programming languages from within org-mode.
