@@ -72,10 +72,10 @@ default value (8 MiB) after startup.
               (setq gc-cons-threshold gc-cons-threshold-default)))
 #+end_src
 * Package manager settings
-I used to use =Elpaca= package manager. Although, it give excellent
+I used to use =Elpaca= package manager. Although, it gave excellent
 startup times, it didn't install the info manuals when available. And
 I didn't really use any of its advanced features other than what was
-already available built in.
+already available built in anyway.
 #+begin_src elisp
   (require 'package)
   (package-initialize)
@@ -90,15 +90,16 @@ Make sure =use-package= is installed. Got this snippet from [[https://protesilao
       (package-install 'use-package)))
 #+end_src
 
-This makes sure that Emacs install any package that is not available.
+This makes sure that Emacs installs any package that is not available.
 #+begin_src elisp
   (require 'use-package-ensure)
-  (setq use-package-always-ensure t)
+  (setopt use-package-always-ensure t)
 #+end_src
 
-This informs you if any use-package declaration took longer than 0.1 seconds.
+This informs you if any use-package declaration took longer than 0.1
+seconds.
 #+begin_src elisp
-  (setq use-package-verbose t)
+  (setopt use-package-verbose t)
 #+end_src
 
 Of course, =melpha= is a community driven package archive. It has more
@@ -106,6 +107,19 @@ packages than =elpa=.
 #+begin_src elisp
   (add-to-list 'package-archives
   	     '("melpa" . "https://melpa.org/packages/"))
+#+end_src
+
+This stops Emacs from just loading all the packages at startup. (We
+use use-package to load the packages as we wish, so we don't need
+this.)
+#+begin_src elisp :tangle early-init.el
+(setopt package-enable-at-startup nil)
+#+end_src
+
+Enables =M-x use-package-report RET= which is helpful in determining which
+packages take the longest to load.
+#+begin_src elisp
+(setopt use-package-compute-statistics t)
 #+end_src
 * Custom interface
 Else it will put everything in init.el which gets removed every time
@@ -144,7 +158,7 @@ It's very annoying to have that bell ringing all the time.
 * WHICH-KEY 
 =which-key= basically shows all the keybindings.
 #+begin_src elisp
-  (use-package which-key :init  (which-key-mode))
+  (use-package which-key :config (which-key-mode))
 #+end_src
 * Custom keybindings
 I will try to keep these to a minimum. Setting up custom keybindings
@@ -241,26 +255,32 @@ Evaluate this to get a pulse 😄.
 #+end_src
 *** basic setup
 #+begin_src elisp
-  (use-package pulsar :config
-    (setq pulsar-pulse t)
-    (setq pulsar-delay 0.2)
-    (setq pulsar-iterations 2)
-    (setq pulsar-face 'pulsar-magenta)
-    (setq pulsar-highlight-face 'pulsar-yellow)
-    (add-hook 'next-error-hook #'pulsar-pulse-line)
-    (add-hook 'minibuffer-setup-hook #'pulsar-pulse-line)
-
-    ;; integration with the built-in `imenu':
-    (add-hook 'imenu-after-jump-hook #'pulsar-recenter-top)
-    (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
+  (use-package pulsar
+    :defer nil
+    :hook ((next-error pulsar-pulse-line)
+  	 (minibuffer-setup pulsar-pulse-line)
+  	 (imenu-after-jump pulsar-recenter-top)
+  	 (imenu-after-jump pulsar-reveal-entry))
+    :custom
+    (pulsar-pulse t)
+    (pulsar-delay 0.2)
+    (pulsar-iterations 2)
+    (pulsar-face 'pulsar-magenta)
+    (pulsar-highlight-face 'pulsar-yellow)
+    :config
     (pulsar-global-mode 1))
 #+end_src
 ** THEME
 I use Modus themes.
-*** Extra Themes
-**** Ef-themes
+*** Ef-themes
 #+begin_src elisp
-  (use-package ef-themes)
+  (use-package ef-themes
+    :defer t
+    :custom (ef-themes-mixed-fonts t))
+#+end_src
+*** Modus-themes
+#+begin_src elisp
+  (setq modus-themes-mixed-fonts t)
 #+end_src
 *** Easy cycling
 :TODO:
@@ -293,11 +313,11 @@ I have a custom function for loading and cycling through my preferred themes.
 This is used to make theme switch to the light theme at day and the
 dark theme at night.
 #+begin_src elisp
-(use-package circadian
-  :config
-  (setq circadian-themes '(("6:00" . modus-operandi)
-                           ("18:00" . modus-vivendi)))
-  (circadian-setup))
+  (use-package circadian
+    :custom (circadian-themes '(("6:00" . modus-operandi)
+                                ("18:00" . modus-vivendi)))
+    :config
+    (circadian-setup))
 #+end_src
 ** TRANSPARENCY
 With Emacs version 29, true transparency has been added.
@@ -411,7 +431,7 @@ number properly). Also removed some cosmetic noise from here.
 Hide some minor modes.
 #+begin_src elisp
   (use-package diminish
-    :defer 3
+    :defer t
     :config
     (diminish 'which-key-mode))
 #+end_src
@@ -493,7 +513,7 @@ I find myself needing to manage my ollama instances.
 *** Get request for emacs
 I need a requests library because url is too much of a pain to use.
 #+begin_src elisp
-  (use-package plz)
+  (use-package plz :defer t)
 #+end_src
 *** Get a list of Ollama instances
 #+begin_src elisp
@@ -534,6 +554,12 @@ ssh -L local_port:remote_address:remote_port username@server.com
 #+end_src
 #+begin_src elisp
   (use-package gptel
+    :defer t
+    :custom (gptel-backend nil)
+    :hook (gptel-mode . ECFPAW/load-models)
+    :hook (gptel-post-response . gptel-end-of-response)
+    :hook (gptel-mode . olivetti-mode)
+    :hook (gptel-mode . (lambda nil (auto-fill-mode -1)))
     :config
     (defun ECFPAW/load-models ()
       (interactive)
@@ -546,8 +572,6 @@ ssh -L local_port:remote_address:remote_port username@server.com
                                       :host host
                                       :stream t
                                       :models models)))
-      (add-hook 'gptel-mode-hook 'ECFPAW/load-models)
-
       (let ((host "localhost:11435"))
         (gptel-make-ollama "Ollama(remote)"
           :host host
@@ -555,8 +579,7 @@ ssh -L local_port:remote_address:remote_port username@server.com
           :models (condition-case nil
                       (ECFPAW/ollama-get-model-names host)
                     (plz-error nil)))))
-    (ECFPAW/load-models)
-    (add-hook 'gptel-post-response-functions 'gptel-end-of-response))
+    (ECFPAW/load-models))
 #+end_src
 *** System Prompts
 :TODO:
@@ -747,7 +770,6 @@ Friendship ended with Helm, Fido is my new friend.
 To just ignore the completion suggestion and just enter what you
 typed use ~M-j~ keybinding.
 #+begin_src emacs-lisp
-  (fido-mode)
   (fido-vertical-mode)
 #+end_src
 ** Marginalia
@@ -789,8 +811,7 @@ I have removed most of what I had copied. (They helped me with this setup :) )
     :unless window-system
     :hook (corfu-mode . corfu-terminal-mode))
 
-  ;; :NOTE| Completion at point through Cape
-  (use-package cape
+    (use-package cape
     :preface
     (defun setup-cape-extensions ()
       (dolist (cape-fn '(dict emoji)) ;; keyword file  dabbrev tex emoji elisp-symbol))
@@ -800,8 +821,6 @@ I have removed most of what I had copied. (They helped me with this setup :) )
   (use-package corfu-candidate-overlay
     :after corfu
     :config
-    ;; enable corfu-candidate-overlay mode globally
-    ;; this relies on having corfu-auto set to nil
     (corfu-candidate-overlay-mode t))
 #+end_src
 * TEXT
@@ -905,8 +924,9 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
 ** For focused writing
 #+begin_src elisp
   (use-package olivetti
-    :config
-    (setq-default olivetti-body-width 80))
+    :defer t
+    :custom (olivetti-body-width 80))
+#+end_src
 #+end_src
 * MANUALS
 This will solve any issues I have with documentation.
@@ -931,9 +951,12 @@ I use Doc-View to view documents within Emacs.
  start with follow minor mode instead of starting with the normal mode.
 #+begin_src elisp :noweb yes
   (use-package pdf-tools :init (pdf-loader-install)
+    :defer t
+    :mode ("\\.vpdf\\'" . pdf-virtual-edit-mode)
     :bind (:map pdf-view-mode-map ("C-c p" . ECFPAW/pdf-page-number-to-scratch))
+    :hook (pdf-annot-list-mode . pdf-annot-list-follow-minor-mode)
+    :hook (pdf-virtual-view-mode . (lambda () (breadcrumb-local-mode -1)))
     :config
-    (add-hook 'pdf-annot-list-mode-hook 'pdf-annot-list-follow-minor-mode)
     (setq pdf-annot-list-mode-map
   	(let ((km (make-sparse-keymap)))
   	  (define-key km (kbd "C-c C-f") #'pdf-annot-list-follow-minor-mode)
@@ -1010,32 +1033,13 @@ This packages allows shortcuts for source blocks etc.
 #+begin_src elisp
   (require 'org-tempo)
 #+end_src
-***  Fix Electric mode inhibiting tempo
-#+begin_src elisp
-(add-hook 'org-mode-hook (lambda ()
-           (setq-local electric-pair-inhibit-predicate
-                   `(lambda (c)
-                  (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
-#+end_src
-** LaTeX preview
-Org-mode can embed directly into the document. Here I am adjusting the
-size and rendering method.
-#+begin_src elisp
-  (custom-set-variables '(org-format-latex-options
-                          '(:foreground default :background default :scale 3 :html-foreground "Black" :html-background "Transparent" :html-scale 1 :matchers
-                                        ("begin" "$1" "$" "$$" "\\(" "\\["))))
-  (setq org-preview-latex-default-process 'imagemagick)
-#+end_src
-** COMMENT Latex math support
-#+begin_src elisp
-  (use-package cdlatex)
-  (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
-  (defun ECFPAW/org-latex-yas ()
-    "Activate org and LaTeX yas expansion in org-mode buffers."
-    (yas-minor-mode)
-    (yas-activate-extra-mode 'latex-mode))
 
-  (add-hook 'org-mode-hook #'ECFPAW/org-latex-yas)
+Fix =electric-mode= inhibiting tempo.
+#+begin_src elisp
+  (add-hook 'org-mode-hook (lambda ()
+             (setq-local electric-pair-inhibit-predicate
+                     `(lambda (c)
+                    (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
 #+end_src
 ** Journal and Task
 *** Agenda and capturing
@@ -1092,10 +1096,8 @@ Enable babel execution for Python too.
 ** Org-Download
 This extension allows drag and drop of images.
 #+begin_src elisp
-  (use-package org-download
-    :config
-    ;; Drag-and-drop to `dired`
-    (add-hook 'dired-mode-hook 'org-download-enable))
+   (use-package org-download
+     :hook (dired-mode . org-download-enable))
 #+end_src
 ** Org custom cookies
 Cookies basically give you information about the list.
@@ -1192,7 +1194,7 @@ versions for you.
 ** MAGIT
 Magit (Maggot , magic IDK) is a git client for Emacs.
 #+begin_src elisp
-  (use-package transient)
+  (use-package transient :defer t)
   (use-package magit :defer t)
 #+end_src
 ** PINENTRY
@@ -1243,8 +1245,8 @@ from inside a Guix shell. But after reading this [[https://rednosehacker.com/com
 need envrc so that I can automatically switch to the Guix shell when I
 open a project.
 #+begin_src elisp
-(use-package envrc
-  :config (envrc-global-mode))
+  (use-package envrc
+    :config (envrc-global-mode))
 #+end_src
 
 You of course need =direnv= and if you want to use Guix shell. You need
@@ -1270,6 +1272,7 @@ Its helpful to keep track indentation. Since I am trying to reduce the
 amount of indentation I do.
 #+begin_src elisp
   (use-package highlight-indentation
+    :defer t
     :config
     (setq highlight-indentation-set-offset 4))
 #+end_src
@@ -1278,7 +1281,6 @@ Breadcrumbs are the little thingies at the top which show in which
 part of the document you are in and in which directory.
 #+begin_src elisp
   (use-package breadcrumb
-    :vc (:url "https://github.com/joaotavora/breadcrumb.git")
     :config (breadcrumb-mode t))
 #+end_src
 ** Compilation mode
@@ -1290,7 +1292,7 @@ part of the document you are in and in which directory.
 This color codes =()= so that you never miss them.
 #+begin_src elisp
   (use-package rainbow-delimiters
-    :hook ((prog-mode . rainbow-delimiters-mode)))
+    :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 ** Dev web server
 #+begin_src elisp
@@ -1305,13 +1307,13 @@ This color codes =()= so that you never miss them.
 ** Rainbow mode
 *Show the colors!*
 #+begin_src elisp
-(use-package rainbow-mode :config (add-hook 'prog-mode 'rainbow-mode))
+(use-package rainbow-mode :hook (prog-mode . rainbow-mode))
 #+end_src
 ** LANGUAGE MODES
 **** Markdown mode
 I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
 #+begin_src elisp
-  (use-package markdown-mode)
+  (use-package markdown-mode :defer t)
 #+end_src
 **** Python
 ***** COMMENT PET
@@ -1368,11 +1370,11 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
 #+end_src
 **** Go
 #+begin_src elisp
-  (use-package go-mode)
+  (use-package go-mode :defer t)
 #+end_src
 **** Zig
 #+begin_src elisp
-  (use-package zig-mode)
+  (use-package zig-mode :defer t)
 #+end_src
 ***** outline mode regexps
 #+begin_src elisp
@@ -1416,7 +1418,7 @@ switch over to editing with sudo privileges if we initially opened the
 file without such privileges.
 
 #+begin_src emacs-lisp
-(use-package sudo-edit)
+(use-package sudo-edit :defer t)
 #+end_src
 * TRAMP
 =Tramp= allows you to remote into other machines from within Emacs.
