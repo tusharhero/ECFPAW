@@ -392,11 +392,7 @@ number properly). Also removed some cosmetic noise from here.
    ECFPAW/mode-line/time
    '(:eval
      (propertize
-      (format-time-string "%R %a %d-%b-%y")
-      'face 'mode-line
-      'help-echo
-      (current-time-string)
-      'mouse-face 'mode-line-highlight))
+      (format-time-string "%R %a %d-%b-%y")))
    "Mode line construct to display the time")
 #+end_src
 ** Default mode-line, and cycling.
