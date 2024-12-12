@@ -251,10 +251,10 @@ Evaluate this to get a pulse 😄.
 #+begin_src elisp
   (use-package pulsar
     :defer nil
-    :hook ((next-error pulsar-pulse-line)
-  	 (minibuffer-setup pulsar-pulse-line)
-  	 (imenu-after-jump pulsar-recenter-top)
-  	 (imenu-after-jump pulsar-reveal-entry))
+    :hook ((next-error . pulsar-pulse-line)
+  	 (minibuffer-setup . pulsar-pulse-line)
+  	 (imenu-after-jump . pulsar-recenter-top)
+  	 (imenu-after-jump . pulsar-reveal-entry))
     :custom
     (pulsar-pulse t)
     (pulsar-delay 0.2)
