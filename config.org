@@ -914,6 +914,9 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
     :defer t
     :custom (olivetti-body-width 80))
 #+end_src
+** Enable spell checking by default
+#+begin_src elisp
+  (add-hook 'text-mode-hook 'flyspell-mode)
 #+end_src
 * MANUALS
 This will solve any issues I have with documentation.
@@ -986,10 +989,6 @@ interfaces from them.
 What is like the org-mode? What can make war against it?
 ...
 #+end_quote
-** Enable spell checking by default
-#+begin_src elisp
-  (add-hook 'org-mode-hook 'flyspell-mode)
-#+end_src
 ** Inserting time and date
 Here I will make a custom function which will help me insert time and date.
 #+begin_src elisp
