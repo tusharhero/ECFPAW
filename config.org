@@ -51,7 +51,7 @@
 * BOOTSTRAPPING
 #+begin_src elisp :tangle bootstrap-config.el :shebang #!/usr/bin/env -S emacs --script
 ;; Run this script to 'bootstrap' ECFPAW from `config.org', of
-;; course the only requirement it has is Emacs is itself.
+;; course the only requirement it has is Emacs itself.
 (message "Loading Org...")
 (require 'org)
 (message "Tangling config.org...")
@@ -122,8 +122,8 @@ packages take the longest to load.
 (setopt use-package-compute-statistics t)
 #+end_src
 * Custom interface
-Else it will put everything in init.el which gets removed every time
-we tangle.
+Put all custom configuration into =custom.el=, else it will put
+everything in init.el which gets removed every time we tangle.
 #+begin_src elisp
   (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
   (if (file-exists-p custom-file)
@@ -142,12 +142,6 @@ There functions are generally useful.
     "Create a cyclic list."
     (when list
       (setf (cdr (last list)) list)))
-
-  (defun ECFPAW/is-it-day ()
-    "Return a boolean representation of whether its day or not.
-  Any time between 6 and 18 is defined as day."
-    (interactive)
-    (< 6 (decoded-time-hour (decode-time (current-time))) 18))
 #+end_src
 * DISABLE BELL
 It's very annoying to have that bell ringing all the time.
