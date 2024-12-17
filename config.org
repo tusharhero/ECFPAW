@@ -937,7 +937,7 @@ I use Doc-View to view documents within Emacs.
  start with follow minor mode instead of starting with the normal mode.
 #+begin_src elisp :noweb yes
   (use-package pdf-tools :init (pdf-loader-install)
-    :defer t
+    :demand t
     :mode ("\\.vpdf\\'" . pdf-virtual-edit-mode)
     :bind (:map pdf-view-mode-map ("C-c p" . ECFPAW/pdf-page-number-to-scratch))
     :hook (pdf-annot-list-mode . pdf-annot-list-follow-minor-mode)
