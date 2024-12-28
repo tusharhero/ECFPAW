@@ -773,45 +773,15 @@ looking very busy on small frames.
     :hook (minibuffer-setup . (lambda () (setq truncate-lines t)))
     :init (marginalia-mode))
 #+end_src
-** Corfu
-:TODO:
-+ [X] Fix this corfu error
-#+begin_example
-Error running timer ‘corfu--auto-complete-deferred’: (wrong-number-of-arguments #<subr evil-normalize-keymaps> 4)
-#+end_example
-Fixed by removing evil!
-+ [ ] Setup the cape extensions properly
-+ [X] Foreshadowing completion support for most cases... Basically I
-  need this package , https://code.bsdgeek.org/adam/corfu-candidate-overlay
-  I need to do a bit more research though because a lot of stuff uses
-  my =TAB= key.
-+ [ ] Fix it for use without evil.
-:END:
-I used to use Company but that had some issue like, dictionary
-disabling all the other symbols.
+** Completion preview
+This was the only thing I ever used when even when I had =Corfu= (and
+before that =Company=), basically "preview" of the first completion
+candidate in-buffer.
 
-To complete, please use ~C-<tab>~
-
-The following configuration was copied from this [[https://github.com/Icy-Thought/emacs.d/blob/main/irkalla/site-lisp/editor/coding/init-corfu.el][config]], although now
-I have removed most of what I had copied. (They helped me with this setup :) )
+Awesome that Emacs is finally getting features of the great community
+packages built-in!
 #+begin_src emacs-lisp
-  (use-package corfu)
-
-  (use-package corfu-terminal
-    :unless window-system
-    :hook (corfu-mode . corfu-terminal-mode))
-
-    (use-package cape
-    :preface
-    (defun setup-cape-extensions ()
-      (dolist (cape-fn '(dict emoji)) ;; keyword file  dabbrev tex emoji elisp-symbol))
-        (add-to-list 'completion-at-point-functions (intern (format "cape-%s" cape-fn)))))
-    :hook (corfu-mode . setup-cape-extensions))
-
-  (use-package corfu-candidate-overlay
-    :after corfu
-    :config
-    (corfu-candidate-overlay-mode t))
+  (global-completion-preview-mode)
 #+end_src
 * TEXT
 Some stuff which are for text editing in general.
