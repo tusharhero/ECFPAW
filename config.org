@@ -152,7 +152,9 @@ It's very annoying to have that bell ringing all the time.
 * WHICH-KEY 
 =which-key= basically shows all the keybindings.
 #+begin_src elisp
-  (use-package which-key :config (which-key-mode))
+  (use-package which-key
+    :bind ("C-c l" . which-key-show-major-mode)
+    :config (which-key-mode))
 #+end_src
 * Custom keybindings
 I will try to keep these to a minimum. Setting up custom keybindings
