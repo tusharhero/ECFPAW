@@ -912,6 +912,7 @@ I use Doc-View to view documents within Emacs.
     :bind (:map pdf-view-mode-map ("C-c p" . ECFPAW/pdf-page-number-to-scratch))
     :hook (pdf-annot-list-mode . pdf-annot-list-follow-minor-mode)
     :hook (pdf-virtual-view-mode . (lambda () (breadcrumb-local-mode -1)))
+    :hook (pdf-virtual-view-mode . pdf-outline-minor-mode)
     :config
     (setq pdf-annot-list-mode-map
   	(let ((km (make-sparse-keymap)))
