@@ -238,16 +238,13 @@ Oh, man this single-handedly makes ECFPAW look so much better. Thanks Prot!
      :config (spacious-padding-mode t))
 #+end_src
 ** Pulsar
-*** Introduction
 =Pulsar= provides the sweet *pulsing* of light you see when you switch
 you buffers, or go to a place in the buffer. It's super nice for
 knowing where you are.
 
-Evaluate this to get a pulse 😄.
-#+begin_src elisp :tangle no
-(pulsar-pulse-line)
-#+end_src
-*** basic setup
+=pulsar-pulse-region-functions= is a new feature which pulses the region
+you just acted on, super nice.
+
 #+begin_src elisp
   (use-package pulsar
     :defer nil
@@ -255,14 +252,13 @@ Evaluate this to get a pulse 😄.
   	 (minibuffer-setup . pulsar-pulse-line)
   	 (imenu-after-jump . pulsar-recenter-top)
   	 (imenu-after-jump . pulsar-reveal-entry))
-    :custom
-    (pulsar-pulse t)
-    (pulsar-delay 0.2)
-    (pulsar-iterations 2)
-    (pulsar-face 'pulsar-magenta)
-    (pulsar-highlight-face 'pulsar-yellow)
+    :custom (pulsar-pulse-region-functions
+  	   (append pulsar-pulse-region-common-functions
+  		   '(upcase-word
+  		     downcase-word
+  		     capitalize-word)))
     :config
-    (pulsar-global-mode 1))
+    (pulsar-global-mode))
 #+end_src
 ** THEME
 I use Modus themes.
