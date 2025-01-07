@@ -973,17 +973,6 @@ I /decided/ that I don't like to see *emphasis* markers in org-mode.
 #+begin_src elisp
   (setq org-hide-emphasis-markers t)
 #+end_src
-** Enabling modern
-I used to use org superstar, but apparently org modern is better. 
-#+begin_src elisp
-  (use-package org-modern
-    :hook (org-mode . org-modern-mode)
-    :hook (org-mode . org-indent-mode)
-    :hook (org-agenda-finalize . org-modern-agenda)
-    :custom
-    (org-modern-star 'replace)
-    (org-modern-block-fringe nil))
-#+end_src
 ** Enabling org-tempo
 This packages allows shortcuts for source blocks etc.
 #+begin_src elisp
