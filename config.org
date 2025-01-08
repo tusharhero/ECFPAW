@@ -986,6 +986,13 @@ Fix =electric-mode= inhibiting tempo.
                      `(lambda (c)
                     (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
 #+end_src
+** Org indent
+I recently got rid of org-modern because I realized I don't need it.
+Org indent is plenty eye candy.
+
+#+begin_src elisp
+  (add-hook 'org-mode-hook 'org-indent-mode)
+#+end_src
 ** Journal and Task
 *** Agenda and capturing
 #+begin_src elisp :var goals-directory="~/Documents/goals/"
