@@ -308,14 +308,29 @@ I have a custom function for loading and cycling through my preferred themes.
     (load-theme (pop ECFPAW/themes) t))
 #+end_src
 *** Day and night switching
-This is used to make theme switch to the light theme at day and the
-dark theme at night.
+I used to use circadian for this, but that was just too bloated
+(according to use-package-report it would take a long time to load).
+So I just roll my own now.
 #+begin_src elisp
-  (use-package circadian
-    :custom (circadian-themes '(("6:00" . modus-operandi)
-                                ("18:00" . modus-vivendi)))
-    :config
-    (circadian-setup))
+  (setq ECFPAW/day-theme 'modus-operandi
+        ECFPAW/night-theme 'modus-vivendi)
+
+  (setq ECFPAW/day-start "6:00"
+        ECFPAW/day-end "18:00")
+
+  (let* ((start (decoded-time-hour
+  	       (parse-time-string ECFPAW/day-start)))
+         (end (decoded-time-hour
+  	     (parse-time-string ECFPAW/day-end)))
+         (current (decoded-time-hour (decode-time)))
+         (day-p (< start current end)))
+    (if day-p
+        (load-theme ECFPAW/day-theme t)
+      (load-theme ECFPAW/night-theme t)))
+
+  (let ((day (* 24 60 60)))
+    (run-at-time ECFPAW/day-start day 'load-theme ECFPAW/day-theme)
+    (run-at-time ECFPAW/day-end day 'load-theme ECFPAW/night-theme))
 #+end_src
 ** TRANSPARENCY
 With Emacs version 29, true transparency has been added.
