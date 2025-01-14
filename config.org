@@ -1151,23 +1151,27 @@ heading.
     (format "[%s]" (ECFPAW/org-number-of-direct-descendant-subentries)))
 #+end_src
 * NEWS-TICKER
-=newsticker= is a feed reader for Emacs. 
-** Loading feeds
+:TODO:
+- [ ] add support for customize to add feeds.
+:END:
+=newsticker= is a feed reader for Emacs.
+
 To keep the feeds private, I have the feeds listed in a file called
 =feeds.el=.
-
-To remove this from your =git= tracking use this,
-#+begin_src shell :tangle no
-git update-index --assume-unchanged feed.el
-#+end_src
-
 #+begin_src elisp
-  (load-file
-   (expand-file-name
-    "feed.el"
-    user-emacs-directory))
+  (let ((feeds (expand-file-name
+  	    "feed.el"
+  	    user-emacs-directory)))
+    (if (file-exists-p feeds)
+        (load-file feeds)))
 #+end_src
-** Making eww the default
+
+Convenient alias.
+#+begin_src elisp
+  (defalias 'newsticker 'newsticker-show-news)
+#+end_src
+
+Making eww the default.
 #+begin_src elisp
   (setq browse-url-browser-function 'eww-browse-url)
 #+end_src
