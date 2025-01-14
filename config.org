@@ -953,6 +953,30 @@ just copy it and format it for a virtual PDF.
       (scratch-buffer)
       (insert page)))
 #+end_src
+* CALC
+From =(info "calc")=:
+#+begin_quote
+“Calc” is an advanced desk calculator and mathematical tool written by
+Dave Gillespie that runs as part of the GNU Emacs environment.
+#+end_quote
+
+Big language mode is nice, it changes =sin(x)^2= to
+#+begin_example
+        2
+  sin(x)
+#+end_example
+
+#+begin_src elisp
+  (use-package calc
+    :ensure nil
+    :defer t
+    :custom
+    (calc-language 'big)
+    (calc-symbolic-mode t)
+    (calc-prefer-frac t)
+    (calc-angle-mode 'rad))
+#+end_src
+
 * CASUAL
 Casual is like [[*MAGIT][magit]] but for other things as well.
 
