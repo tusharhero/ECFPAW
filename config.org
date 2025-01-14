@@ -564,6 +564,7 @@ ssh -L local_port:remote_address:remote_port username@server.com
 #+begin_src elisp
   (use-package gptel
     :defer t
+    :bind (:map gptel-mode-map ("C-c l" . gptel-menu))
     :custom (gptel-backend nil)
     :hook (gptel-mode . ECFPAW/load-models)
     :hook (gptel-post-response . gptel-end-of-response)
