@@ -1,5 +1,5 @@
-# -*- after-save-hook: (org-babel-tangle); eval: (message "Welcome to ECFPAW's literate configuration."); org-confirm-babel-evaluate: nil; -*-
-#+TITLE: Emacs Config For Programming And Writing (ECFPAW)
+# -*- after-save-hook: (lambda () (compile "./bootstrap-config.el")); eval: (message "Welcome to ECFPAW's literate configuration."); -*-
+#+TITLE: Emacs Configuration For Programming And Writing (ECFPAW)
 #+AUTHOR: tusharhero
 #+EMAIL: tusharhero@sdf.org
 #+DESCRIPTION: It actually does more than just programming and writing.
@@ -25,7 +25,7 @@
 #+begin_src elisp
   ;; The GPLv3 License (GPLv3)
 
-  ;; Copyright © 2024 tusharhero
+  ;; Copyright © 2023-2025 tusharhero
 
   ;; This program is free software: you can redistribute it and/or modify
   ;; it under the terms of the GNU General Public License as published by
@@ -49,14 +49,15 @@
 ** TODO Divide this TODO into respective categories in their correct place.
 ** DONE Completely overhaul the way I do keybindings.
 * BOOTSTRAPPING
-#+begin_src elisp :tangle bootstrap-config.el :shebang #!/usr/bin/env -S emacs --script
-;; Run this script to 'bootstrap' ECFPAW from `config.org', of
-;; course the only requirement it has is Emacs itself.
-(message "Loading Org...")
-(require 'org)
-(message "Tangling config.org...")
-(org-babel-tangle-file "config.org")
-(message "ECFPAW has been bootstrapped!")
+#+begin_src elisp :tangle bootstrap-config.el :shebang #!/bin/env -S emacs --script
+  ;; Run this script to 'bootstrap' ECFPAW from `config.org', of course
+  ;; the only requirement it has is Emacs itself.
+  (message "Loading Org...")
+  (require 'org)
+  (setopt org-confirm-babel-evaluate nil)
+  (message "Tangling config.org...")
+  (org-babel-tangle-file "config.org")
+  (message "ECFPAW has been bootstrapped!")
 #+end_src
 * Startup Optimization
 It took 2.7-3 seconds before these optimizations, and now it is 1
