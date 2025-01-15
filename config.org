@@ -150,6 +150,14 @@ There functions are generally useful.
     (when list
       (setf (cdr (last list)) list)))
 #+end_src
+
+#+begin_src elisp
+  (defun ECFPAW/get-region-string ()
+    "Get buffer substring from current region."
+    (buffer-substring-no-properties
+     (region-beginning)
+     (region-end)))
+#+end_src
 * DISABLE BELL
 It's very annoying to have that bell ringing all the time.
 #+begin_src elisp
@@ -1444,6 +1452,174 @@ out I need to alias it to ~clear-scrollback~!
 #+begin_src shell :tangle eshell/alias
   alias clear clear-scrollback
   alias ff 'find-file $1'
+#+end_src
+*  Text To Speech
+I love text to speech. I am experimenting with various free software.
+** Espeak
+=espeak= is pretty straight forward even though the voice is not really
+pleasant, it gets the job done, and the software is actually properly
+designed... (at the least).
+
+We don't restart =espeak= every time we want to use it. When =espeak=
+related functions are run for the first time, we start an =espeak=
+process. Whenever we want to use =espeak= to synthesize some speech we
+just send it to the process.
+#+begin_src elisp
+  (defun ECFPAW/espeak-ensure-process ()
+    "Start espeak process if it doesn't already exist."
+    (unless (get-process "espeak")
+      (start-process "espeak" nil "espeak" "-p" "65" "-s" "150" "-g" "2")))
+
+  (defun ECFPAW/espeak-string (string)
+    "Use espeak to synthesize STRING."
+    (ECFPAW/espeak-ensure-process)
+    (process-send-string "espeak" string)
+    (process-send-string "espeak" "\n"))
+
+  (defun ECFPAW/espeak-region ()
+    "Use espeak to synthesize text in region."
+    (interactive)
+    (ECFPAW/espeak-string (ECFPAW/get-region-string)))
+#+end_src
+
+To pause and play espeak.
+#+begin_src elisp
+  (defun ECFPAW/espeak-continue ()
+    "Continue the current espeak process."
+    (interactive)
+    (signal-process (get-process "espeak") 'SIGCONT))
+
+  (defun ECFPAW/espeak-stop ()
+    "Stop the current espeak process."
+    (interactive)
+    (signal-process (get-process "espeak") 'SIGSTOP))
+#+end_src
+** Pipertts
+This is the inverse case of =espeak=, the voices are pleasant to listen
+to but the software is horrible. Anyway, I have got it to work after
+some hair pulling.
+
+These are some configuration variables.
+
+#+begin_src elisp
+  (defvar ECFPAW/pipertts-binary
+    "/home/tusharhero/pipertts/piper/piper"
+    "Path to the piper tts binary.")
+
+  (defvar ECFPAW/pipertts-model
+    "/home/tusharhero/pipertts/voices/en_US-libritts-high.onnx"
+    "Path to the piper model.")
+
+  (defvar ECFPAW/pipertts-speaker 0
+    "The speaker used by pipertts.")
+#+end_src
+
+This is similar to what we do for =espeak= but it is a bit more
+complicated. We have a =pipertts= process for every "speaker" (basically
+a voice). This process is actually a shell command which sends what we
+send using =process-send-string= to =pipertts= using a pipe, and then
+another pipe to =ffplay= to play the synthesized audio.
+
+#+begin_src elisp
+  (defun ECFPAW/get-pipertts-process-name (speaker)
+    "Get name of the pipertts process with SPEAKER."
+    (format "pipertts %d" speaker))
+
+  (defun ECFPAW/ensure-pipertts (speaker)
+    "Ensure pipertts process with SPEAKER is running."
+    (let ((process-name (ECFPAW/get-pipertts-process-name speaker)))
+      (unless (get-process process-name)
+        (make-process :name process-name
+  		    :connection-type 'pipe
+  		    :buffer "*pipertts*"
+  		    :stderr "*pipertts*"
+  		    :command (list "sh" "-c"
+  				   (string-join
+  				    (list "cat" "/dev/stdin"
+  					  "|"
+  					  ECFPAW/pipertts-binary
+  					  "--model" ECFPAW/pipertts-model
+    					  "--output_raw"
+    					  "-s" (number-to-string speaker)
+  					  "|"
+  					  "ffplay"
+  					  "-i" "-"
+  					  ;; make it start immediately.
+  					  "-probesize" "32"
+  					  "-max_ts_probe" "0"
+  					  ;; setting the format.
+  					  "-f" "s16le"
+  					  "-nodisp"
+  					  "-loglevel" "16"
+  					  ;; setting the samplerate.
+  					  "-ar" "22050")
+  				    " "))))))
+
+  (defun ECFPAW/pipertts-string (string speaker)
+    "Use pipertts to synthesize STRING as SPEAKER voice."
+    (ECFPAW/ensure-pipertts speaker)
+    (process-send-string (ECFPAW/get-pipertts-process-name speaker)
+  		       (concat string "\n")))
+#+end_src
+
+#+begin_src elisp
+  (defun ECFPAW/pipertts (&optional arg)
+    "Use pipertts to synthesize text in region using a preferred speaker.
+  The value of `ECFPAW/pipertts-speaker' determines the speaker. If
+  provided with a prefix argument ARG, prompt for the speaker and change
+  value, and if provied with a double prefix argument, choose a random
+  speaker. Both prefix arguments change the value of
+  `ECFPAW/pipertts-speaker'."
+    (interactive "P")
+    (setq ECFPAW/pipertts-speaker
+  	(pcase (car arg)
+   	  (4 (read-number "Enter speaker number: "))
+   	  (16 (random 1000))
+   	  (_ ECFPAW/pipertts-speaker)))
+    (message "Speaker is: %d" ECFPAW/pipertts-speaker)
+    (ECFPAW/pipertts-string (ECFPAW/get-region-string)
+  			  ECFPAW/pipertts-speaker))
+#+end_src
+
+For pausing and play...
+
+It would have been nice if there was an easier less hacky way to the
+get the PID of a child.
+#+begin_src elisp
+  (defun ECFPAW/get-ffplay-process-id ()
+    (let* ((pipertts-pid (process-id
+  			(get-process
+  			 (format "pipertts %d" ECFPAW/pipertts-speaker))))
+  	 (ffplay-pid (string-to-number
+  		      (shell-command-to-string
+  		       (format "ps --ppid %d | grep ffplay | cut -d? -f1 | tr -c -d [:digit:]"
+  			       pipertts-pid)))))
+      ffplay-pid))
+
+  (defun ECFPAW/pipertts-signal (signal)
+    "Send SIGNAL to the current pipertts process."
+    (signal-process (ECFPAW/get-ffplay-process-id) signal))
+
+  (defun ECFPAW/pipertts-continue ()
+    "Continue the current pipertts process."
+    (interactive)
+    (ECFPAW/pipertts-signal 'SIGCONT))
+
+  (defun ECFPAW/pipertts-stop ()
+    "Stop the current pipertts process."
+    (interactive)
+    (ECFPAW/pipertts-signal 'SIGSTOP))
+#+end_src
+
+And keybindings.
+#+begin_src elisp
+  (bind-keys :prefix-map ECFPAW/tts
+  	   :prefix "C-c b"
+  	   :prefix-docstring "Control TTS."
+  	   :map ECFPAW/tts
+  	   ("b" . ECFPAW/pipertts)
+  	   ("s" . ECFPAW/pipertts-stop)
+  	   ("c" . ECFPAW/pipertts-continue))
 #+end_src
 * Emacs Everywhere
 It allows you to use Emacs everywhere. [[https://aur.archlinux.org/packages/kdotool-git][Kdotools]] and [[https://archlinux.org/packages/extra/x86_64/ydotool/][Ydotool]] are needed for KDE.
