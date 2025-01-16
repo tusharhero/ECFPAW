@@ -1621,6 +1621,43 @@ And keybindings.
   	   ("s" . ECFPAW/pipertts-stop)
   	   ("c" . ECFPAW/pipertts-continue))
 #+end_src
+* YEETUBE
+Every other YouTube client just sucks. I have no choice but to use
+Emacs for this.
+
+I use a personal fork which allows me to pass an extra flag to mpv, I
+use this to make sure my mpv window is floating.
+
+The only reason this fork exists is because yeetube's author intends
+to rewrite the yeetube package, and are not accepting feature patches
+at the moment but I cannot wait for them to do the rewrite, so I have
+created this fork with the features I need for the time being,
+
+And due to the buggy nature of thumbnails, I have disabled them.
+#+begin_src elisp
+  (use-package yeetube
+    :vc (:url "https://codeberg.org/tusharhero/yeetube.git"
+              :rev :newest)
+    :defer t
+    :init (define-prefix-command 'ECFPAW/yeetube-map)
+    :bind (("C-c y" . ECFPAW/yeetube-map)
+  	 :map ECFPAW/yeetube-map
+  	 ("s" . yeetube-search)
+  	 ("_" . yeetube-mpv-toggle-video)
+  	 ("SPC" . yeetube-mpv-toggle-pause)
+  	 :map yeetube-mode-map
+  	 ("RET" . yeetube-play)
+  	 ("q" . quit-window)
+  	 ("C-q" . yeetube-mpv-change-video-quality)
+  	 ("_" . yeetube-mpv-toggle-video)
+  	 ("SPC" . yeetube-mpv-toggle-pause)
+  	 ("v" . nil)
+  	 ("V" . nil)
+  	 ("M-RET" . nil))
+    :custom
+    (yeetube-display-thumbnails nil)
+    (yeetube-mpv-additional-flags " --title='${filename} - mpv -float-'"))
+#+end_src
 * Emacs Everywhere
 It allows you to use Emacs everywhere. [[https://aur.archlinux.org/packages/kdotool-git][Kdotools]] and [[https://archlinux.org/packages/extra/x86_64/ydotool/][Ydotool]] are needed for KDE.
 #+begin_src elisp
