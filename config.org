@@ -1159,6 +1159,45 @@ heading.
     "Return the total number of direct discendants."
     (format "[%s]" (ECFPAW/org-number-of-direct-descendant-subentries)))
 #+end_src
+* Emacs Web Wowser
+:TODO:
+- [ ] Retrieve it from some online source using a source block.
+:END:
+I love using eww.
+
+The default user-agent is too unique.
+#+begin_src elisp
+  (setopt url-user-agent
+  	"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.3")
+#+end_src
+
+Use wget, if available, else just use the defaults. Set up some
+redirection.
+#+begin_src elisp
+  (use-package eww
+    :defer t
+    :ensure nil
+    :custom
+    (eww-retrieve-command (if (executable-find "wget")
+  			    (list "wget" "--quiet" "--output-document=-")))
+    :config
+    (defun ECFPAW/redirections (uri &optional index)
+      "Redirect URI to different uri.
+    INDEX is used internally for recursion."
+      (let* ((redirections '((".*[w]*\.reddit\.com" "https://old.reddit.com")
+  			   (".*[w]*\.programming\.dev" "https://old.programming.dev")))
+    	   (index (if (null index) 0 index))
+    	   (redirection (nth index redirections))
+    	   (regexp (car redirection))
+    	   (replacement (cadr redirection)))
+        (if (not (null redirection))
+    	  (ECFPAW/redirections
+    	   (replace-regexp-in-string regexp replacement uri)
+    	   (+ 1 index))
+  	uri)))
+    (add-to-list 'eww-url-transformers 'ECFPAW/redirections))
+#+end_src
+
 * NEWS-TICKER
 :TODO:
 - [ ] add support for customize to add feeds.
