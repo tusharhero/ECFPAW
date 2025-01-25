@@ -1664,18 +1664,9 @@ And keybindings.
 Every other YouTube client just sucks. I have no choice but to use
 Emacs for this.
 
-I use a personal fork which allows me to pass an extra flag to mpv, I
-use this to make sure my mpv window is floating.
-
-The only reason this fork exists is because yeetube's author intends
-to rewrite the yeetube package, and are not accepting feature patches
-at the moment but I cannot wait for them to do the rewrite, so I have
-created this fork with the features I need for the time being,
-
-And due to the buggy nature of thumbnails, I have disabled them.
 #+begin_src elisp
   (use-package yeetube
-    :vc (:url "https://codeberg.org/tusharhero/yeetube.git"
+    :vc (:url "https://codeberg.org/ThanosApollo/emacs-yeetube"
               :rev :newest)
     :defer t
     :init (define-prefix-command 'ECFPAW/yeetube-map)
