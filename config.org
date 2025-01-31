@@ -217,11 +217,12 @@ won't show up in =fido= completion menu.
     (nerd-icons-completion-mode))
 #+end_src
 ** FONTS
-*** setting the fonts face
-Defining the various fonts Emacs will use.
+Defining the various fonts Emacs will use. For now, I don't set a
+variable pitch font and let Emacs select one.
 #+begin_src elisp
-  (add-to-list 'default-frame-alist
-               '(font . "Iosevka NF 14"))
+  (let ((mono-spaced-font "Iosevka Nerd Font"))
+    (set-face-attribute 'default nil :family mono-spaced-font :height 140)
+    (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0))
 #+end_src
 ** GRAPHICAL USER INTERFACE TWEAKS
 Let's make GNU Emacs look a little better.
