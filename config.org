@@ -1276,6 +1276,10 @@ Flycheck can do a lot of stuff including,
     :init (global-flycheck-mode))
 #+end_src
 * PROGRAMMING
+** Spell check
+#+begin_src elisp
+  (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+#+end_src
 ** ENVRC/DIRENV
 I used to use Direnv and then I decided to switch to Guix shell, I was
 literally starting an Emacs instance per project by launching Emacs
