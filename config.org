@@ -787,8 +787,10 @@ Add human readable directory sizes in the directory listing, because,
 #+begin_quote
 Friendship ended with Helm, Fido is my new friend.
 #+end_quote
+
 To just ignore the completion suggestion and just enter what you
 typed use ~M-j~ keybinding.
+
 #+begin_src emacs-lisp
   (fido-vertical-mode)
 #+end_src
@@ -810,8 +812,14 @@ candidate in-buffer.
 
 Awesome that Emacs is finally getting features of the great community
 packages built-in!
+
 #+begin_src emacs-lisp
   (global-completion-preview-mode)
+#+end_src
+
+Also do spell checking using this.
+#+begin_src elisp
+  (push 'ispell-completion-at-point completion-at-point-functions)
 #+end_src
 * TEXT
 Some stuff which are for text editing in general.
