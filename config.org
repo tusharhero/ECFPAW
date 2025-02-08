@@ -1505,7 +1505,7 @@ out I need to alias it to ~clear-scrollback~!
   alias clear clear-scrollback
   alias ff 'find-file $1'
 #+end_src
-*  Text To Speech
+* Text To Speech
 I love text to speech. I am experimenting with various free software.
 ** Espeak
 =espeak= is pretty straight forward even though the voice is not really
@@ -1552,34 +1552,66 @@ to but the software is horrible. Anyway, I have got it to work after
 some hair pulling.
 
 These are some configuration variables.
-
 #+begin_src elisp
-  (defvar ECFPAW/pipertts-binary
-    "/home/tusharhero/pipertts/piper/piper"
-    "Path to the piper tts binary.")
+  (defcustom ECFPAW/pipertts-binary
+    ""
+    "Path to the piper tts binary."
+    :type '(file :must-match t))
 
-  (defvar ECFPAW/pipertts-model
-    "/home/tusharhero/pipertts/voices/en_US-libritts-high.onnx"
-    "Path to the piper model.")
+  (defcustom ECFPAW/pipertts-model
+    ""
+    "Path to the piper model."
+    :type '(file :must-match t))
+#+end_src
 
-  (defvar ECFPAW/pipertts-speaker 0
-    "The speaker used by pipertts.")
+And get information about the model from its configuration file.
+#+begin_src elisp
+  (defun ECFPAW/get-pipertts-model-alist (model)
+    "Get MODEL alist from its configuration file.
+   The configuration file is supposed to be model filename with a '.json'
+   extension attached."
+    (if-let* ((model-config-file (concat model ".json")))
+        (json-read-file model-config-file)))
+
+  (defun ECFPAW/get-pipertts-model-sample-rate (model)
+    "Get MODEL sample rate from its configuration file.
+  See `ECFPAW/get-pipertts-model-alist'."
+    (let* ((mode-alist
+  	  (ECFPAW/get-pipertts-model-alist model))
+  	 (audio-alist (alist-get 'audio mode-alist)))
+      (alist-get 'sample_rate audio-alist)))
+
+  (defun ECFPAW/get-pipertts-model-no-speakers (model)
+    "Get number of speakers available in MODEL form its configuration file.
+  See `ECFPAW/get-pipertts-model-alist'."
+    (let ((mode-alist
+  	 (ECFPAW/get-pipertts-model-alist model)))
+      (alist-get 'num_speakers mode-alist)))
+#+end_src
+
+This will be by default at 0. We need to make sure that it doesn't
+exceed the maximum number of speakers available for the current model.
+#+begin_src elisp
+  (defvar ECFPAW/pipertts-speaker 0 "The speaker used by pipertts.")
 #+end_src
 
 This is similar to what we do for =espeak= but it is a bit more
 complicated. We have a =pipertts= process for every "speaker" (basically
-a voice). This process is actually a shell command which sends what we
-send using =process-send-string= to =pipertts= using a pipe, and then
-another pipe to =ffplay= to play the synthesized audio.
+a voice) and model. This process is actually a shell command which
+sends what we send using =process-send-string= to =pipertts= using a pipe,
+and then another pipe to =ffplay= to play the synthesized audio.
 
 #+begin_src elisp
-  (defun ECFPAW/get-pipertts-process-name (speaker)
-    "Get name of the pipertts process with SPEAKER."
-    (format "pipertts %d" speaker))
+  (defun ECFPAW/get-pipertts-process-name (model speaker)
+    "Get name of the pipertts process with MODEL and SPEAKER."
+    (format "pipertts %s %d" model speaker))
 
   (defun ECFPAW/ensure-pipertts (speaker)
     "Ensure pipertts process with SPEAKER is running."
-    (let ((process-name (ECFPAW/get-pipertts-process-name speaker)))
+    (let ((process-name (ECFPAW/get-pipertts-process-name
+  		       ECFPAW/pipertts-model speaker))
+  	(sample-rate (ECFPAW/get-pipertts-model-sample-rate
+  		      ECFPAW/pipertts-model)))
       (unless (get-process process-name)
         (make-process :name process-name
   		    :connection-type 'pipe
@@ -1604,53 +1636,81 @@ another pipe to =ffplay= to play the synthesized audio.
   					  "-nodisp"
   					  "-loglevel" "16"
   					  ;; setting the samplerate.
-  					  "-ar" "22050")
+  					  "-ar" (number-to-string sample-rate))
   				    " "))))))
 
   (defun ECFPAW/pipertts-string (string speaker)
     "Use pipertts to synthesize STRING as SPEAKER voice."
     (ECFPAW/ensure-pipertts speaker)
-    (process-send-string (ECFPAW/get-pipertts-process-name speaker)
+    (process-send-string (ECFPAW/get-pipertts-process-name ECFPAW/pipertts-model speaker)
   		       (concat string "\n")))
 #+end_src
 
 #+begin_src elisp
+  (defun ECFPAW/pipertts-pdf-region ()
+    "Speak the region selected by mouse in a `pdf-view-mode' or `pdf-virtual-view-mode'."
+    (interactive)
+    (mapc (lambda (string)
+  	  (ECFPAW/pipertts-string string ECFPAW/pipertts-speaker))
+  	(pdf-view-active-region-text)))
+
   (defun ECFPAW/pipertts (&optional arg)
     "Use pipertts to synthesize text in region using a preferred speaker.
   The value of `ECFPAW/pipertts-speaker' determines the speaker. If
-  provided with a prefix argument ARG, prompt for the speaker and change
-  value, and if provied with a double prefix argument, choose a random
-  speaker. Both prefix arguments change the value of
-  `ECFPAW/pipertts-speaker'."
+  provided with a prefix argument ARG, choose a random speaker, and if
+  provied with a double prefix argument, prompt for the speaker. Both
+  prefix arguments change the value of `ECFPAW/pipertts-speaker'."
     (interactive "P")
     (setq ECFPAW/pipertts-speaker
-  	(pcase (car arg)
-   	  (4 (read-number "Enter speaker number: "))
-   	  (16 (random 1000))
-   	  (_ ECFPAW/pipertts-speaker)))
-    (message "Speaker is: %d" ECFPAW/pipertts-speaker)
-    (ECFPAW/pipertts-string (ECFPAW/get-region-string)
-  			  ECFPAW/pipertts-speaker))
+  	(let ((max-speaker
+  	       (1- (ECFPAW/get-pipertts-model-no-speakers
+  		ECFPAW/pipertts-model))))
+  	  (pcase (car arg)
+  	    (4 (random max-speaker))
+  	    (16 (read-number "Enter speaker number: "))
+  	    (_ (min ECFPAW/pipertts-speaker max-speaker)))))
+    (message "Voice model: %s \nSpeaker: %d"
+  	   (car (last (string-split ECFPAW/pipertts-model "/")))
+  	   ECFPAW/pipertts-speaker)
+    (pcase major-mode
+      ((or 'pdf-view-mode 'pdf-virtual-view-mode) (ECFPAW/pipertts-pdf-region))
+      (_ (ECFPAW/pipertts-string (ECFPAW/get-region-string)
+  			       ECFPAW/pipertts-speaker))))
 #+end_src
 
 For pausing and play...
 
-It would have been nice if there was an easier less hacky way to the
-get the PID of a child.
+Easy to way to find the children of a process.
 #+begin_src elisp
-  (defun ECFPAW/get-ffplay-process-id ()
-    (let* ((pipertts-pid (process-id
-  			(get-process
-  			 (format "pipertts %d" ECFPAW/pipertts-speaker))))
-  	 (ffplay-pid (string-to-number
-  		      (shell-command-to-string
-  		       (format "ps --ppid %d | grep ffplay | cut -d? -f1 | tr -c -d [:digit:]"
-  			       pipertts-pid)))))
-      ffplay-pid))
+  (defun ECFPAW/process-find-children (pid)
+    "List of all child pids of PID."
+    (seq-keep
+     (lambda (process)
+       (let* ((ppid (alist-get
+  		   'ppid
+  		   (process-attributes process)))
+  	    (nil? (null ppid)))
+         (if (and (not nil?)
+  		(= pid ppid))
+  	   process)))
+     (list-system-processes)))
 
+  (defun ECFPAW/get-pipertts-ffplay-process-id ()
+    "Get pid of currently running ffplay process."
+    (car (seq-keep (lambda (process)
+  		   (if (string= "ffplay"
+  				(alist-get 'comm (process-attributes process)))
+  		       process))
+  		 (ECFPAW/process-find-children
+  		  (process-id (get-process (ECFPAW/get-pipertts-process-name
+  					    ECFPAW/pipertts-model
+  					    ECFPAW/pipertts-speaker)))))))
+#+end_src
+
+#+begin_src elisp
   (defun ECFPAW/pipertts-signal (signal)
     "Send SIGNAL to the current pipertts process."
-    (signal-process (ECFPAW/get-ffplay-process-id) signal))
+    (signal-process (ECFPAW/get-pipertts-ffplay-process-id) signal))
 
   (defun ECFPAW/pipertts-continue ()
     "Continue the current pipertts process."
@@ -1661,6 +1721,18 @@ get the PID of a child.
     "Stop the current pipertts process."
     (interactive)
     (ECFPAW/pipertts-signal 'SIGSTOP))
+
+  (defun ECFPAW/pipertts-pause-resume ()
+    "Resume the current pipertts process if it is stopped.
+  Stop it in another case."
+    (interactive)
+    (pcase (alist-get 'state
+  		    (process-attributes
+  		     (ECFPAW/get-pipertts-ffplay-process-id)))
+      ("T" (ECFPAW/pipertts-continue)
+       (message "Resumed..."))
+      (_ (ECFPAW/pipertts-stop)
+         (message "Paused..."))))
 #+end_src
 
 And keybindings.
@@ -1670,8 +1742,7 @@ And keybindings.
   	   :prefix-docstring "Control TTS."
   	   :map ECFPAW/tts
   	   ("b" . ECFPAW/pipertts)
-  	   ("s" . ECFPAW/pipertts-stop)
-  	   ("c" . ECFPAW/pipertts-continue))
+  	   ("SPC" . ECFPAW/pipertts-pause-resume))
 #+end_src
 * YEETUBE
 Every other YouTube client just sucks. I have no choice but to use
