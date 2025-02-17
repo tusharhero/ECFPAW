@@ -1773,6 +1773,8 @@ Emacs for this.
   	 ("s" . yeetube-search)
   	 ("_" . yeetube-mpv-toggle-video)
   	 ("SPC" . yeetube-mpv-toggle-pause)
+  	 ("b" . yeetube-mpv-backward)
+  	 ("f" . yeetube-mpv-forward)
   	 :map yeetube-mode-map
   	 ("RET" . yeetube-play)
   	 ("q" . quit-window)
@@ -1783,7 +1785,7 @@ Emacs for this.
   	 ("V" . nil)
   	 ("M-RET" . nil))
     :custom
-    (yeetube-display-thumbnails nil)
+    (yeetube-display-thumbnails-p nil)
     (yeetube-mpv-additional-flags " --title='${filename} - mpv -float-'"))
 #+end_src
 * Emacs Everywhere
