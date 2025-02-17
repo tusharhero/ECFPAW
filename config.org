@@ -922,6 +922,10 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
 #+begin_src elisp
   (add-hook 'text-mode-hook 'flyspell-mode)
 #+end_src
+** Enable variable pitch mode
+#+begin_src elisp
+  (add-hook 'text-mode-hook 'variable-pitch-mode)
+#+end_src
 * MANUALS
 This will solve any issues I have with documentation.
 ** Texinfo
