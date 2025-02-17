@@ -948,6 +948,7 @@ I use Doc-View to view documents within Emacs.
     :demand t
     :mode ("\\.vpdf\\'" . pdf-virtual-edit-mode)
     :bind (:map pdf-view-mode-map ("C-c p" . ECFPAW/pdf-page-number-to-scratch))
+    :hook (pdf-view-mode . ECFPAW/pipertts-mouse-3-mode)
     :hook (pdf-annot-list-mode . pdf-annot-list-follow-minor-mode)
     :hook (pdf-virtual-view-mode . (lambda () (breadcrumb-local-mode -1)))
     :hook (pdf-virtual-view-mode . pdf-outline-minor-mode)
@@ -1722,6 +1723,13 @@ Easy to way to find the children of a process.
     (interactive)
     (ECFPAW/pipertts-signal 'SIGSTOP))
 
+  (defun ECFPAW/pipertts-kill ()
+    "Kill the current pipertts process."
+    (interactive)
+    (kill-process (get-process (ECFPAW/get-pipertts-process-name
+  			      ECFPAW/pipertts-model
+  			      ECFPAW/pipertts-speaker))))
+
   (defun ECFPAW/pipertts-pause-resume ()
     "Resume the current pipertts process if it is stopped.
   Stop it in another case."
@@ -1742,7 +1750,13 @@ And keybindings.
   	   :prefix-docstring "Control TTS."
   	   :map ECFPAW/tts
   	   ("b" . ECFPAW/pipertts)
-  	   ("SPC" . ECFPAW/pipertts-pause-resume))
+  	   ("SPC" . ECFPAW/pipertts-pause-resume)
+  	   ("k" . ECFPAW/pipertts-kill))
+
+  (define-minor-mode ECFPAW/pipertts-mouse-3-mode
+    "Binds `ECFPAW/pipertts' to `mouse-3' (right click)."
+    :keymap
+    `((,(kbd "<mouse-3>") . ECFPAW/pipertts)))
 #+end_src
 * YEETUBE
 Every other YouTube client just sucks. I have no choice but to use
