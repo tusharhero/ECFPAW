@@ -1649,6 +1649,10 @@ and then another pipe to =ffplay= to play the synthesized audio.
     (ECFPAW/ensure-pipertts speaker)
     (process-send-string (ECFPAW/get-pipertts-process-name ECFPAW/pipertts-model speaker)
   		       (concat string "\n")))
+
+  (defun ECFPAW/pipertts-string-current-speaker (string)
+    "Use pipertts to synthesize STRING with `ECFPAW/pipertts-speaker' voice."
+    (ECFPAW/pipertts-string string ECFPAW/pipertts-speaker))
 #+end_src
 
 #+begin_src elisp
@@ -1656,31 +1660,52 @@ and then another pipe to =ffplay= to play the synthesized audio.
     "Speak the region selected by mouse in a `pdf-view-mode' or `pdf-virtual-view-mode'."
     (interactive)
     (mapc (lambda (string)
-  	  (ECFPAW/pipertts-string string ECFPAW/pipertts-speaker))
-  	(pdf-view-active-region-text)))
+      	  (ECFPAW/pipertts-string-current-speaker string))
+      	(pdf-view-active-region-text)))
+
+  (defun ECFPAW/pipertts-max-speaker ()
+    "Return the maximum number of speakers available in `ECFPAW/pipertts-model'."
+    (ECFPAW/get-pipertts-model-no-speakers
+     ECFPAW/pipertts-model))
+
+  (defun ECFPAW/pipertts-speaker-range-fix ()
+    "Fix the value of `ECFPAW/pipertts-speaker'."
+    (setq ECFPAW/pipertts-speaker
+    	(min ECFPAW/pipertts-speaker
+    	     (1- (ECFPAW/pipertts-max-speaker)))))
+
+  (defun ECFPAW/pipertts-change-speaker-random ()
+    "Change the value `ECFPAW/pipertts-speaker' randomly bounded by `ECFPAW/pipertts-max-speaker'."
+    (interactive)
+    (setq ECFPAW/pipertts-speaker
+      	(random (ECFPAW/pipertts-max-speaker)))
+    (when (called-interactively-p 'interactive)
+      (message "Choose Speaker: %d randomly" ECFPAW/pipertts-speaker)))
+
+  (defun ECFPAW/pipertts-change-speaker ()
+    "Prompt user for the value of `ECFPAW/pipertts-speaker' bounded by `ECFPAW/pipertts-max-speaker'."
+    (interactive)
+    (setq ECFPAW/pipertts-speaker
+      	(read-number "Enter speaker number: "))
+    (ECFPAW/pipertts-speaker-range-fix))
 
   (defun ECFPAW/pipertts (&optional arg)
     "Use pipertts to synthesize text in region using a preferred speaker.
-  The value of `ECFPAW/pipertts-speaker' determines the speaker. If
-  provided with a prefix argument ARG, choose a random speaker, and if
-  provied with a double prefix argument, prompt for the speaker. Both
-  prefix arguments change the value of `ECFPAW/pipertts-speaker'."
+      The value of `ECFPAW/pipertts-speaker' determines the speaker. If
+      provided with a prefix argument ARG, choose a random speaker, and if
+      provied with a double prefix argument, prompt for the speaker. Both
+      prefix arguments change the value of `ECFPAW/pipertts-speaker'."
     (interactive "P")
-    (setq ECFPAW/pipertts-speaker
-  	(let ((max-speaker
-  	       (1- (ECFPAW/get-pipertts-model-no-speakers
-  		ECFPAW/pipertts-model))))
-  	  (pcase (car arg)
-  	    (4 (random max-speaker))
-  	    (16 (read-number "Enter speaker number: "))
-  	    (_ (min ECFPAW/pipertts-speaker max-speaker)))))
+    (pcase (car arg)
+      (4 (ECFPAW/pipertts-change-speaker-random))
+      (16 (ECFPAW/pipertts-change-speaker))
+      (_ (ECFPAW/pipertts-speaker-range-fix)))
     (message "Voice model: %s \nSpeaker: %d"
-  	   (car (last (string-split ECFPAW/pipertts-model "/")))
-  	   ECFPAW/pipertts-speaker)
+      	   (car (last (string-split ECFPAW/pipertts-model "/")))
+      	   ECFPAW/pipertts-speaker)
     (pcase major-mode
       ((or 'pdf-view-mode 'pdf-virtual-view-mode) (ECFPAW/pipertts-pdf-region))
-      (_ (ECFPAW/pipertts-string (ECFPAW/get-region-string)
-  			       ECFPAW/pipertts-speaker))))
+      (_ (ECFPAW/pipertts-string-current-speaker (ECFPAW/get-region-string)))))
 #+end_src
 
 For pausing and play...
