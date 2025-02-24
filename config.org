@@ -297,20 +297,10 @@ I use Modus themes.
 :END:
 I have a custom function for loading and cycling through my preferred themes.
 #+begin_src elisp
-  (defvar ECFPAW/themes (ECFPAW/make-cyclic-list
-                         (list 'modus-vivendi 'modus-operandi))
-    "A list of the themes I like and use.")
-
   (setq custom-safe-themes t)
   (advice-add 'load-theme
               :before (lambda (theme &optional no-confirm no-enable)
-                        (disable-theme (car custom-enabled-themes))
-                        (spacious-padding-mode t)))
-
-  (defun ECFPAW/cycle-my-theme ()
-    "Cycle through a list of themes, `ECFPAW/themes'."
-    (interactive)
-    (load-theme (pop ECFPAW/themes) t))
+                        (disable-theme (car custom-enabled-themes))))
 #+end_src
 *** Day and night switching
 I used to use circadian for this, but that was just too bloated
