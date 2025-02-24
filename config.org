@@ -103,13 +103,6 @@ seconds.
   (setopt use-package-verbose t)
 #+end_src
 
-Of course, =melpha= is a community driven package archive. It has more
-packages than =elpa=.
-#+begin_src elisp
-  (add-to-list 'package-archives
-  	     '("melpa" . "https://melpa.org/packages/"))
-#+end_src
-
 This stops Emacs from just loading all the packages at startup. (We
 use use-package to load the packages as we wish, so we don't need
 this.)
