@@ -148,8 +148,8 @@ There functions are generally useful.
 * DISABLE BELL
 It's very annoying to have that bell ringing all the time.
 #+begin_src elisp
-(setq visible-bell t)
-(setq ring-bell-function 'ignore)
+(setopt visible-bell nil)
+(setopt ring-bell-function 'ignore)
 #+end_src
 * WHICH-KEY 
 =which-key= basically shows all the keybindings.
