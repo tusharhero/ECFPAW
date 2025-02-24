@@ -283,7 +283,9 @@ I use Modus themes.
 #+end_src
 *** Modus-themes
 #+begin_src elisp
-  (setq modus-themes-mixed-fonts t)
+  (setopt modus-themes-mixed-fonts t)
+  (setopt modus-themes-common-palette-overrides
+  	'((fg-region unspecified)))
 #+end_src
 *** Easy cycling
 :TODO:
