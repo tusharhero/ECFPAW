@@ -243,13 +243,16 @@ Oh, man this single-handedly makes ECFPAW look so much better. Thanks Prot!
      :config (spacious-padding-mode t))
 #+end_src
 ** Pulsar
-=Pulsar= provides the sweet *pulsing* of light you see when you switch
-you buffers, or go to a place in the buffer. It's super nice for
-knowing where you are.
+=Pulsar= provides the sweet *pulsing* of light you see when you switch you
+buffers, or go to a place in the buffer. It's super nice for knowing
+where you are.
 
 =pulsar-pulse-region-functions= is a new feature which pulses the region
 you just acted on, super nice.
 
+I have adjust =pulsar-delay= and =pulsar-iterations= to make them
+smoother. Divide default value =pulsar-delay= by 5, and multiply the
+default of =pulsar-iterations= by 5.
 #+begin_src elisp
   (use-package pulsar
     :defer nil
@@ -257,11 +260,16 @@ you just acted on, super nice.
   	 (minibuffer-setup . pulsar-pulse-line)
   	 (imenu-after-jump . pulsar-recenter-top)
   	 (imenu-after-jump . pulsar-reveal-entry))
-    :custom (pulsar-pulse-region-functions
-  	   (append pulsar-pulse-region-common-functions
-  		   '(upcase-word
-  		     downcase-word
-  		     capitalize-word)))
+    :custom
+    (pulsar-delay 0.01)
+    (pulsar-iterations 50)
+    (pulsar-pulse-region-functions
+     (append pulsar-pulse-region-common-functions
+  	   '(upcase-word
+  	     downcase-word
+  	     capitalize-word
+  	     fill-paragraph
+  	     org-fill-paragraph)))
     :config
     (pulsar-global-mode))
 #+end_src
