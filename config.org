@@ -514,88 +514,52 @@ the documentation.
 #+end_src
 * LLM-SUPPORT
 I like to use Ollama on my local(and remote) computers 😄.
-** Ollama management
-I find myself needing to manage my ollama instances.
-*** Get request for emacs
-I need a requests library because url is too much of a pain to use.
-#+begin_src elisp
-  (use-package plz :defer t)
-#+end_src
-*** Get a list of Ollama instances
-#+begin_src elisp
-  (defun ECFPAW/ollama-get-model-names (ollama-host)
-      "Gets the names of models available in OLLAMA-HOST as a list."
-      (require 'plz)
-      (mapcar (lambda (model) (alist-get 'name model))
-              (alist-get 'models
-                         (plz 'get
-                           (format "http://%s/api/tags" ollama-host)
-                           :as #'json-read))))
-#+end_src
-*** Add Ollama models
-:TODO:
-+ [ ] Fix this function as currently, it just calls the API waits for
-  the first response and then immediately.
-:END:
-#+begin_src elisp
-  (defun ECFPAW/ollama-pull-model (ollama-host model-name)
-    "Pull model named MODEL-NAME in OLLAMA-HOST."
-    (interactive "MOllama host: \nMModel name: ")
-    (require 'plz)
-    (plz 'post (format "http://%s/api/pull" ollama-host)
-      :headers '(("Content-Type" . "application/json"))
-      :body (json-encode '(("name" . model-name)))
-      :as #'json-read))
-#+end_src
-** GPTEL
-*** Configuration
-I currently just use Ollama, I have 2 backends defined one of them is
-the local Ollama backend which uses the port ~11434~, the other one is
-the remote backend, which uses the port ~11435~. You are supposed use
-ssh redirection to redirect your remote ollama server to the port ~11435~.
+** Ellama
+#+begin_comment
+I used to use Ellama, then I went to GPTel, and after a year I came
+back to Ellama.
+#+end_comment
 
-To redirect any port from a remote machine, use the following command:
+To redirect Ollama from a remote machine, use the following command:
 #+begin_src shell :tangle no
 ssh -L local_port:remote_address:remote_port username@server.com
 #+end_src
+
 #+begin_src elisp
-  (use-package gptel
+  (use-package ellama
     :defer t
-    :bind (:map gptel-mode-map ("C-c l" . gptel-menu))
-    :custom (gptel-backend nil)
-    :hook (gptel-mode . ECFPAW/load-models)
-    :hook (gptel-post-response . gptel-end-of-response)
-    :hook (gptel-mode . olivetti-mode)
-    :hook (gptel-mode . (lambda nil (auto-fill-mode -1)))
-    :config
-    (defun ECFPAW/load-models ()
-      (interactive)
-      (let* ((host "localhost:11434")
-             (models (condition-case nil
-                         (ECFPAW/ollama-get-model-names host)
-                       (plz-error nil))))
-        (setq-default gptel-model (car models)
-                      gptel-backend (gptel-make-ollama "Ollama"
-                                      :host host
-                                      :stream t
-                                      :models models)))
-      (let ((host "localhost:11435"))
-        (gptel-make-ollama "Ollama(remote)"
-          :host host
-          :stream t
-          :models (condition-case nil
-                      (ECFPAW/ollama-get-model-names host)
-                    (plz-error nil)))))
-    (ECFPAW/load-models))
+    :commands ellama-community-prompts-select-blueprint
+    :vc (:url "https://github.com/s-kostyaev/ellama.git" :rev :newest)
+    :hook (org-ctrl-c-ctrl-c-final . ellama-chat-send-last-message)
+    :hook (ellama-session-mode . ellama-context-header-line-mode)
+    :hook (ellama-session-mode . ECFPAW/ellama-pipertts-automatic-speak-mode)
+    :bind ("C-c e" . ellama-transient-main-menu)
+    :custom
+    (ellama-naming-scheme 'ellama-generate-name-by-llm)
+    (ellama-auto-scroll t)
+    (ellama-context-line-always-visible t))
 #+end_src
-*** System Prompts
+** Pipertts support
+I have implemented support for [[* Pipertts][Pipertts]], a local minor mode to
+automatically speak the response, after the LLM has finished.
+#+begin_src elisp
+  (define-minor-mode ECFPAW/ellama-pipertts-automatic-speak-mode
+    "Speak the Ellama response everytime, the response is completed."
+    :lighter ""
+    (if ECFPAW/ellama-pipertts-automatic-speak-mode
+        (setq-local ECFPAW/ellama-automatic-speak-mode--state
+  		  (buffer-local-set-state ellama-chat-done-callback
+  					  'ECFPAW/pipertts-string-current-speaker))
+      (buffer-local-restore-state ECFPAW/ellama-automatic-speak-mode--state)))
+#+end_src
+** System Prompts
 :TODO:
-+ [X] Perhaps write elisp code extract this info from an org-tree instead.
+- [ ] make them Ellama blueprints.
 :END:
 We will just set the directives by taking them from [[Prompts]].
 #+NAME: prompts
 #+begin_src elisp :tangle no :noweb yes :eval yes :results raw
-  `(setq gptel-directives 
+  `(setq llm-directives
   ',(mapcar
    (lambda (prompt)
      `(,(intern (car prompt)) . ,(cadr prompt)))
@@ -608,7 +572,7 @@ We will just set the directives by taking them from [[Prompts]].
          "prompts"))))
 #+end_src
 #+begin_src elisp :noweb yes
-<<prompts()>>
+  <<prompts()>>
 #+end_src
 **** Prompts                                                     :prompts:
 This org-tree contains the actual prompts.
