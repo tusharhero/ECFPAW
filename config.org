@@ -119,7 +119,8 @@ packages take the longest to load.
 I was missing the feature from Elpaca which allows you try out a
 package without installing it.
 #+begin_src elisp
-  (use-package try :defer t)
+  (use-package try :defer t
+    :vc (:url "https://github.com/larstvei/Try.git"))
 #+end_src
 * Custom interface
 Put all custom configuration into =custom.el=, else it will put
@@ -170,6 +171,7 @@ and maintaining them is a headache.
 I need to get some keybinding statistics to improve my keybindings situation.
 #+begin_src elisp
   (use-package keyfreq
+    :vc (:url "https://github.com/dacap/keyfreq.git")
     :config (keyfreq-mode 1)
     (keyfreq-autosave-mode 1))
 #+end_src
@@ -187,17 +189,19 @@ nerd-icons-install-fonts yes RET=.
 I used to use =all-the-icons= before this, but that was inferior to nerd
 icons because it behaved weirdly inside the terminal.
 #+begin_src emacs-lisp
-  (use-package nerd-icons)
+  (use-package nerd-icons
+    :vc (:url "https://github.com/rainstormstudio/nerd-icons.el.git"))
 
   (use-package nerd-icons-dired
-    :hook
-    (dired-mode . nerd-icons-dired-mode))
+    :vc (:url "https://github.com/rainstormstudio/nerd-icons-dired.git")
+    :hook (dired-mode . nerd-icons-dired-mode))
 #+end_src
 
 This package needs to load after =marginalia-mode=, otherwise the icons
 won't show up in =fido= completion menu.
 #+begin_src emacs-lisp
   (use-package nerd-icons-completion
+    :vc (:url "https://github.com/rainstormstudio/nerd-icons-completion.git")
     :after marginalia
     :hook (marginalia-mode . nerd-icons-completion-marginalia-setup)
     :config
@@ -866,6 +870,7 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
 ** For focused writing
 #+begin_src elisp
   (use-package olivetti
+    :vc (:url "https://github.com/rnkn/olivetti.git")
     :defer t
     :custom (olivetti-body-width 80))
 #+end_src
@@ -952,7 +957,12 @@ Big language mode is nice, it changes =sin(x)^2= to
     (calc-angle-mode 'rad))
 #+end_src
 
-* CASUAL
+* COMMENT CASUAL
+#+begin_comment
+Because due to a bug in emacs, its not possible to get complicated
+packages via =package-vc=. Hence I have commented this package for now.
+#+end_comment
+
 Casual is like [[*MAGIT][magit]] but for other things as well.
 
 It excellent for discoverability, the only reason I am able to use:
@@ -1052,12 +1062,6 @@ Enable babel execution for Python too.
    '((emacs-lisp . t)
      (python . t)))
 #+end_src
-** Org-Download
-This extension allows drag and drop of images.
-#+begin_src elisp
-   (use-package org-download
-     :hook (dired-mode . org-download-enable))
-#+end_src
 ** Org custom cookies
 Cookies basically give you information about the list.
 :TODO:
@@ -1077,6 +1081,7 @@ Cookies basically give you information about the list.
 :END:
 #+begin_src elisp
   (use-package org-custom-cookies
+    :vc (:url "https://github.com/gsingh93/org-custom-cookies.git")
     :after org
     :custom (org-custom-cookies-enable-cookie-face t)
     :config
@@ -1236,6 +1241,7 @@ Flycheck can do a lot of stuff including,
 - Showing spelling errors.
 #+begin_src elisp
   (use-package flycheck
+    :vc (:url "https://github.com/flycheck/flycheck.git")
     :defer t
     :init (global-flycheck-mode))
 #+end_src
@@ -1251,7 +1257,11 @@ from inside a Guix shell. But after reading this [[https://rednosehacker.com/com
 need envrc so that I can automatically switch to the Guix shell when I
 open a project.
 #+begin_src elisp
+  (use-package inheritenv
+    :vc (:url "https://github.com/purcell/inheritenv.git"))
   (use-package envrc
+    :after inheritenv
+    :vc (:url "https://github.com/purcell/envrc.git")
     :config (envrc-global-mode))
 #+end_src
 
@@ -1272,16 +1282,6 @@ generate this you may use the following command.
 #+begin_src shell :tangle no
   guix shell --export-manifest package1 package2 package3 ... > manifest.scm
 #+end_src
-
-** Highlighting Indent Guides
-Its helpful to keep track indentation. Since I am trying to reduce the
-amount of indentation I do.
-#+begin_src elisp
-  (use-package highlight-indentation
-    :defer t
-    :config
-    (setq highlight-indentation-set-offset 4))
-#+end_src
 ** Breadcrumbs
 Breadcrumbs are the little thingies at the top which show in which
 part of the document you are in and in which directory.
@@ -1298,6 +1298,7 @@ part of the document you are in and in which directory.
 This color codes =()= so that you never miss them.
 #+begin_src elisp
   (use-package rainbow-delimiters
+    :vc (:url "https://github.com/Fanael/rainbow-delimiters.git")
     :hook (prog-mode . rainbow-delimiters-mode))
 #+end_src
 ** Dev web server
@@ -1313,7 +1314,7 @@ This color codes =()= so that you never miss them.
 ** Rainbow mode
 *Show the colors!*
 #+begin_src elisp
-(use-package rainbow-mode :hook (prog-mode . rainbow-mode))
+  (use-package rainbow-mode :hook (prog-mode . rainbow-mode))
 #+end_src
 ** LANGUAGE MODES
 **** Markdown mode
@@ -1376,7 +1377,9 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
 #+end_src
 **** Go
 #+begin_src elisp
-  (use-package go-mode :defer t)
+  (use-package go-mode
+    :vc (:url "https://github.com/dominikh/go-mode.el.git")
+    :defer t)
 #+end_src
 **** Zig
 #+begin_src elisp
@@ -1424,7 +1427,8 @@ switch over to editing with sudo privileges if we initially opened the
 file without such privileges.
 
 #+begin_src emacs-lisp
-(use-package sudo-edit :defer t)
+  (use-package sudo-edit
+    :vc (:url "https://github.com/nflath/sudo-edit.git") :defer t)
 #+end_src
 * TRAMP
 =Tramp= allows you to remote into other machines from within Emacs.
@@ -1791,5 +1795,5 @@ Emacs for this.
 * Emacs Everywhere
 It allows you to use Emacs everywhere. [[https://aur.archlinux.org/packages/kdotool-git][Kdotools]] and [[https://archlinux.org/packages/extra/x86_64/ydotool/][Ydotool]] are needed for KDE.
 #+begin_src elisp
-  (use-package emacs-everywhere)
+  (use-package emacs-everywhere :vc (:url "https://github.com/tecosaur/emacs-everywhere.git"))
 #+end_src
