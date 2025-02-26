@@ -130,6 +130,12 @@ everything in init.el which gets removed every time we tangle.
   (if (file-exists-p custom-file)
       (load custom-file))
 #+end_src
+* Miscellaneous
+Don't understand why this isn't the default! Such a great quality of
+life improvement.
+#+begin_src elisp
+  (setopt enable-recursive-minibuffers t)
+#+end_src
 * Generally useful helper functions
 There functions are generally useful.
 #+begin_src elisp
