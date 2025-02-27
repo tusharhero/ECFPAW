@@ -1600,7 +1600,10 @@ These are some configuration variables.
     :type '(file :must-match t))
 
   (defcustom ECFPAW/pipertts-filters
-    '(("\*" . ""))
+    `(("\*" . "")
+      ("GNU" . "ganoo")
+      (,(rx (and " " "vi" (or " " punct))) . "v i")
+      ("vs" . "versus"))
     "Filter things that sound weird."
     :type '(alist (regexp string)))
 #+end_src
