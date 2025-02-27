@@ -131,6 +131,11 @@ everything in init.el which gets removed every time we tangle.
       (load custom-file))
 #+end_src
 * Miscellaneous
+Get diminish loaded quick!
+#+begin_src elisp :noweb yes
+<<diminish>>
+#+end_src
+
 Don't understand why this isn't the default! Such a great quality of
 life improvement.
 #+begin_src elisp
@@ -162,6 +167,7 @@ It's very annoying to have that bell ringing all the time.
 =which-key= basically shows all the keybindings.
 #+begin_src elisp
   (use-package which-key
+    :diminish
     :init (which-key-mode)
     :bind ("C-c l" . which-key-show-major-mode))
 #+end_src
@@ -377,19 +383,44 @@ I am going to make my own mode-line, I followed [[https://protesilaos.com/codelo
     `(progn (defvar-local ,constr-name ,val ,docstring)
            (put ',constr-name 'risky-local-variable t)))
 #+end_src
+
+A macro to help define mode-line-formats. Along with functions to
+switch to said commands.
+#+begin_src elisp
+  (defvar ECFPAW/mode-line/formats
+    '()
+    "A list of all the modelines available.")
+
+  (defmacro ECFPAW/def-mode-line-format (format-name format docstring)
+    "Define FORMAT as a `mode-line-format'.
+  FORMAT-NAME is prepended with \"ECFPAW/mode-line/\". DOCSTRING is used
+  as a docstring. Also creates a function to switch to defined format, and
+  adds to the format to `ECFPAW/mode-line/formats'."
+    (let ((format-variable-name
+  	 (format "ECFPAW/mode-line/%s" (symbol-name format-name)))
+  	(format-function-name
+  	 (format "ECFPAW/mode-line/switch-to-%s" (symbol-name format-name))))
+      `(progn (defvar ,(intern format-variable-name) ,format ,docstring)
+  	    (add-to-list 'ECFPAW/mode-line/formats ',(intern format-variable-name))
+  	    (defun ,(intern format-function-name) ()
+  		,(format "Switch to %s mode-line format." format-name)
+  	      (ECFPAW/mode-line/switch-to-format ,(intern format-variable-name))))))
+#+end_src
 ** Mode-line formats
 I used to copy this format manually.
 #+begin_src elisp
-  (defvar ECFPAW/mode-line/default-format
-    (default-value 'mode-line-format)
-    "The vanilla default Emacs mode line format.")
+  (ECFPAW/def-mode-line-format
+   default-format
+   (default-value 'mode-line-format)
+   "The vanilla default Emacs mode line format.")
 #+end_src
 
 The format works with PDF view mode too now (it displays the page
 number properly). Also removed some cosmetic noise from here.
 #+begin_src elisp
-  (defvar ECFPAW/mode-line/format
-    '(""
+  (ECFPAW/def-mode-line-format
+   full-format
+     '(""
       mode-line-front-space
       ECFPAW/mode-line/major-mode
       " "
@@ -399,12 +430,34 @@ number properly). Also removed some cosmetic noise from here.
       " "
       mode-line-misc-info
       " "
+      mode-line-modes
+      " "
       mode-line-format-right-align
       ECFPAW/mode-line/time
       mode-line-end-spaces
       )
-    "ECFPAW's mode line format."
-    )
+    "Full mode line format.")
+#+end_src
+
+The clutter free mode-line-format. (Just removed the =mode-line-modes=).
+#+begin_src elisp
+  (ECFPAW/def-mode-line-format
+   clutter-free-format
+   '(""
+     mode-line-front-space
+     ECFPAW/mode-line/major-mode
+     " "
+     mode-line-buffer-identification
+     " "
+     mode-line-position
+     " "
+     mode-line-misc-info
+     " "
+     mode-line-format-right-align
+     ECFPAW/mode-line/time
+     mode-line-end-spaces
+     )
+   "clutter-free mode line format.")
 #+end_src
 ** Mode-line constructs
 #+begin_src elisp
@@ -422,36 +475,37 @@ number properly). Also removed some cosmetic noise from here.
    "Mode line construct to display the time")
 #+end_src
 ** Default mode-line, and cycling.
-
 #+begin_src elisp
-  (setq-default mode-line-format ECFPAW/mode-line/format)
+  (setq-default mode-line-format ECFPAW/mode-line/clutter-free-format)
 #+end_src
 
 #+begin_src elisp
-  (defvar ECFPAW/mode-line/formats
-    '(ECFPAW/mode-line/format
-      ECFPAW/mode-line/default-format)
-    "A list of all the modelines available.")
-
   (defun ECFPAW/mode-line/switch-to-format (format)
-    "Switch to mode-line `FORMAT'."
-    (interactive
-     (list (eval
+  "Switch to mode-line `FORMAT'."
+  (interactive
+   (list (eval
   	  (intern (completing-read
   		   "Switch to mode-line format: "
-      		   ECFPAW/mode-line/formats)))))
-    (setq mode-line-format  format)
-    (force-mode-line-update))
+    		   ECFPAW/mode-line/formats)))))
+  (setq mode-line-format format)
+  (force-mode-line-update))
 #+end_src
 ** Diminish modes
-Hide some minor modes.
-#+begin_src elisp
+This is a bit over engineered (LOL), but I am using ~noweb~ to put this
+particular block at the top of ~init.el~, so that it loads quickly. I
+have a handy macro to diminish the modes, whenever they are enabled. I
+use it in tandem with =use-package='s ~:diminish~ keyword. But for things
+that do not have a =use-package= declaration.
+#+begin_src elisp :tangle no :noweb-ref diminish
   (use-package diminish
-    :defer t
+    :demand t
     :config
-    (diminish 'which-key-mode))
+    (defmacro ECFPAW/diminish (mode &optional to-what)
+      `(progn
+         (diminish ',mode ,to-what)
+         (add-hook ',(intern (format "%s-hook" (symbol-name mode)))
+  		 (lambda nil (diminish ',mode ,to-what))))))
 #+end_src
-
 * LINE NUMBERS
 I am using this function because sometimes =absolute= line number is
 better than =relative=. And I have decided to *NOT* enable these by
@@ -778,6 +832,12 @@ packages built-in!
   (global-completion-preview-mode)
 #+end_src
 
+And diminish it.
+#+begin_src elisp
+  (ECFPAW/diminish global-completion-preview-mode)
+  (ECFPAW/diminish completion-preview-mode)
+#+end_src
+
 Also do spell checking using this.
 #+begin_src elisp
   (push 'ispell-completion-at-point completion-at-point-functions)
@@ -802,6 +862,7 @@ I love auto-fill mode, it basically wraps the line at 80 characters for
 you. So that the line is not too big and readable.
 #+begin_src elisp
   (add-hook 'text-mode-hook 'auto-fill-mode)
+  (ECFPAW/diminish auto-fill-function " F𜱀")
 #+end_src
 ** Prettify mode
 *** enabling it globally
@@ -884,9 +945,17 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
 #+begin_src elisp
   (add-hook 'text-mode-hook 'flyspell-mode)
 #+end_src
+And diminish it.
+#+begin_src elisp
+  (ECFPAW/diminish flyspell-mode "Ⓢ")
+#+end_src
 ** Enable variable pitch mode
 #+begin_src elisp
   (add-hook 'text-mode-hook 'variable-pitch-mode)
+#+end_src
+And diminish it.
+#+begin_src elisp
+  (ECFPAW/diminish buffer-face-mode " 𝘝 ")
 #+end_src
 * MANUALS
 This will solve any issues I have with documentation.
@@ -1249,6 +1318,7 @@ Flycheck can do a lot of stuff including,
   (use-package flycheck
     :vc (:url "https://github.com/flycheck/flycheck.git")
     :defer t
+    :diminish "Ⓒ"
     :init (global-flycheck-mode))
 #+end_src
 * PROGRAMMING
