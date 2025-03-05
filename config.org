@@ -597,12 +597,14 @@ ssh -L local_port:remote_address:remote_port username@server.com
     :hook (org-ctrl-c-ctrl-c-final . ellama-chat-send-last-message)
     :hook (ellama-session-mode . ellama-context-header-line-mode)
     :hook (ellama-session-mode . ECFPAW/ellama-pipertts-automatic-speak-mode)
+    :hook (ellama-session-mode . ECFPAW/mode-line/switch-to-full-format)
     :bind ("C-c e" . ellama-transient-main-menu)
     :custom
     (ellama-naming-scheme 'ellama-generate-name-by-llm)
     (ellama-auto-scroll t)
     (ellama-context-line-always-visible t))
 #+end_src
+
 ** Pipertts support
 I have implemented support for [[* Pipertts][Pipertts]], a local minor mode to
 automatically speak the response, after the LLM has finished.
@@ -620,13 +622,13 @@ automatically speak the response, after the LLM has finished.
 :TODO:
 - [ ] make them Ellama blueprints.
 :END:
-We will just set the directives by taking them from [[Prompts]].
+We will just set the blueprints by taking them from [[Prompts]].
 #+NAME: prompts
 #+begin_src elisp :tangle no :noweb yes :eval yes :results raw
-  `(setq llm-directives
+  `(setq ellama-blueprints
   ',(mapcar
    (lambda (prompt)
-     `(,(intern (car prompt)) . ,(cadr prompt)))
+     `(:act ,(intern (car prompt)) :prompt ,(cadr prompt)))
    (cdr (org-map-entries
          (lambda ()
            `(,(substring-no-properties
@@ -657,22 +659,20 @@ Never apologize Ask questions when unsure.
 ***** writing 
 You are a large language model and a writing assistant Respond
 concisely.
+***** Story writer
+I want you to act as a story writer. You will come up with
+entertaining stories that are engaging, imaginative and captivating
+for the audience. You will try to be unique with the stories you come
+up with. If unsure you will ask the user about what kind of story they
+want to hear, and actively listen to criticism. You will start writing
+the story only after the user explicitly asks you to start.
 ***** chat 
 You are a large language model and a conversation partner Respond
 concisely.
-***** programmer 
-You are a careful programmer Provide code and only code as output
-without any additional text, prompt or note
-***** cliwhiz 
-You are a command line helper Generate command line commands that do
-what is requested, without any additional description or explanation
-Generate ONLY the command, I will edit it myself before running
 ***** emacser 
 You are an Emacs maven Reply only with the most appropriate built-in
 Emacs command for the task I specify Do NOT generate any additional
 description or explanation
-***** explain 
-Explain what this code does to a novice programmer
 ***** overtlyrational 
 You are rationalAI, an extremely rational chatbot You will always take
 the side of evidence and reason You will reject any ideas which are
@@ -681,14 +681,6 @@ will not give any explanations or clarifications for your position,
 you will talk to the point You will not claim to hold no position, You
 will hold a position in accordance with reason and evidence ONLY You
 will NOT write word salads, you will only talk sense
-***** gitcoomitor
-Read the prompt calmly and read each addition, deletion and no-changed
-line carefully.  Focus on changes, not only last or first, figure out
-the main idea of the input.  If complex, break it down into smaller
-parts to organize your thoughts.  Then, craft a good commit message
-based on the input context.  Write a commit message based on the git
-diff. Read the diff below and write a commit message that describes
-the changes made.
 * Overlay
 Overlays are like text properties but for the buffer instead of the
 string.
