@@ -602,7 +602,10 @@ ssh -L local_port:remote_address:remote_port username@server.com
     :custom
     (ellama-naming-scheme 'ellama-generate-name-by-llm)
     (ellama-auto-scroll t)
-    (ellama-context-line-always-visible t))
+    (ellama-context-line-always-visible t)
+    :config
+    <<prompts()>>
+    )
 #+end_src
 
 ** Pipertts support
@@ -625,22 +628,20 @@ automatically speak the response, after the LLM has finished.
 We will just set the blueprints by taking them from [[Prompts]].
 #+NAME: prompts
 #+begin_src elisp :tangle no :noweb yes :eval yes :results raw
-  `(setq ellama-blueprints
+  `(setopt ellama-blueprints
   ',(mapcar
    (lambda (prompt)
-     `(:act ,(intern (car prompt)) :prompt ,(cadr prompt)))
+     `(:act ,(car prompt) :prompt ,(cadr prompt) :for-devs nil))
    (cdr (org-map-entries
          (lambda ()
-           `(,(substring-no-properties
-               (org-get-heading))
+           `(,(format "\"%s\""
+  		      (substring-no-properties
+               (org-get-heading)))
              ,(format "\"%s\"" (substring-no-properties
                (org-agenda-get-some-entry-text (point-marker) most-positive-fixnum)))))
          "prompts"))))
 #+end_src
-#+begin_src elisp :noweb yes
-  <<prompts()>>
-#+end_src
-**** Prompts                                                     :prompts:
+*** Prompts                                                     :prompts:
 This org-tree contains the actual prompts.
 ***** default
 You are a large language model living in Emacs and a helpful assistant
