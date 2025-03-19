@@ -589,20 +589,20 @@ To redirect Ollama from a remote machine, use the following command:
 ssh -L local_port:remote_address:remote_port username@server.com
 #+end_src
 
-#+begin_src elisp
+#+begin_src elisp :noweb yes
   (use-package ellama
     :defer t
-    :commands ellama-community-prompts-select-blueprint
-    :vc (:url "https://github.com/s-kostyaev/ellama.git" :rev :newest)
+    :vc t
+    :load-path "/home/tusharhero/Documents/ellama"
     :hook (org-ctrl-c-ctrl-c-final . ellama-chat-send-last-message)
     :hook (ellama-session-mode . ellama-context-header-line-mode)
-    :hook (ellama-session-mode . ECFPAW/ellama-pipertts-automatic-speak-mode)
     :hook (ellama-session-mode . ECFPAW/mode-line/switch-to-full-format)
     :bind ("C-c e" . ellama-transient-main-menu)
     :custom
     (ellama-naming-scheme 'ellama-generate-name-by-llm)
     (ellama-auto-scroll t)
     (ellama-context-line-always-visible t)
+    (ellama-session-auto-save nil)
     :config
     <<prompts()>>
     )
