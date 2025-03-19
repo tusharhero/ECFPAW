@@ -1833,6 +1833,9 @@ And keybindings.
     "Binds `ECFPAW/pipertts' to `mouse-3' (right click)."
     :keymap
     `((,(kbd "<mouse-3>") . ECFPAW/pipertts)))
+
+  (define-globalized-minor-mode ECFPAW/global-pipertts-mouse-3-mode
+    ECFPAW/pipertts-mouse-3-mode ECFPAW/pipertts-mouse-3-mode)
 #+end_src
 * YEETUBE
 Every other YouTube client just sucks. I have no choice but to use
