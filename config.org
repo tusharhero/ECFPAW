@@ -857,6 +857,19 @@ you. So that the line is not too big and readable.
   (toggle-text-mode-auto-fill)
   (ECFPAW/diminish auto-fill-function " F𜱀")
 #+end_src
+** unfill functions
+Very surprised that this isn't inbuilt!
+#+begin_src elisp
+  ;;; Stefan Monnier <foo at acm.org>. It is the opposite of
+  ;;; fill-paragraph
+  (defun unfill-paragraph (&optional region)
+    "Takes a multi-line paragraph and makes it into a single line of text."
+    (interactive (progn (barf-if-buffer-read-only) '(t)))
+    (let ((fill-column (point-max))
+          ;; This would override `fill-column' if it's an integer.
+          (emacs-lisp-docstring-fill-column t))
+      (fill-paragraph nil region)))
+#+end_src
 ** Prettify mode
 *** enabling it globally
 #+begin_src elisp
