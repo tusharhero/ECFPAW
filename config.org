@@ -1902,7 +1902,9 @@ Emacs for this.
     (yeetube-mpv-additional-flags " --title='${filename} - mpv -float-'"))
 #+end_src
 * Emacs Everywhere
-It allows you to use Emacs everywhere. [[https://aur.archlinux.org/packages/kdotool-git][Kdotools]] and [[https://archlinux.org/packages/extra/x86_64/ydotool/][Ydotool]] are needed for KDE.
+It allows you to use Emacs everywhere. [[https://github.com/atx/wtype][Wtype]] is needed.
 #+begin_src elisp
-  (use-package emacs-everywhere :vc (:url "https://github.com/tecosaur/emacs-everywhere.git"))
+  (use-package emacs-everywhere
+    :vc (:url "https://github.com/tecosaur/emacs-everywhere.git"
+  	    :rev :newest))
 #+end_src
