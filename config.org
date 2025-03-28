@@ -1910,11 +1910,17 @@ actual package work. [[https://github.com/atx/wtype][Wtype]] is needed.
     "Write string into Wayland windows from within Emacs."
     (start-process "ee-write" nil "wtype" "-s" "500" string))
 
-  (defun ECFPAW/ee-done ()
-    (interactive)
-    (let ((text (buffer-substring-no-properties (point-min) (point-max))))
-    (delete-frame)
-    (ECFPAW/ee-write text)))
+  (defun ECFPAW/ee-done (&optional arg)
+    (interactive "p")
+    (require 'ox-md)
+    (let* ((raw-text (buffer-substring-no-properties (point-min) (point-max)))
+  	 ;; No idea why the 4th argument `org-export-with-toc' doesn't work for this.
+  	 (org-export-with-toc nil)
+  	 (text (pcase arg
+    		 (4  (org-export-string-as raw-text 'md t))
+  		 (_  raw-text))))
+      (delete-frame)
+      (ECFPAW/ee-write text)))
 
   (define-minor-mode ECFPAW/ee-mode
     "ee minor mode"
@@ -1925,6 +1931,7 @@ actual package work. [[https://github.com/atx/wtype][Wtype]] is needed.
     (with-current-buffer
         (get-buffer-create (format "ee-%d"
   				 (time-convert (current-time) 'integer)))
+      (org-mode)
       (ECFPAW/ee-mode)
       (modify-frame-parameters
        (make-frame '((name . "ee -float-")))
@@ -1935,5 +1942,5 @@ actual package work. [[https://github.com/atx/wtype][Wtype]] is needed.
 I am too lazy to update Sway configuration.
 
 #+begin_src elisp
-(defalias 'emacs-everywhere 'ECFPAW/ee)
+  (defalias 'emacs-everywhere 'ECFPAW/ee)
 #+end_src
