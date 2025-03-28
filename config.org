@@ -1902,9 +1902,35 @@ Emacs for this.
     (yeetube-mpv-additional-flags " --title='${filename} - mpv -float-'"))
 #+end_src
 * Emacs Everywhere
-It allows you to use Emacs everywhere. [[https://github.com/atx/wtype][Wtype]] is needed.
+I have emacs-everywhere at home now, I gave up trying to make the
+actual package work. [[https://github.com/atx/wtype][Wtype]] is needed.
+
 #+begin_src elisp
-  (use-package emacs-everywhere
-    :vc (:url "https://github.com/tecosaur/emacs-everywhere.git"
-  	    :rev :newest))
+  (defun ECFPAW/ee-write (string)
+    "Write string into Wayland windows from within Emacs."
+    (start-process "ee-write" nil "wtype" "-s" "500" string))
+
+  (defun ECFPAW/ee--done ()
+    (interactive)
+    (ECFPAW/ee-write
+     (buffer-substring-no-properties (point-min) (point-max)))
+    (delete-frame))
+
+  (define-minor-mode ECFPAW/ee-mode
+    "ee minor mode"
+    :keymap `((,(kbd "C-c C-c") . ECFPAW/ee--done)))
+
+  (defun ECFPAW/ee ()
+    "Start ee."
+    (with-current-buffer
+        (get-buffer-create (format "ee-%d"
+  				 (time-convert (current-time) 'integer)))
+      (ECFPAW/ee-mode)
+      (make-frame '((name . "ee")))))
+#+end_src
+
+I am too lazy to update Sway configuration.
+
+#+begin_src elisp
+(defalias 'emacs-everywhere 'ECFPAW/ee)
 #+end_src
