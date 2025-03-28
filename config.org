@@ -1910,11 +1910,11 @@ actual package work. [[https://github.com/atx/wtype][Wtype]] is needed.
     "Write string into Wayland windows from within Emacs."
     (start-process "ee-write" nil "wtype" "-s" "500" string))
 
-  (defun ECFPAW/ee--done ()
+  (defun ECFPAW/ee-done ()
     (interactive)
-    (ECFPAW/ee-write
-     (buffer-substring-no-properties (point-min) (point-max)))
-    (delete-frame))
+    (let ((text (buffer-substring-no-properties (point-min) (point-max))))
+    (delete-frame)
+    (ECFPAW/ee-write text)))
 
   (define-minor-mode ECFPAW/ee-mode
     "ee minor mode"
