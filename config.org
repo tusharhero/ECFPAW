@@ -1918,7 +1918,7 @@ actual package work. [[https://github.com/atx/wtype][Wtype]] is needed.
 
   (define-minor-mode ECFPAW/ee-mode
     "ee minor mode"
-    :keymap `((,(kbd "C-c C-c") . ECFPAW/ee--done)))
+    :keymap `((,(kbd "C-c C-c") . ECFPAW/ee-done)))
 
   (defun ECFPAW/ee ()
     "Start ee."
@@ -1926,7 +1926,10 @@ actual package work. [[https://github.com/atx/wtype][Wtype]] is needed.
         (get-buffer-create (format "ee-%d"
   				 (time-convert (current-time) 'integer)))
       (ECFPAW/ee-mode)
-      (make-frame '((name . "ee")))))
+      (modify-frame-parameters
+       (make-frame '((name . "ee -float-")))
+       '((width . 80)
+         (height . 20)))))
 #+end_src
 
 I am too lazy to update Sway configuration.
