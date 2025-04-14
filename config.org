@@ -1871,6 +1871,15 @@ And keybindings.
   (define-globalized-minor-mode ECFPAW/global-pipertts-mouse-3-mode
     ECFPAW/pipertts-mouse-3-mode ECFPAW/pipertts-mouse-3-mode)
 #+end_src
+
+Also a menu,
+#+begin_src elisp
+  (easy-menu-define nil global-map "TTS menu for ECFPAW."
+    '("TTS"
+      ["Read" ECFPAW/pipertts]
+      ["Pause/Resume" ECFPAW/pipertts-pause-resume]
+      ["Stop" ECFPAW/pipertts-kill]))
+#+end_src
 * YEETUBE
 Every other YouTube client just sucks. I have no choice but to use
 Emacs for this.
@@ -1900,6 +1909,13 @@ Emacs for this.
     :custom
     (yeetube-display-thumbnails-p nil)
     (yeetube-mpv-additional-flags " --title='${filename} - mpv -float-'"))
+#+end_src
+
+And add a menu,
+#+begin_src elisp
+  (easy-menu-define nil global-map "Yeetube menu for ECFPAW."
+    '("Yeetube"
+      ["Pause/Resume" yeetube-mpv-toggle-pause]))
 #+end_src
 * Emacs Everywhere
 I have emacs-everywhere at home now, I gave up trying to make the
