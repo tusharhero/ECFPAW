@@ -1256,7 +1256,7 @@ redirection.
     (defun ECFPAW/redirections (uri &optional index)
       "Redirect URI to different uri.
     INDEX is used internally for recursion."
-      (let* ((redirections '((".*[w]*\.reddit\.com" "https://old.reddit.com")
+      (let* ((redirections '(("www\.reddit\.com" "https://old.reddit.com")
   			   (".*[w]*\.programming\.dev" "https://old.programming.dev")))
     	   (index (if (null index) 0 index))
     	   (redirection (nth index redirections))
