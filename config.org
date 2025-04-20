@@ -432,8 +432,6 @@ number properly). Also removed some cosmetic noise from here.
       " "
       mode-line-modes
       " "
-      mode-line-format-right-align
-      ECFPAW/mode-line/time
       mode-line-end-spaces
       )
     "Full mode line format.")
@@ -453,8 +451,6 @@ The clutter free mode-line-format. (Just removed the =mode-line-modes=).
      " "
      mode-line-misc-info
      " "
-     mode-line-format-right-align
-     ECFPAW/mode-line/time
      mode-line-end-spaces
      )
    "clutter-free mode line format.")
