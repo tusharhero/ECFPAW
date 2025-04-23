@@ -1914,51 +1914,16 @@ And add a menu,
       ["Pause/Resume" yeetube-mpv-toggle-pause]))
 #+end_src
 * Emacs Everywhere
-I have emacs-everywhere at home now, I gave up trying to make the
-actual package work. [[https://github.com/atx/wtype][Wtype]] is needed.
+=emacs-everywhere= was giving me trouble, so I decided to write my own
+version instead. [[https://github.com/atx/wtype][Wtype]] is needed.
 
-#+begin_src elisp
-  (defun ECFPAW/ee-write (string)
-    "Write string into Wayland windows from within Emacs."
-    (start-process "ee-write" nil "wtype" "-s" "500" string))
-
-  (defun ECFPAW/ee-done (&optional arg)
-    "Write the current buffer using `ECFPAW/ee-write'.
-
-    If ARG is 4, export the buffer as Markdown. Otherwise, directly use
-    the org markup.
-
-    This function deletes the current frame after writing the text."
-    (interactive "p")
-    (require 'ox-md)
-    (let* ((raw-text (buffer-substring-no-properties (point-min) (point-max)))
-  	 ;; No idea why the 3rd argument of `org-export-with-toc' doesn't work for this.
-  	 (org-export-with-toc nil)
-  	 (text (pcase arg
-  		 (4  (org-export-string-as raw-text 'md t))
-  		 (_  raw-text))))
-      (delete-frame)
-      (ECFPAW/ee-write text)))
-
-  (define-minor-mode ECFPAW/ee-mode
-    "ee minor mode"
-    :keymap `((,(kbd "C-c C-c") . ECFPAW/ee-done)))
-
-  (defun ECFPAW/ee ()
-    "Start ee."
-    (with-current-buffer
-        (get-buffer-create (format "ee-%d"
-  				 (time-convert (current-time) 'integer)))
-      (org-mode)
-      (ECFPAW/ee-mode)
-      (modify-frame-parameters
-       (make-frame '((name . "ee -float-")))
-       '((width . 80)
-         (height . 20)))))
+#+begin_src emacs-lisp
+  (use-package tinee
+    :vc (:url "https://codeberg.org/tusharhero/tinee.git"))
 #+end_src
 
 I am too lazy to update Sway configuration.
 
 #+begin_src elisp
-  (defalias 'emacs-everywhere 'ECFPAW/ee)
+  (defalias 'emacs-everywhere 'tinee)
 #+end_src
