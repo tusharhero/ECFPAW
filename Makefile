@@ -1,0 +1,2 @@
+tangle:
+	./bootstrap-config.el

@@ -1,4 +1,4 @@
-# -*- after-save-hook: (lambda () (compile "./bootstrap-config.el")); eval: (message "Welcome to ECFPAW's literate configuration."); -*-
+# -*- after-save-hook: (lambda () (compile "make -k")); -*-
 #+TITLE: Emacs Configuration For Programming And Writing (ECFPAW)
 #+AUTHOR: tusharhero
 #+EMAIL: tusharhero@sdf.org
@@ -60,6 +60,12 @@
   (message "Tangling config.org...")
   (org-babel-tangle-file "config.org")
   (message "ECFPAW has been bootstrapped!")
+#+end_src
+
+Also add a Makefile.
+#+begin_src makefile :tangle Makefile
+  tangle:
+  	./bootstrap-config.el
 #+end_src
 * Startup Optimization
 It took 2.7-3 seconds before these optimizations, and now it is 1
