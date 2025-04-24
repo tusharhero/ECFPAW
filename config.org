@@ -1927,7 +1927,8 @@ version instead. [[https://github.com/atx/wtype][Wtype]] is needed.
 
 #+begin_src emacs-lisp
   (use-package tinee
-    :vc (:url "https://codeberg.org/tusharhero/tinee.git"))
+    :vc (:url "https://codeberg.org/tusharhero/tinee.git")
+    :custom (tinee-frame-name "tinee -float-"))
 #+end_src
 
 I am too lazy to update Sway configuration.
