@@ -1,4 +1,6 @@
 #!/bin/env -S emacs --script
+;;  -*- lexical-binding: t; -*-
+
 ;; Run this script to 'bootstrap' ECFPAW from `config.org', of course
 ;; the only requirement it has is Emacs itself.
 (message "Loading Org...")
