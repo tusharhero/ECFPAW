@@ -1090,13 +1090,33 @@ interfaces from them.
 What is like the org-mode? What can make war against it?
 ...
 #+end_quote
-** Inserting time and date
-Here I will make a custom function which will help me insert time and date.
+** Stuff that should really come with org but doesn't
+I use this frequently to insert time and date into an org buffer.
 #+begin_src elisp
   (defun ECFPAW/insert-now-timestamp()
     "Insert org mode timestamp at point with current date and time."
     (interactive)
     (org-insert-time-stamp (current-time) t))
+#+end_src
+
+The more general version (and simpler) version of ~org-babel-demarcate-block~.
+#+begin_src elisp
+  (defun ECFPAW/org-demarcate ()
+    "Split the org block at point."
+    (interactive)
+    (let* ((case-fold-search t)
+  	 (get-line (lambda ()
+  		     (string-trim
+  		      (thing-at-point 'line t))))
+  	 (begin (save-excursion
+  		  (search-backward "#+begin")
+  		  (funcall get-line)))
+  	 (end (save-excursion
+  		(search-forward "#+end")
+  		(funcall get-line))))
+      (save-excursion
+        (insert (concat end "\n\n" begin "\n")))
+      (forward-line 2)))
 #+end_src
 ** Hide emphasis markers
 I /decided/ that I don't like to see *emphasis* markers in org-mode.
