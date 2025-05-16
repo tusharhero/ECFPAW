@@ -1383,6 +1383,11 @@ Flycheck can do a lot of stuff including,
     :init (global-flycheck-mode))
 #+end_src
 * PROGRAMMING
+** Aggressive indent
+Magical package.
+#+begin_src elisp
+  (use-package aggressive-indent :defer t)
+#+end_src
 ** Spell check
 #+begin_src elisp
   (add-hook 'prog-mode-hook 'flyspell-prog-mode)
