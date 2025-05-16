@@ -1933,7 +1933,12 @@ Emacs for this.
     :vc (:url "https://codeberg.org/ThanosApollo/emacs-yeetube"
               :rev :newest)
     :defer t
+    :autoload yeetube-mpv-play
     :init (define-prefix-command 'ECFPAW/yeetube-map)
+    (defun ECFPAW/yeetube-play-file-at-point ()
+      "Play the file at point using Yeetube mpv."
+      (interactive)
+      (yeetube-mpv-play (thing-at-point 'filename)))
     :bind (("C-c y" . ECFPAW/yeetube-map)
   	 :map ECFPAW/yeetube-map
   	 ("s" . yeetube-search)
