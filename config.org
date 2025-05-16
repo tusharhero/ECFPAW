@@ -1319,6 +1319,16 @@ Making eww the default.
 #+begin_src elisp
   (setq browse-url-browser-function 'eww-browse-url)
 #+end_src
+
+I like using =yeetube=,
+#+begin_src elisp
+  (defun ECFPAW/newsticker-yeetube-play ()
+    "Play newsticker media at point using yeetube."
+    (interactive)
+    (let ((url (get-text-property (point) 'nt-link)))
+      (yeetube-mpv-play url)))
+#+end_src
+
 * GIT
 [[https://git-scm.com][Git]] is the best version control system(The only one I have ever
 used). You can use it for anything BTW, not just programming. For
