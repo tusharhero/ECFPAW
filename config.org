@@ -105,6 +105,11 @@ This makes sure that Emacs installs any package that is not available.
   (setopt use-package-always-ensure t)
 #+end_src
 
+Native compile ahead of time.
+#+begin_src elisp
+  (setopt package-native-compile t)
+#+end_src
+
 This informs you if any use-package declaration took longer than 0.1
 seconds.
 #+begin_src elisp
