@@ -1966,6 +1966,15 @@ And add a menu,
     '("Yeetube"
       ["Pause/Resume" yeetube-mpv-toggle-pause]))
 #+end_src
+* ERC
+I use ERC, for IRC.
+#+begin_src elisp
+  (defun ECFPAW/erc-pipertts-toggle ()
+    "Toggle automated reading of incoming messages on ERC."
+    (if (memq 'ECFPAW/pipertts erc-insert-modify-hook)
+        (remove-hook 'erc-insert-modify-hook 'ECFPAW/pipertts t)
+      (add-hook 'erc-insert-modify-hook 'ECFPAW/pipertts nil t)))
+#+end_src
 * Emacs Everywhere
 =emacs-everywhere= was giving me trouble, so I decided to write my own
 version instead. [[https://github.com/atx/wtype][Wtype]] is needed.
