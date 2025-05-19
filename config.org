@@ -1987,10 +1987,34 @@ I use ERC, for IRC.
 =emacs-everywhere= was giving me trouble, so I decided to write my own
 version instead. [[https://github.com/atx/wtype][Wtype]] is needed.
 
+I am currently experimenting with transient menu.
+
 #+begin_src emacs-lisp
   (use-package tinee
-    :vc (:url "https://codeberg.org/tusharhero/tinee.git")
-    :custom (tinee-frame-name "tinee -float-"))
+    :vc t
+    :load-path "/home/tusharhero/Documents/tinee"
+    :custom (tinee-frame-name "tinee -float-")
+    :config
+    (defun ECFPAW/tinee-org-send ()
+      (interactive)
+      (let ((string (buffer-substring-no-properties
+  		   (point-min) (point-max))))
+        (delete-frame)
+        (funcall tinee-send-text-function string)))
+    (defun ECFPAW/tinee-md-send ()
+      (interactive)
+      (let* ((raw-text (buffer-substring-no-properties
+    		      (point-min) (point-max)))
+    	   (org-export-with-toc nil)
+    	   (text (org-export-string-as raw-text 'md t)))
+        (delete-frame)
+        (funcall tinee-send-text-function text)))
+    (transient-define-prefix ECFPAW/tinee-transient-done ()
+      "Transient menu for tinee. (Experimental)."
+      ["How do I Send Text?"
+       [("RET" "As is." ECFPAW/tinee-org-send)]
+       [("m" "As markdown" ECFPAW/tinee-md-send)]])
+    (defalias 'tinee-done 'ECFPAW/tinee-transient-done))
 #+end_src
 
 I am too lazy to update Sway configuration.
