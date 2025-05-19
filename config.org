@@ -1899,14 +1899,22 @@ Easy to way to find the children of a process.
 
 And keybindings.
 #+begin_src elisp
-  (bind-keys :prefix-map ECFPAW/tts
-  	   :prefix "C-c b"
-  	   :prefix-docstring "Control TTS."
-  	   :map ECFPAW/tts
-  	   ("b" . ECFPAW/pipertts)
-  	   ("SPC" . ECFPAW/pipertts-pause-resume)
-  	   ("k" . ECFPAW/pipertts-kill))
+  (transient-define-prefix ECFPAW/tts-transient-menu ()
+    "Transient menu for ECFPAW TTS system."
+    ["Text To Speech"
+     [("s" "Speak region" ECFPAW/pipertts)]
+     [("SPC" "Pause/Resume" ECFPAW/pipertts-pause-resume)]
+     [:description
+      (lambda ()
+        (format "Current Speaker: %d" ECFPAW/pipertts-speaker))
+      ("u" "Select speaker" ECFPAW/pipertts-change-speaker)]
+     [("r" "Select random speaker" ECFPAW/pipertts-change-speaker-random)]])
 
+  (bind-keys ("C-c b" . ECFPAW/tts-transient-menu))
+#+end_src
+
+This is convenient at times.
+#+begin_src elisp
   (define-minor-mode ECFPAW/pipertts-mouse-3-mode
     "Binds `ECFPAW/pipertts' to `mouse-3' (right click)."
     :keymap
