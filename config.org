@@ -1404,7 +1404,8 @@ Flycheck can do a lot of stuff including,
 ** Aggressive indent
 Magical package.
 #+begin_src elisp
-  (use-package aggressive-indent :defer t)
+  (use-package aggressive-indent :defer t
+    :hook emacs-lisp-mode)
 #+end_src
 ** Spell check
 #+begin_src elisp
