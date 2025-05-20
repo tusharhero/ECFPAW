@@ -1342,7 +1342,7 @@ versions for you.
 ** MAGIT
 Magit (Maggot , magic IDK) is a git client for Emacs.
 #+begin_src elisp
-  (use-package transient :defer t)
+  (use-package transient :demand t)
   (use-package magit :defer t)
 #+end_src
 ** PINENTRY
