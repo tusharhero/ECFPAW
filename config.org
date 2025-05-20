@@ -1299,6 +1299,19 @@ redirection.
     (add-to-list 'eww-url-transformers 'ECFPAW/redirections))
 #+end_src
 
+eww but not eww, no html rendering.
+#+begin_src elisp
+  (defun ECFPAW/raw-eww (uri)
+    "Get content from URI as raw text."
+    (interactive (list (thing-at-point 'url)))
+    (url-retrieve uri (lambda (status)
+  		      (let* ((text (cadr (split-string (buffer-string) "\n\n"))))
+  			(switch-to-buffer
+  			 (get-buffer-create "*eww-raw*"))
+  			(erase-buffer)
+  			(insert text)))))
+#+end_src
+
 * NEWS-TICKER
 :TODO:
 - [ ] add support for customize to add feeds.
