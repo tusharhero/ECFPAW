@@ -975,7 +975,20 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
   (use-package olivetti
     :vc (:url "https://github.com/rnkn/olivetti.git")
     :defer t
+    :hook (olivetti-mode . auto-fill-mode)
     :custom (olivetti-body-width 80))
+#+end_src
+
+I also want it to be enabled whenever the lines in a document are too
+big.
+#+begin_src elisp
+  (defun ECFPAW/enable-olivetti-if-long-line ()
+    "Enable `olivetti-mode' if lines are too long."
+    (when (> (cadr (buffer-line-statistics))
+  	   (* 1.5 fill-column))
+      (olivetti-mode)))
+
+  (add-hook 'text-mode-hook 'ECFPAW/enable-olivetti-if-long-line)
 #+end_src
 ** Enable spell checking by default
 #+begin_src elisp
