@@ -2006,6 +2006,7 @@ I use ERC, for IRC.
 #+begin_src elisp
   (defun ECFPAW/erc-pipertts-toggle ()
     "Toggle automated reading of incoming messages on ERC."
+    (interactive)
     (if (memq 'ECFPAW/pipertts erc-insert-modify-hook)
         (remove-hook 'erc-insert-modify-hook 'ECFPAW/pipertts t)
       (add-hook 'erc-insert-modify-hook 'ECFPAW/pipertts nil t)))
