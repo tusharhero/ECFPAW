@@ -798,8 +798,23 @@ I was using projectile before but then I realized that I don't use
 most of its functionality(Basically it was bloated for me). That is
 why I have decided to switch to =project.el=, the builtin project
 management functionality of Emacs.
+
+I have also integrated it with Magit.
 #+begin_src elisp
-  (setq project-switch-commands 'project-find-dir)
+  (defun ECFPAW/project-magit-status ()
+    "Run `magit-status' in the current project's root."
+    (interactive)
+    (magit-status (project-root (project-current t))))
+
+  (define-key project-prefix-map "m" 'ECFPAW/project-magit-status)
+  (setopt project-switch-commands
+  	'((project-find-file "Find file")
+  	  (project-find-regexp "Find regexp")
+  	  (project-find-dir "Find directory")
+  	  (project-vc-dir "VC-Dir")
+  	  (ECFPAW/project-magit-status "Magit-Status")
+  	  (project-eshell "Eshell")
+  	  (project-any-command "Other")))
 #+end_src
 * DIRED
 Dired is a file manager within Emacs. It comes builtin.
