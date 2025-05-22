@@ -1929,8 +1929,9 @@ And keybindings.
   (transient-define-prefix ECFPAW/tts-transient-menu ()
     "Transient menu for ECFPAW TTS system."
     ["Text To Speech"
-     [("s" "Speak region" ECFPAW/pipertts)]
+     [("b" "Speak region" ECFPAW/pipertts)]
      [("SPC" "Pause/Resume" ECFPAW/pipertts-pause-resume)]
+     [("k" "Stop" ECFPAW/pipertts-kill)]
      [:description
       (lambda ()
         (format "Current Speaker: %d" ECFPAW/pipertts-speaker))
