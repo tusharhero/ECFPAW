@@ -314,7 +314,8 @@ I use Modus themes.
 #+begin_src elisp
   (setopt modus-themes-mixed-fonts t)
   (setopt modus-themes-common-palette-overrides
-  	'((fg-region unspecified)))
+  	'((fg-region unspecified)
+  	  (fringe unspecified)))
 #+end_src
 *** Easy cycling
 :TODO:
