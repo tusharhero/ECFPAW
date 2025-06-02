@@ -268,8 +268,32 @@ of this.
 ** Spacious Padding
 Oh, man this single-handedly makes ECFPAW look so much better. Thanks Prot!
 #+begin_src elisp
-  (use-package spacious-padding
-     :config (spacious-padding-mode t))
+  (use-package spacious-padding)
+#+end_src
+
+No borders, though I like spacious-padding, it has some issues with
+start up, so I am experimenting with my own stuff. I really like
+spacious-padding's no vertical borders thing.
+#+begin_src elisp
+  (defun ECFPAW/make-windows-no-border (theme &optional no-confirm no-enable)
+    "Make windows border less."
+    (let ((bg-main (face-background 'default))
+  	(fg-main (face-foreground 'default))
+   	custom--inhibit-theme-enable)
+      (custom-theme-set-faces
+       'user
+       `(fringe ((t :background ,bg-main)))
+       `(line-number ((t :background ,bg-main)))
+       `(vertical-border ((t :background ,bg-main :foreground ,bg-main)))
+       `(,@(spacious-padding-set-window-divider 'window-divider bg-main))
+       `(,@(spacious-padding-set-window-divider 'window-divider-first-pixel bg-main))
+       `(,@(spacious-padding-set-window-divider 'window-divider-last-pixel bg-main))
+       `(mode-line-active ((t (:box nil :inherit (mode-line)))))
+       `(mode-line-inactive ((t (:box nil :inherit (mode-line))))))))
+
+  (advice-add 'load-theme :after 'ECFPAW/make-windows-no-border)
+  (add-to-list 'after-make-frame-functions 'ECFPAW/make-windows-no-border)
+
 #+end_src
 ** Pulsar
 =Pulsar= provides the sweet *pulsing* of light you see when you switch you
