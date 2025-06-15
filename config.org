@@ -1,4 +1,4 @@
-# -*- after-save-hook: (lambda () (compile "make -k")); -*-
+# -*- after-save-hook: org-babel-tangle; org-confirm-babel-evaluate: nil; -*-
 #+TITLE: Emacs Configuration For Programming And Writing (ECFPAW)
 #+AUTHOR: tusharhero
 #+EMAIL: tusharhero@sdf.org
