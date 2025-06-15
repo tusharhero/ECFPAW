@@ -626,8 +626,6 @@ ssh -L local_port:remote_address:remote_port username@server.com
 #+begin_src elisp :noweb yes
   (use-package ellama
     :defer t
-    :vc t
-    :load-path "/home/tusharhero/Documents/ellama"
     :hook (org-ctrl-c-ctrl-c-final . ellama-chat-send-last-message)
     :hook (ellama-session-mode . ellama-context-header-line-mode)
     :hook (ellama-session-mode . ECFPAW/mode-line/switch-to-full-format)
@@ -2060,8 +2058,8 @@ I am currently experimenting with transient menu.
 
 #+begin_src emacs-lisp
   (use-package tinee
-    :vc t
-    :load-path "/home/tusharhero/Documents/tinee"
+    :vc (:url "https://codeberg.org/tusharhero/tinee"
+              :rev :newest)
     :custom (tinee-frame-name "tinee -float-")
     :config
     (defun ECFPAW/tinee-org-send ()
