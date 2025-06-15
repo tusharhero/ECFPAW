@@ -236,9 +236,11 @@ won't show up in =fido= completion menu.
 Defining the various fonts Emacs will use. For now, I don't set a
 variable pitch font and let Emacs select one.
 #+begin_src elisp
-  (let ((mono-spaced-font "Iosevka Nerd Font"))
+  (let ((mono-spaced-font "Aporetic Sans Mono")
+        (variable-pitch-font "Aporetic Serif"))
     (set-face-attribute 'default nil :family mono-spaced-font :height 140)
-    (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0))
+    (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 1.0)
+    (set-face-attribute 'variable-pitch nil :family variable-pitch-font :height 1.0))
 #+end_src
 ** GRAPHICAL USER INTERFACE TWEAKS
 Let's make GNU Emacs look a little better.
