@@ -1476,9 +1476,9 @@ open a project.
   (use-package envrc
     :after inheritenv
     :vc (:url "https://codeberg.org/pastor/envrc")
-    :custom (envrc-indicator
-  	   '(:eval ( if (eq envrc--status 'none) ""
-  		     " envrc[" (:eval (envrc--status)) "]")))
+    :custom (envrc-indicator '((:eval (if (eq envrc--status 'none)
+  					""
+  				      (format " envrc[%s]" envrc--status)))))
     :config (envrc-global-mode))
 #+end_src
 
