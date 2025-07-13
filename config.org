@@ -1411,6 +1411,11 @@ Magit (Maggot , magic IDK) is a git client for Emacs.
   (use-package transient :demand t)
   (use-package magit :defer t)
 #+end_src
+** Git Link
+#+begin_src elisp
+  (use-package git-link
+    :vc (:url "https://github.com/sshaw/git-link" :rev "d828dae"))
+#+end_src
 ** PINENTRY
 For getting support for GPG(GNU Privacy Guard).
 
