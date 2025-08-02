@@ -2061,6 +2061,11 @@ I use ERC, for IRC.
         (remove-hook 'erc-insert-modify-hook 'ECFPAW/pipertts t)
       (add-hook 'erc-insert-modify-hook 'ECFPAW/pipertts nil t)))
 #+end_src
+
+Also enable flyspell here,
+#+begin_src elisp
+  (add-hook 'erc-mode-hook 'flyspell-mode)
+#+end_src
 * Emacs Everywhere
 =emacs-everywhere= was giving me trouble, so I decided to write my own
 version instead. [[https://github.com/atx/wtype][Wtype]] is needed.
