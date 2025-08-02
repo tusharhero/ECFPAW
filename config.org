@@ -41,13 +41,6 @@
   ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #+end_src
 
-* TODO CHORES [1/5]
-** TODO Use =use-package= properly to reduce startup time.
-** TODO Add more key bindings.
-*** TODO Add shortcut to bold, italicize, etc. in [[ORG-MODE]].
-** TODO Correct the key bindings for annot-list mode.
-** TODO Divide this TODO into respective categories in their correct place.
-** DONE Completely overhaul the way I do keybindings.
 * BOOTSTRAPPING
 #+begin_src elisp :tangle bootstrap-config.el :shebang #!/bin/env -S emacs --script
   ;;  -*- lexical-binding: t; -*-
