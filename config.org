@@ -1017,9 +1017,17 @@ big.
 #+begin_src elisp
   (defun ECFPAW/enable-olivetti-if-long-line ()
     "Enable `olivetti-mode' if lines are too long."
-    (when (> (cadr (buffer-line-statistics))
-  	   (* 1.5 fill-column))
-      (olivetti-mode)))
+    (let ((buffer-string (buffer-string))
+  	(clone-buffer (get-buffer-create
+  		       (concat "<clone>" (buffer-name)))))
+      (with-current-buffer clone-buffer
+        (insert buffer-string)
+        (goto-char (point-min))
+        (delete-non-matching-lines "."))
+      (when (> (nth 2 (buffer-line-statistics clone-buffer))
+    	     (* 0.75 fill-column))
+        (olivetti-mode))
+      (kill-buffer clone-buffer)))
 
   (add-hook 'text-mode-hook 'ECFPAW/enable-olivetti-if-long-line)
 #+end_src
