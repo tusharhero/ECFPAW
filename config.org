@@ -894,9 +894,23 @@ And diminish it.
   (ECFPAW/diminish completion-preview-mode)
 #+end_src
 
-Also do spell checking using this.
+Add support for org-mode.
 #+begin_src elisp
-  (push 'ispell-completion-at-point completion-at-point-functions)
+  (push 'org-self-insert-command completion-preview-commands)
+  (push 'org-delete-backward-char completion-preview-commands)
+#+end_src
+** CAPF
+I want to do spell checking using completion-at-point.
+#+begin_src elisp
+    (push 'ispell-completion-at-point completion-at-point-functions)
+#+end_src
+
+I need the cape package for the =cape-dabbrev= because it =dabbrev-capf=
+is [[https://debbugs.gnu.org/cgi/bugreport.cgi?bug=75690][broken]].
+#+begin_src elisp
+  (use-package cape
+    :config
+    (push 'cape-dabbrev completion-at-point-functions))
 #+end_src
 * TEXT
 Some stuff which are for text editing in general.
