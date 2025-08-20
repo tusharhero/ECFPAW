@@ -1039,7 +1039,7 @@ big.
         (goto-char (point-min))
         (delete-non-matching-lines "."))
       (when (> (nth 2 (buffer-line-statistics clone-buffer))
-    	     (* 0.75 fill-column))
+    	     (* 0.85 fill-column))
         (olivetti-mode))
       (kill-buffer clone-buffer)))
 
