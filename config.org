@@ -322,7 +322,13 @@ default of =pulsar-iterations= by 5.
     (pulsar-global-mode))
 #+end_src
 ** THEME
-I use Modus themes.
+This makes it so that only one theme is loaded at a time.
+#+begin_src elisp
+  (setq custom-safe-themes t)
+  (advice-add 'load-theme
+              :before (lambda (theme &optional no-confirm no-enable)
+                        (disable-theme (car custom-enabled-themes))))
+#+end_src
 *** Ef-themes
 #+begin_src elisp
   (use-package ef-themes
@@ -335,23 +341,6 @@ I use Modus themes.
   (setopt modus-themes-common-palette-overrides
   	'((fg-region unspecified)
   	  (fringe unspecified)))
-#+end_src
-*** Easy cycling
-:TODO:
-+ [ ] Figure out a way to automatically wait for the correct package to
-  load before running ~ECFPAW/cycle-theme~, I tried doing it using
-  this code, but that does not really work.
-  #+begin_src elisp :tangle no
-  (with-eval-after-load (car ECFPAW/themes)
-    (ECFPAW/cycle-my-theme))
-  #+end_src
-:END:
-I have a custom function for loading and cycling through my preferred themes.
-#+begin_src elisp
-  (setq custom-safe-themes t)
-  (advice-add 'load-theme
-              :before (lambda (theme &optional no-confirm no-enable)
-                        (disable-theme (car custom-enabled-themes))))
 #+end_src
 *** Day and night switching
 I used to use circadian for this, but that was just too bloated
