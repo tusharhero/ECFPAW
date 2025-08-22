@@ -994,7 +994,7 @@ you want to hook them to 💀. My mind is struggling to comprehend that.
 ** For focused writing
 #+begin_src elisp
   (use-package olivetti
-    :vc (:url "https://github.com/rnkn/olivetti.git")
+    :vc (:url "https://github.com/rnkn/olivetti.git" :rev "845eb7a")
     :defer t
     :hook (olivetti-mode . auto-fill-mode)
     :custom (olivetti-body-width 80))
@@ -1315,7 +1315,7 @@ Magit (Maggot , magic IDK) is a git client for Emacs.
 ** Git Link
 #+begin_src elisp
   (use-package git-link
-    :vc (:url "https://github.com/sshaw/git-link" :rev "d828dae"))
+    :vc (:url "https://github.com/sshaw/git-link" :rev "e4cfed0"))
 #+end_src
 ** PINENTRY
 For getting support for GPG(GNU Privacy Guard).
