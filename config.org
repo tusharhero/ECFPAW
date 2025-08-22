@@ -185,14 +185,6 @@ and maintaining them is a headache.
   (keymap-global-set "C-c a" 'org-agenda)
   (keymap-global-set "C-c c" 'org-capture)
 #+end_src
-* Key Statistics
-I need to get some keybinding statistics to improve my keybindings situation.
-#+begin_src elisp
-  (use-package keyfreq
-    :vc (:url "https://github.com/dacap/keyfreq.git")
-    :config (keyfreq-mode 1)
-    (keyfreq-autosave-mode 1))
-#+end_src
 * GRAPHICS
 ** Nerd Icons
 This uses nerd icons for various things inside Emacs. Since I already
