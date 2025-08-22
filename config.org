@@ -1012,6 +1012,9 @@ big.
         (insert buffer-string)
         (goto-char (point-min))
         (delete-non-matching-lines "."))
+
+      (message "%S" (buffer-line-statistics clone-buffer))
+
       (when (> (nth 2 (buffer-line-statistics clone-buffer))
     	     (* 0.85 fill-column))
         (olivetti-mode))
