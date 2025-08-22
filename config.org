@@ -121,13 +121,6 @@ packages take the longest to load.
 #+begin_src elisp
 (setopt use-package-compute-statistics t)
 #+end_src
-
-I was missing the feature from Elpaca which allows you try out a
-package without installing it.
-#+begin_src elisp
-  (use-package try :defer t
-    :vc (:url "https://github.com/larstvei/Try.git"))
-#+end_src
 * Custom interface
 Put all custom configuration into =custom.el=, else it will put
 everything in init.el which gets removed every time we tangle.
