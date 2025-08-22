@@ -1446,32 +1446,6 @@ I still use markdown files for =README= and stuff, (sorry [[*ORG-MODE]]).
   (use-package markdown-mode :defer t)
 #+end_src
 **** Python
-***** COMMENT PET
-#+begin_src elisp
-  (use-package pet
-    :vc (:url "https://github.com/tusharhero/emacs-pet.git" :branch "emacs-30-fix")
-    :config
-    (add-hook 'python-base-mode-hook 'pet-mode -10)
-    (add-hook 'python-base-mode-hook
-              (lambda ()
-                (setq-local python-shell-interpreter (format "%sbin/python" (pet-virtualenv-root))
-                            lsp-pyright-python-executable-cmd (format "%sbin/python" (pet-virtualenv-root))
-                            python-shell-virtualenv-root (pet-virtualenv-root)))))
-#+end_src
-***** Eglot
-:TODO:
-+ [ ] The required packages to emacs-pkgbuild.
-:END:
-#+begin_src elisp
-  (setq-default eglot-workspace-configuration
-                '((:pylsp . (:configurationSources ["flake8"]
-                             :plugins (
-                                       :flake8 (:enabled :json-false
-                                                :maxLineLength 88)
-                                       :black (:enabled t
-                                               :line_length 80
-                                               :cache_config t))))))
-#+end_src
 ***** Prettify mode symbols
 #+begin_src elisp
   (ECFPAW/add-pretty-sym-pack 'python-mode-hook '(ECFPAW/prettify-symbols-pack/in-equalities
