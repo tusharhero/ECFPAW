@@ -173,6 +173,12 @@ It's very annoying to have that bell ringing all the time.
 * Custom keybindings
 I will try to keep these to a minimum. Setting up custom keybindings
 and maintaining them is a headache.
+** Repeat-mode
+This fixes a few minor inconveniences I have with repeating the
+keybindings again and again. Pretty cool.
+#+begin_src elisp
+  (repeat-mode)
+#+end_src
 ** Org
 #+begin_src elisp
   (keymap-global-set "C-c a" 'org-agenda)
