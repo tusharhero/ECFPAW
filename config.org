@@ -1179,39 +1179,8 @@ Org indent is plenty eye candy.
   (add-hook 'org-mode-hook 'org-indent-mode)
 #+end_src
 ** Journal and Task
-*** Agenda and capturing
-#+begin_src elisp :var goals-directory="~/Documents/goals/"
-  (setq org-capture-templates
-        `(("t" "Todo" entry (file+headline
-                             ,(concat goals-directory "tasks.org") "Tasks")
-           "* TODO %?\n  %i\n  %a")
-          ("j" "Journal" entry (file+datetree
-                                ,(concat goals-directory "journal.org"))
-           "* %?\nEntered on %U\n  %i\n  %a")))
-  (setq org-agenda-files `(,(concat goals-directory "tasks.org")
-                           ,(concat goals-directory "journal.org")))
-#+end_src
-
-Add breadcrumbs because I get confused about which task I am looking at.
 #+begin_src elisp
-  (setq org-agenda-prefix-format
-        '((agenda . " %i %-12:b%?-12t% s") (todo . " %i %-12:c")
-    	(tags . " %i %-12:c") (search . " %i %-12:c")))
-#+end_src
-
-
-#+begin_src elisp
-(setq org-agenda-clockreport-parameter-plist '(:link t :maxlevel 5))
-#+end_src
-
-Its just annoying to look at this point.
-#+begin_src elisp
-(setq org-agenda-show-future-repeats nil)
-#+end_src
-
-And enable habit module!
-#+begin_src elisp
-  (add-to-list 'org-modules 'habit t)
+  (org-babel-load-file "~/Document/goals/org.org")
 #+end_src
 ** Babel
 =Babel= allows you execute programming languages from within org-mode.
