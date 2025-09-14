@@ -1687,7 +1687,7 @@ and then another pipe to =ffplay= to play the synthesized audio.
     "Use pipertts to synthesize STRING as SPEAKER voice."
     (ECFPAW/ensure-pipertts speaker)
     (process-send-string (ECFPAW/get-pipertts-process-name ECFPAW/pipertts-model speaker)
-  		       (concat string "\n")))
+  		       (concat (string-replace "\n" " " string) "\n")))
 
   (defun ECFPAW/pipertts-filter-string (string)
     "Filter STRING according to `ECFPAW/pipertts-filters'."
