@@ -1383,6 +1383,29 @@ generate this you may use the following command.
 #+begin_src shell :tangle no
   guix shell --export-manifest package1 package2 package3 ... > manifest.scm
 #+end_src
+
+It is very annoying to do this manually,
+#+begin_src elisp
+  (defun ECFPAW/create-guix-shell (packages)
+    (interactive (list (completing-read-multiple
+  		      "Guix packages to add to Guix shell: "
+  		      (guix-package-names))))
+    (let* ((directory (if-let* ((project (project-current)))
+  			(project-root project)
+  		      (if-let* ((file-name (buffer-file-name)))
+  			  (file-name-directory file-name)
+  			(read-directory-name "Please select the directory: "))))
+  	 (directory (string-remove-suffix "/" (expand-file-name directory)))
+  	 (manifest (file-name-concat directory "manifest.scm"))
+  	 (envrc (file-name-concat directory ".envrc"))
+  	 (manifest-generator (format "guix shell --export-manifest %s > %s" (string-join packages " ") manifest))
+  	 (safe-directory-command (format "echo %s >> $HOME/.config/guix/shell-authorized-directories" directory))
+  	 (direnv-generator (format "echo 'eval \"$(guix shell --search-paths)\"' > %s" envrc)))
+      (shell-command manifest-generator)
+      (shell-command safe-directory-command)
+      (shell-command direnv-generator)
+      (envrc-allow)))
+#+end_src
 ** Breadcrumbs
 Breadcrumbs are the little thingies at the top which show in which
 part of the document you are in and in which directory.
