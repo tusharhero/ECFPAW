@@ -1386,7 +1386,10 @@ generate this you may use the following command.
 
 It is very annoying to do this manually,
 #+begin_src elisp
+  (autoload 'guix-package-names "guix-package")
+
   (defun ECFPAW/create-guix-shell (packages)
+    "Create necessary Guix manifest and direnv configuration with the PACKAGES specified."
     (interactive (list (completing-read-multiple
   		      "Guix packages to add to Guix shell: "
   		      (guix-package-names))))
