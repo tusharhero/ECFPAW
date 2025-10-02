@@ -1412,15 +1412,60 @@ It is very annoying to do this manually,
 
 *** guix shell
 #+begin_src elisp
+  (defun ECFPAW/guix-set-buffer-environment (&optional profile)
+    "Set buffer's `process-environment' to match PROFILE.
+        PROFILE can be a named profile (like '~/.guix-profile',
+        '~/.config/guix/work') or a direct link to profile from the
+        store, like GUIX_ENVIRONMENT variable (see Info node `(guix)
+        Invoking guix environment' for details).
+
+        If PROFILE is nil, use `guix-current-profile'."
+    (interactive (list (guix-read-profile)))
+    (let ((specs (guix-eval-read
+                  (guix-make-guile-expression
+                   'search-paths-specifications
+                   (guix-file-name profile)))))
+      (dolist (spec specs)
+        (-let* (((variable separator path) spec)
+                (current-value (getenv variable))
+                (value (if (and separator current-value)
+                           (concat path separator current-value)
+                         path)))
+        	(setq-local process-environment (cons (concat variable "=" value)
+        					      process-environment))
+          (when (equal variable "PATH")
+            (setq-local exec-path (split-string value ":")))
+          (when (equal variable "INFOPATH")
+            (setq-local Info-directory-list (split-string value ":")))))))
+
+  (defvar ECFPAW/guix-shell-directory-alist '())
+
+  (defun ECFPAW/guix-update-buffer-dir-environment (&rest args)
+    (when-let* ((profile (cdr
+    			(assoc-string (expand-file-name default-directory)
+    				      ECFPAW/guix-shell-directory-alist))))
+      (ECFPAW/guix-set-buffer-environment profile)))
+
+  (defun ECFPAW/guix-set-directory-environment (directory profile)
+    (push (cons (expand-file-name directory) profile)
+    	ECFPAW/guix-shell-directory-alist)
+    (ECFPAW/guix-update-buffer-dir-environment)
+    (add-hook 'buffer-list-update-hook 'ECFPAW/guix-update-buffer-dir-environment)
+    (advice-add 'start-process :before 'ECFPAW/guix-update-buffer-dir-environment)
+    (advice-add 'call-process :before 'ECFPAW/guix-update-buffer-dir-environment))
+
   (defun ECFPAW/guix-shell (packages)
     "Switch to a guix shell with PACKAGES."
     (interactive (list (completing-read-multiple
-  		      "Guix packages to add to Guix shell: "
-  		      (guix-package-names))))
-    (let* ((guix-shell-command (format "guix shell %s -- printenv GUIX_ENVIRONMENT"
-  				     (string-join packages " ")))
-  	 (guix-shell-environment (string-trim (shell-command-to-string guix-shell-command))))
-      (guix-set-emacs-environment guix-shell-environment)))
+        		      "Packages to add to the guix shell: "
+        		      (guix-package-names))))
+    (if-let* ((guix-shell-command (format "guix shell %s -- printenv GUIX_ENVIRONMENT"
+        					(string-join packages " ")))
+        	    (guix-shell-environment (string-trim (shell-command-to-string guix-shell-command)))
+        	    (directory (if (project-current)
+        			   (project-root (project-current))
+        			 (read-directory-name "Guix shell directory: "))))
+        (ECFPAW/guix-set-directory-environment directory guix-shell-environment)))
 #+end_src
 ** Breadcrumbs
 Breadcrumbs are the little thingies at the top which show in which
