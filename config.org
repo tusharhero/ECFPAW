@@ -251,7 +251,7 @@ of this.
 #+begin_src elisp
   (custom-set-variables '(warning-suppress-types '((comp))))
 #+end_src
-** Spacious Padding
+** COMMENT Spacious Padding
 Oh, man this single-handedly makes ECFPAW look so much better. Thanks Prot!
 #+begin_src elisp
   (use-package spacious-padding)
