@@ -335,7 +335,7 @@ This makes it so that only one theme is loaded at a time.
   	'((fg-region unspecified)
   	  (fringe unspecified)))
 #+end_src
-*** Day and night switching
+*** COMMENT Day and night switching
 I used to use circadian for this, but that was just too bloated
 (according to use-package-report it would take a long time to load).
 So I just roll my own now.
@@ -359,6 +359,13 @@ So I just roll my own now.
   (let ((day (* 24 60 60)))
     (run-at-time ECFPAW/day-start day 'load-theme ECFPAW/day-theme)
     (run-at-time ECFPAW/day-end day 'load-theme ECFPAW/night-theme))
+#+end_src
+*** Load theme
+I used to switch theme on the basis of the time of the day, but now I
+want to just use dark mode all the time. At least for a while, the
+code to do day night switching has been commented out now.
+#+begin_src elisp
+  (load-theme 'modus-vivendi)
 #+end_src
 ** TRANSPARENCY
 With Emacs version 29, true transparency has been added.
