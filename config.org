@@ -1189,7 +1189,7 @@ Org indent is plenty eye candy.
 #+end_src
 ** Journal and Task
 #+begin_src elisp
-  (org-babel-load-file "~/Document/goals/org.org")
+  (org-babel-load-file "~/Documents/goals/org.org")
 #+end_src
 ** Babel
 =Babel= allows you execute programming languages from within org-mode.
