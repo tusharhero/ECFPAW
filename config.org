@@ -4,7 +4,7 @@
 #+EMAIL: tusharhero@sdf.org
 #+DESCRIPTION: It actually does more than just programming and writing.
 #+STARTUP: content
-#+PROPERTY: header-args :tangle init.el :noweb-ref no :mkdirp yes
+#+PROPERTY: header-args :tangle init.el :noweb-ref no :mkdirp yes :results none
 * GENERATION TIME NOTICE
 #+name: time-notice
 #+begin_src elisp :results raw :tangle no 
