@@ -2016,6 +2016,37 @@ Also enable flyspell here,
 #+begin_src elisp
   (add-hook 'erc-mode-hook 'flyspell-mode)
 #+end_src
+** log view mode
+#+begin_src emacs-lisp
+(define-derived-mode ECFPAW/irc-log-mode
+  fundamental-mode
+  "IRC"
+  (highlight-regexp
+   (rx (seq (one-or-more digit)
+	    ?-
+	    (one-or-more digit)
+	    ?-
+	    (one-or-more digit)
+	    ?T
+	    (one-or-more digit)
+	    ?:
+	    (one-or-more digit)
+	    ?:
+	    (one-or-more digit)
+	    (one-or-more " ")))
+   'erc-timestamp-face)
+  (highlight-regexp (rx (minimal-match "  <" (one-or-more not-newline) "> "))
+		    'erc-nick-default-face)
+  (highlight-regexp (rx (seq (one-or-more not-newline) "***" (one-or-more not-newline)))
+		    'ansi-color-black)
+  (highlight-regexp (rx (seq "<pml-bot>" (one-or-more not-newline)))
+		    'font-lock-comment-face)
+  (highlight-regexp (rx (seq " > " (one-or-more not-newline)))
+		    'org-quote)
+  (highlight-regexp erc-button-url-regexp 'browse-url-button)
+  (highlight-phrase "tusharhero" 'ansi-color-underline)
+  (read-only-mode))
+#+end_src
 * Emacs Everywhere
 =emacs-everywhere= was giving me trouble, so I decided to write my own
 version instead. [[https://github.com/atx/wtype][Wtype]] is needed.
