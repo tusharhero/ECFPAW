@@ -806,7 +806,9 @@ most of its functionality(Basically it was bloated for me). That is
 why I have decided to switch to =project.el=, the builtin project
 management functionality of Emacs.
 
-I have also integrated it with Magit.
+I have also integrated it with Magit. Also added =shell= directly to the
+=project-switch-commands=, which doesn't contain it for some weird
+reason.
 #+begin_src elisp
   (defun ECFPAW/project-magit-status ()
     "Run `magit-status' in the current project's root."
@@ -821,6 +823,7 @@ I have also integrated it with Magit.
   	  (project-vc-dir "VC-Dir")
   	  (ECFPAW/project-magit-status "Magit-Status")
   	  (project-eshell "Eshell")
+  	  (project-shell "Shell")
   	  (project-any-command "Other")))
 #+end_src
 * DIRED
