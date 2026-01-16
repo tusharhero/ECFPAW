@@ -1855,6 +1855,7 @@ and then another pipe to =ffplay= to play the synthesized audio.
       	   (car (last (string-split ECFPAW/pipertts-model "/")))
       	   ECFPAW/pipertts-speaker)
     (pcase major-mode
+      ('reader-mode (ECFPAW/pipertts-string-current-speaker (reader-dyn--get-highlight-text)))
       ((or 'pdf-view-mode 'pdf-virtual-view-mode) (ECFPAW/pipertts-pdf-region))
       (_ (ECFPAW/pipertts-string-current-speaker (ECFPAW/get-region-string)))))
 #+end_src
