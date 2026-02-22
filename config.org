@@ -2087,3 +2087,18 @@ I am too lazy to update Sway configuration.
 #+begin_src elisp
   (defalias 'emacs-everywhere 'tinee)
 #+end_src
+* Gnus
+Mail and more, in Emacs.
+
+I keep forgetting to send it the mailing list when replying.
+#+begin_src emacs-lisp
+  (transient-define-prefix ECFPAW/gnus-reply ()
+    "Transient menu for Gnus send."
+    ["Reply"
+     :description
+     "If you only reply to the author and this is a mailing list, it won't reach the others."
+     [("W" "wide" gnus-summary-wide-reply-with-original)]
+     [("O" "Only author of this message." gnus-summary-reply-with-original)]])
+
+  (bind-key "r" #'ECFPAW/gnus-reply gnus-summary-mode-map)
+#+end_src
