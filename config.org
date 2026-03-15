@@ -1300,6 +1300,13 @@ Magit (Maggot , magic IDK) is a git client for Emacs.
     :vc (:url "https://github.com/sshaw/git-link" :rev "e4cfed0")
     :bind ((:map vc-prefix-map ("C-c l" .  #'git-link-dispatch))))
 #+end_src
+** Conflict buttons
+Neat little buttons for conflict resolution, great ux.
+#+begin_src elisp
+  (use-package conflict-buttons
+    :vc (:url "https://codeberg.org/tusharhero/conflict-buttons")
+    :hook (smerge-mode . conflict-buttons-setup))
+#+end_src
 ** PINENTRY
 For getting support for GPG(GNU Privacy Guard).
 
