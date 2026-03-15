@@ -1222,9 +1222,6 @@ redirection.
   (use-package eww
     :defer t
     :ensure nil
-    :custom
-    (eww-retrieve-command (if (executable-find "wget")
-  			    (list "wget" "--quiet" "--output-document=-")))
     :config
     (defun ECFPAW/redirections (uri &optional index)
       "Redirect URI to different uri.
@@ -1275,11 +1272,6 @@ To keep the feeds private, I have the feeds listed in a file called
 Convenient alias.
 #+begin_src elisp
   (defalias 'newsticker 'newsticker-show-news)
-#+end_src
-
-Making eww the default.
-#+begin_src elisp
-  (setq browse-url-browser-function 'eww-browse-url)
 #+end_src
 
 I like using =yeetube=,
