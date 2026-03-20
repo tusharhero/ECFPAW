@@ -297,18 +297,11 @@ default of =pulsar-iterations= by 5.
     :defer nil
     :hook ((next-error . pulsar-pulse-line)
   	 (minibuffer-setup . pulsar-pulse-line)
-  	 (imenu-after-jump . pulsar-recenter-top)
-  	 (imenu-after-jump . pulsar-reveal-entry))
+  	 (imenu-after-jump . pulsar-recenter-top))
     :custom
     (pulsar-delay 0.01)
     (pulsar-iterations 50)
-    (pulsar-pulse-region-functions
-     (append pulsar-pulse-region-common-functions
-  	   '(upcase-word
-  	     downcase-word
-  	     capitalize-word
-  	     fill-paragraph
-  	     org-fill-paragraph)))
+    (pulsar-pulse-on-window-change t)
     :config
     (pulsar-global-mode))
 #+end_src
