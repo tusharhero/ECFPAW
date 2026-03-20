@@ -1985,4 +1985,7 @@ I keep forgetting to send it the mailing list when replying.
      [("O" "Only author of this message." gnus-summary-reply-with-original)]])
 
   (bind-key "r" #'ECFPAW/gnus-reply gnus-summary-mode-map)
+  (bind-key "r" #'ECFPAW/gnus-reply gnus-article-mode-map)
+  (bind-key "R" #'ECFPAW/gnus-reply gnus-summary-mode-map)
+  (bind-key "R" #'ECFPAW/gnus-reply gnus-article-mode-map)
 #+end_src
