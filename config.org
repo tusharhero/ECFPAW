@@ -1855,6 +1855,10 @@ Emacs for this.
       "Play the file at point using Yeetube mpv."
       (interactive)
       (yeetube-mpv-play (thing-at-point 'filename)))
+    (defun ECFPAW/yeetube-play-dired-file-at-point ()
+      "Play the file at point using Yeetube mpv."
+      (interactive)
+      (yeetube-mpv-play (car (dired-get-marked-files))))
     :bind (("C-c y" . ECFPAW/yeetube-map)
   	 :map ECFPAW/yeetube-map
   	 ("s" . yeetube-search)
