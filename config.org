@@ -1012,12 +1012,7 @@ Big language mode is nice, it changes =sin(x)^2= to
     (calc-angle-mode 'rad))
 #+end_src
 
-* COMMENT CASUAL
-#+begin_comment
-Because due to a bug in emacs, its not possible to get complicated
-packages via =package-vc=. Hence I have commented this package for now.
-#+end_comment
-
+* CASUAL
 Casual is like [[*MAGIT][magit]] but for other things as well.
 
 It excellent for discoverability, the only reason I am able to use:
