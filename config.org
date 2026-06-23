@@ -1235,17 +1235,6 @@ defaults suck. I got this from Prot's config.
     (setq ediff-merge-revisions-with-ancestor t)
     (setq ediff-show-clashes-only t))
 #+end_src
-* FLYCHECK
-Flycheck can do a lot of stuff including,
-- Showing errors in programs,
-- Showing spelling errors.
-#+begin_src elisp
-  (use-package flycheck
-    :vc (:url "https://github.com/flycheck/flycheck.git")
-    :defer t
-    :diminish "Ⓒ"
-    :init (global-flycheck-mode))
-#+end_src
 * PROGRAMMING
 ** Aggressive indent
 Magical package.
