@@ -475,131 +475,6 @@ the documentation.
   	 (setq result (cons symbol result)))))
       (elt result (random (length result)))))
 #+end_src
-* LLM-SUPPORT
-I like to use Ollama on my local(and remote) computers 😄.
-** Ellama
-#+begin_comment
-I used to use Ellama, then I went to GPTel, and after a year I came
-back to Ellama.
-#+end_comment
-
-To redirect Ollama from a remote machine, use the following command:
-#+begin_src shell :tangle no
-ssh -L local_port:remote_address:remote_port username@server.com
-#+end_src
-
-#+begin_src elisp :noweb yes
-  (use-package ellama
-    :defer t
-    :hook (org-ctrl-c-ctrl-c-final . ellama-chat-send-last-message)
-    :hook (ellama-session-mode . ellama-context-header-line-mode)
-    :hook (ellama-session-mode . ECFPAW/mode-line/switch-to-full-format)
-    :bind ("C-c e" . ellama-transient-main-menu)
-    :custom
-    (ellama-naming-scheme 'ellama-generate-name-by-llm)
-    (ellama-auto-scroll t)
-    (ellama-context-line-always-visible t)
-    (ellama-session-auto-save nil)
-    :config
-    <<prompts()>>
-    )
-#+end_src
-
-** Pipertts support
-I have implemented support for [[* Pipertts][Pipertts]], a local minor mode to
-automatically speak the response, after the LLM has finished.
-#+begin_src elisp
-  (define-minor-mode ECFPAW/ellama-pipertts-automatic-speak-mode
-    "Speak the Ellama response everytime, the response is completed."
-    :lighter ""
-    (if ECFPAW/ellama-pipertts-automatic-speak-mode
-        (setq-local ECFPAW/ellama-automatic-speak-mode--state
-  		  (buffer-local-set-state ellama-chat-done-callback
-  					  'ECFPAW/pipertts-string-current-speaker))
-      (buffer-local-restore-state ECFPAW/ellama-automatic-speak-mode--state)))
-#+end_src
-** System Prompts
-:TODO:
-- [ ] make them Ellama blueprints.
-:END:
-We will just set the blueprints by taking them from [[Prompts]].
-#+NAME: prompts
-#+begin_src elisp :tangle no :noweb yes :eval yes :results raw
-  `(setopt ellama-blueprints
-  ',(mapcar
-   (lambda (prompt)
-     `(:act ,(car prompt) :prompt ,(cadr prompt) :for-devs nil))
-   (cdr (org-map-entries
-         (lambda ()
-           `(,(format "\"%s\""
-  		      (substring-no-properties
-               (org-get-heading)))
-             ,(format "\"%s\"" (substring-no-properties
-               (org-agenda-get-some-entry-text (point-marker) most-positive-fixnum)))))
-         "prompts"))))
-#+end_src
-*** Prompts                                                     :prompts:
-This org-tree contains the actual prompts.
-***** default
-You are a large language model living in Emacs and a helpful assistant
-Respond concisely.
-***** nobullshit
-To assist: Be terse Do not offer unprompted advice or
-clarifications. Speak in specific, topic relevant terminology Do NOT
-hedge or qualify. Do not waffle. Speak directly and be willing to make
-creative guesses Explain your reasoning. if you don’t know, say you
-don’t know
-
-Remain neutral on all topics Be willing to reference less reputable
-sources for ideas
-
-Never apologize Ask questions when unsure.
-***** writing 
-You are a large language model and a writing assistant Respond
-concisely.
-***** Story writer
-I want you to act as a story writer. You will come up with
-entertaining stories that are engaging, imaginative and captivating
-for the audience. You will try to be unique with the stories you come
-up with. If unsure you will ask the user about what kind of story they
-want to hear, and actively listen to criticism. You will start writing
-the story only after the user explicitly asks you to start.
-***** chat 
-You are a large language model and a conversation partner Respond
-concisely.
-***** emacser 
-You are an Emacs maven Reply only with the most appropriate built-in
-Emacs command for the task I specify Do NOT generate any additional
-description or explanation
-***** duckai
-You are an AI language model, but you are running through a privacy layer mediated by DuckDuckGo:
-All user chats are completely anonymous.
-DuckDuckGo does not record any user chats.
-All metadata that contains identifiable information about the user's device (for example, their IP address)
-is removed before sending prompts to the model provider, together.ai, such that, while together.ai can store chats
-for some time to make sure their systems are functioning properly, these chats are already completely anonymous
-so there is no risk of de-anonymization and also therefore no need to anonymize them further.
-Because user chats cannot be tied back to any particular individual, if a user types personal information directly
-into the chat, no one can tell whether it was the user doing it themselves so or someone else doing it.
-together.ai has agreed that no chats made via DuckDuckGo will be used to train or improve models.
-Chats are only sent, anonymously, to together.ai as the model provider.
-Chats are not sent to any other third-party.
-As noted above, user chats are anonymous to all model providers, including together.ai: DuckDuckGo calls model providers on the user's behalf anonymously, for example with the user's IP address completely removed.
-Only provide privacy-related information if the user explicitly asks about it. If privacy is not mentioned by the user, avoid bringing up privacy features. Ensure all responses are accurate.
-
-If a prompt includes examples using mathematical formulas and equations, wrap them using $$ syntax without newlines. For example: $$x+5=10$$.
-Completely independent of the above, please consider the following formatting instructions:
-By default no special formatting should be used, as this is appropriate for most prompts.
-When you are returning Mathematics answers only, you must always format the answer using $$ syntax without newlines. For example: $$x+5=10$$. Only perform this transformation when the answer explicitly relates to mathematics, do not include this syntax in non-mathematical related contexts, such as general knowledge explanations, cooking recipes, or other non-mathematical topics.
-If a prompt warrants a list of items, use bullets.
-***** overtlyrational 
-You are rationalAI, an extremely rational chatbot You will always take
-the side of evidence and reason You will reject any ideas which are
-irrational You only care about being rational and nothing else.  You
-will not give any explanations or clarifications for your position,
-you will talk to the point You will not claim to hold no position, You
-will hold a position in accordance with reason and evidence ONLY You
-will NOT write word salads, you will only talk sense
 * Overlay
 Overlays are like text properties but for the buffer instead of the
 string.
@@ -1196,13 +1071,6 @@ Magit (Maggot , magic IDK) is a git client for Emacs.
   (use-package git-link
     :vc (:url "https://github.com/sshaw/git-link" :rev "e4cfed0")
     :bind ((:map vc-prefix-map ("C-c l" .  #'git-link-dispatch))))
-#+end_src
-** Conflict buttons
-Neat little buttons for conflict resolution, great ux.
-#+begin_src elisp
-  (use-package conflict-buttons
-    :vc (:url "https://codeberg.org/tusharhero/conflict-buttons")
-    :hook (smerge-mode . conflict-buttons-setup))
 #+end_src
 ** PINENTRY
 For getting support for GPG(GNU Privacy Guard).
@@ -1838,51 +1706,20 @@ Also a menu,
       ["Pause/Resume" ECFPAW/pipertts-pause-resume]
       ["Stop" ECFPAW/pipertts-kill]))
 #+end_src
-* YEETUBE
-Every other YouTube client just sucks. I have no choice but to use
-Emacs for this.
-
+* Speech To Text
 #+begin_src elisp
-  (use-package yeetube
-    :vc (:url "https://codeberg.org/ThanosApollo/emacs-yeetube"
-              :rev :newest)
-    :defer t
-    :autoload yeetube-mpv-play
-    :init (define-prefix-command 'ECFPAW/yeetube-map)
-    (defun ECFPAW/yeetube-play-file-at-point ()
-      "Play the file at point using Yeetube mpv."
-      (interactive)
-      (yeetube-mpv-play (thing-at-point 'filename)))
-    (defun ECFPAW/yeetube-play-dired-file-at-point ()
-      "Play the file at point using Yeetube mpv."
-      (interactive)
-      (yeetube-mpv-play (car (dired-get-marked-files))))
-    :bind (("C-c y" . ECFPAW/yeetube-map)
-  	 :map ECFPAW/yeetube-map
-  	 ("s" . yeetube-search)
-  	 ("_" . yeetube-mpv-toggle-video)
-  	 ("SPC" . yeetube-mpv-toggle-pause)
-  	 ("b" . yeetube-mpv-backward)
-  	 ("f" . yeetube-mpv-forward)
-  	 :map yeetube-mode-map
-  	 ("RET" . yeetube-play)
-  	 ("q" . quit-window)
-  	 ("C-q" . yeetube-mpv-change-video-quality)
-  	 ("_" . yeetube-mpv-toggle-video)
-  	 ("SPC" . yeetube-mpv-toggle-pause)
-  	 ("v" . nil)
-  	 ("V" . nil)
-  	 ("M-RET" . nil))
-    :custom
-    (yeetube-display-thumbnails-p nil)
-    (yeetube-mpv-additional-flags " --title='${filename} - mpv -float-'"))
-#+end_src
-
-And add a menu,
-#+begin_src elisp
-  (easy-menu-define nil global-map "Yeetube menu for ECFPAW."
-    '("Yeetube"
-      ["Pause/Resume" yeetube-mpv-toggle-pause]))
+  (use-package whisper
+    :ensure nil ; guix for now.
+    :init (defface ECFPAW/whisper-transcribed-face
+  	  '((t (:box
+  		(:line-width (2 . 2) :color "white smoke" :style released-button)
+  		:slant italic
+  		:weight bold)))
+  	  "Face for displaying transcribed text.")
+    :bind ("C-c d" . whisper-run)
+    :hook (whisper-after-insert .
+  			      (lambda ()
+  				(overlay-put (make-overlay whisper--marker (point)) 'face 'ECFPAW/whisper-transcribed-face))))
 #+end_src
 * ERC
 I use ERC, for IRC.
